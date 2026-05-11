@@ -138,6 +138,7 @@ html, body {
 // Standard slide title: small-caps with a tab-rule above, ink color.
 // Excludes the auto title slide, section dividers, pull-quote slides, and
 // colophon — those carry their own treatments below.
+// Title and tab-rule are horizontally centered.
 .reveal .slides > section:not(.section-divider):not(.pull-quote):not(.colophon):not(.quarto-title-block) > h2,
 .reveal .slides > section > section:not(.section-divider):not(.pull-quote):not(.colophon) > h2 {
   position: relative;
@@ -147,8 +148,9 @@ html, body {
   font-size: 1.55em;
   line-height: 1.15;
   color: var(--ink);
-  margin: 0 0 0.35em;
+  margin: 0 auto 0.55em;
   padding-top: 0.55em;
+  text-align: center;
 }
 .reveal .slides > section:not(.section-divider):not(.pull-quote):not(.colophon):not(.quarto-title-block) > h2::before,
 .reveal .slides > section > section:not(.section-divider):not(.pull-quote):not(.colophon) > h2::before {
@@ -156,7 +158,7 @@ html, body {
   display: block;
   border-top: 3px solid var(--oxblood);
   width: 2.6rem;
-  margin-bottom: 0.45rem;
+  margin: 0 auto 0.45rem;
 }
 
 // Hide empty h2 placeholders Quarto emits for `## {.cls}` (no title text).
@@ -283,18 +285,40 @@ html, body {
 // we deliberately do NOT key off that class, otherwise our masthead would
 // take over every section break.
 // =========================================================================
-.reveal .quarto-title-block {
+// Force the title-block section to span the slide exactly and to flex-centre
+// its children. Use explicit pixel widths on the masthead/vol-badge so the
+// computed margins are symmetric regardless of any parent quirks.
+html body div.reveal div.slides section.quarto-title-block {
   text-align: center !important;
-  padding: 0 4% !important;
-  position: relative;
-  // Take the full slide height so absolute-positioned siblings (e.g., the
-  // bottom-right pull-quote) anchor to the slide rectangle, not just to
-  // the masthead's content box.
+  padding: 0 !important;
+  margin: 0 !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   min-height: 100% !important;
-  height: 100%;
+  box-sizing: border-box !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
+  align-items: center !important;
+}
+html body div.reveal div.slides section.quarto-title-block > .masthead,
+html body div.reveal div.slides section.quarto-title-block > .title-volume {
+  width: auto !important;
+  max-width: 92% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  align-self: center !important;
+  box-sizing: border-box !important;
+}
+// Force the QR svg to fit its plate, ignoring its inline mm dimensions.
+html body div.reveal div.slides .qr-plate > svg {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
 }
 
 // Persistence-landmark backdrop: a uniform lattice of landmarks on the
@@ -394,9 +418,17 @@ html, body {
 
 // Masthead block: top + bottom double-rules form a contained header that
 // holds the flanking plates, the title, the subtitle, and the edition line.
+// AI-resolved: width:100%; max-width:100%; flex column align-items:center.
 .reveal .quarto-title-block .masthead {
   position: relative;
-  margin: 0.6em auto 0.4em;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
   padding: 0.6em 0;
   border-top: 4px solid var(--ink);
   border-bottom: 1px solid var(--ink);
@@ -412,13 +444,34 @@ html, body {
 .reveal .quarto-title-block .masthead::before { top: 5px; }
 .reveal .quarto-title-block .masthead::after  { bottom: -5px; }
 
-// Row inside the masthead: plate · title · plate
+// Row inside the masthead — exact recipe from the in-browser DevTools AI:
+//   masthead-row: flex row, center/center, padding:0, width:auto, max:92%, margin:auto
+//   plates:       flex:0 0 130px, width:130px, max-width:130px, margin:0, padding:0
+//   masthead-text: flex:1 1 auto, text-align:center, margin:0, width:auto
 .reveal .quarto-title-block .masthead-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: auto !important;
+  max-width: 92% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
   gap: clamp(1rem, 4vw, 3rem);
-  padding: 0.4em 1em 0.6em;
+}
+.reveal .quarto-title-block .masthead-text {
+  flex: 1 1 auto !important;
+  text-align: center !important;
+  margin: 0 !important;
+  width: auto !important;
+  min-width: 0;
+}
+.reveal .quarto-title-block .masthead-row > .landmark-plate {
+  flex: 0 0 130px !important;
+  width: 130px !important;
+  max-width: 130px !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 .reveal .quarto-title-block .masthead-text {
   flex: 0 1 auto;
@@ -429,9 +482,10 @@ html, body {
 // Plates: now flex items inside the masthead, no absolute positioning.
 .reveal .quarto-title-block .landmark-plate {
   position: relative;
-  flex: 0 0 auto;
-  width: 130px;
-  height: 130px;
+  flex: 0 0 130px;
+  width: 130px !important;
+  height: 130px !important;
+  max-width: 130px !important;
   margin: 0;
   padding: 6px;
   background: var(--paper);
@@ -440,6 +494,8 @@ html, body {
   outline-offset: 4px;
   box-shadow: none;
   opacity: 0.95;
+  box-sizing: border-box !important;
+  overflow: hidden;
 }
 .reveal .quarto-title-block .landmark-plate svg {
   display: block;
@@ -680,10 +736,35 @@ html, body {
 //   Use class: .section-divider on a `## My Section {.section-divider}`
 //   Or on a `# Section` header (Quarto creates a section break slide).
 // =========================================================================
-.reveal section.section-divider,
-.reveal section.section-divider > section {
+// Force flex centering with a high-specificity selector, and also center
+// the heading via `margin: 0 auto` + `width: fit-content` so that even if
+// reveal manages to override `display: flex` via runtime inline styles,
+// the heading is still centered as a block-level element.
+html body div.reveal div.slides section.section-divider {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
   text-align: center !important;
-  padding: 0 6% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+html body div.reveal div.slides section.section-divider > * {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 88%;
+}
+html body div.reveal div.slides section.section-divider > h1,
+html body div.reveal div.slides section.section-divider > h2 {
+  display: block !important;
+  width: fit-content !important;
+  max-width: 88% !important;
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 .reveal .section-divider .roman,
 .reveal .section-divider .section-num {
@@ -1066,9 +1147,31 @@ html, body {
 // CLOSING SLIDE — wax seal centered, "FINIS" kicker, contact in small caps
 //   Use class: .colophon on the closing slide
 // =========================================================================
-.reveal section.colophon {
+html body div.reveal div.slides section.colophon {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
   text-align: center !important;
-  padding: 0 6% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+html body div.reveal div.slides section.colophon > * {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 88%;
+}
+html body div.reveal div.slides section.colophon > h1,
+html body div.reveal div.slides section.colophon > h2 {
+  display: block !important;
+  width: fit-content !important;
+  max-width: 88% !important;
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 .reveal .colophon .finis {
   font-family: var(--smallcaps);

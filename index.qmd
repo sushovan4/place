@@ -12,22 +12,16 @@ format:
 footer: "PLACE  ·  S. Majhi  ·  ICERM TW-26-FCG  ·  Brown University  ·  20 May 2026"
 ---
 
-# In This Edition {.section-divider}
-
-## The Plan of the Talk {.section-divider}
-
-::: {.edition-badge}
-Vol. MMXXVI · No. III · Calcutta–Washington Edition · Six paise
-:::
+# The Plan of the Talk {.section-divider}
 
 ::: {.front-index data-title="Inside today's edition"}
-| Page | Article |
-|:----:|:--------|
-|  I.  | Why placement matters — the puzzle motivating PLACE.                |
-|  II. | The construction — local atlases from persistence.                  |
-| III. | A theorem and its discontents.                                      |
-|  IV. | Experiments — what the paper claims, and what it carefully does not.|
-|   V. | Where this leaves us.                                               |
+| §    | Article                                                                    |
+|:----:|:---------------------------------------------------------------------------|
+|  I.  | Motivation — the certification gap in TDA-based classifiers.               |
+|  II. | Construction — landmark grid, hat coordinates, closed-form weights.        |
+| III. | Theory — stability, the classification certificate, sharpness.             |
+|  IV. | Experiments — MUTAG, NCI1, ENZYMES; where the certificate fires.           |
+|   V. | The wider arc — PALACE, CASTLE, open questions.                            |
 
 :::
 
@@ -36,190 +30,300 @@ Vol. MMXXVI · No. III · Calcutta–Washington Edition · Six paise
 
 # § I.  Motivation {.section-divider}
 
-## The Puzzle
-
-::: {.byline}
-[§ I.]{.kicker} · [Motivation]{} · [Six minutes]{}
+::: {.section-deck}
+*Or, why a persistence-based classifier should come with a certificate.*
 :::
 
-A learned representation of a point cloud usually answers *what is here?* — class, label, embedding. It rarely answers *where in the shape is here?*
-
-::: {.dispatches data-title="The gap PLACE addresses"}
-- A vertex's coordinate vector says nothing about its **role** in the shape.
-- Two combinatorially-identical patches at different curvatures look the same to a vanilla MLP.
-- Persistence already encodes shape *globally* — but global summaries flatten location.
-:::
-
-## What we want
+## The certification gap
 
 ::: {.byline}
-[§ I.]{.kicker} · [Motivation]{} · [Continued]{}
+[§ I.]{.kicker} · [Motivation]{} · [Three minutes]{}
 :::
 
 ::: {.standfirst}
-A point-wise embedding that is *aware* of the topological neighbourhood it inhabits — a coordinate with a sense of place.
+TDA-based classifiers report numbers; they rarely report when those numbers are *provably right*.
 :::
 
-::: {.fig-right}
-![](assets/ornament.svg){width="220"}
-
-*Fig. 1.* — A printer's flower, standing in for the figure your authors will provide on rendering.
+::: {.dispatches data-title="The state of the practice"}
+- **Persistence vectorisations** (PI, PL, Euler) — strong empirical baselines, no closed-form guarantees.
+- **Neural-on-diagrams** (PersLay, Set Transformer) — competitive but uninterpretable; calibration is an art.
+- **Held-out tuning** is the rule, not the exception. The model that ships is rarely the one the theory describes.
 :::
 
-Three desiderata:
-
-1. **Equivariance** under shape-preserving deformations.
-2. **Discriminating power** for points distinguishable by local topology.
-3. **Cheap to compute** at inference, even on graphs of millions of vertices.
-
-The first two are theory questions; the third is engineering.
-
-::: {.endmark .threefleur}
-:::
-
-## *A coordinate that knows its place must remember, at minimum, the birth-merge structure of the components around it — a histogram of distances cannot.* {.pull-quote}
-
-::: {.attribution}
-Lemma I.2 (informal)
-:::
-
-# § II.  Construction {.section-divider}
-
-## Local atlas
-
-::: {.byline}
-[§ II.]{.kicker} · [Construction]{} · [Architecture A]{}
-:::
-
-::: {.standfirst}
-For each point we cut a small ball, run a filtration on it, and read off a coordinate from the resulting persistence diagram.
-:::
-
-[Calcutta, 16 May —]{.dateline} The construction proceeds in three steps:
-
-1. **Localise.**  Around vertex $v$, take a $k$-NN ball $B_k(v)$ of radius $r$.
-2. **Filter.**  Build the alpha filtration on $B_k(v)$ up to scale $r$.
-3. **Read.**  Extract the $H_0$ persistence diagram and embed it as a fixed-length vector $\Phi(v) \in \mathbb{R}^d$.
-
-The resulting map $v \mapsto \Phi(v)$ is the **PLACE coordinate** of $v$.
-
-## A picture is in order {.section-divider}
-
-## The PLACE construction at a glance
-
-::: {.plate data-plate="II"}
-![](assets/ornament.svg)
-:::
-
-::: {.plate-caption}
-**Pl. II.**  *The PLACE construction at a single vertex.*  Left: the local ball $B_k(v)$. Centre: the alpha filtration at three scales $r_1 < r_2 < r_3$. Right: the resulting $H_0$ diagram, embedded into $\mathbb{R}^d$ via the chosen vectorisation.
-:::
-
-## A theorem we can prove
-
-::: {.byline}
-[§ II.]{.kicker} · [Construction]{} · [Theory]{}
-:::
-
-::: {.marginalia data-title="Theorem II.1"}
-Let $X, Y$ be two finite metric spaces, and let $f \colon X \to Y$ be an $\varepsilon$-isometry. Then for every $v \in X$ and every choice of vectorisation $\nu$ that is $L$-Lipschitz on $\mathcal{D}^{H_0}$,
-$$
-\bigl\| \Phi_\nu(v) - \Phi_\nu(f(v)) \bigr\|_2 \;\leq\; 2 L \varepsilon.
-$$
-:::
-
-The constant is sharp: equality is attained on the unit-circle pair at $r = \pi/2$.
+The audience for FCG knows the construction zoo. The pitch today is different: *what if the pipeline were closed-form, end to end, with an explicit certificate firing on a fraction of inputs you can describe?*
 
 ::: {.endmark}
 :::
 
-## A theorem we cannot
+## PLACE in one slide
 
 ::: {.byline}
-[§ II.]{.kicker} · [Construction]{} · [Theory, continued]{}
+[§ I.]{.kicker} · [Motivation]{} · [The pitch]{}
 :::
 
 ::: {.standfirst}
-The $H_0$-only variant is provably blind to certain $H_1$-distinguishable pairs. Architecture B addresses this — at a price.
+Mitra–Virk landmarks on a uniform grid; analytic weights; a linear classifier with a sharp confidence ball. No held-out tuning at any stage.
 :::
 
-::: {.dispatches data-title="What we trade"}
-- **Architecture A** ($H_0$ only):  cheap, Lipschitz-stable, blind to loops.
-- **Architecture B** ($H_0 \oplus H_1$):  ~3× more expensive, captures cycle birth, no closed-form stability bound.
+::: {.dispatches data-title="What PLACE is, in three lines"}
+- **Embedding.** $\Phi(A) = \sum_{a \in A} \boldsymbol{\varphi}_{R,p}(a) \in \mathbb{R}^{\ell}$ — landmark hats summed over diagram points.
+- **Weights.** $w_k^2 \propto (d_{k+1}^2 - d_k^2)/R_k^2$ — *derived* from the Mitra–Virk distortion bound, not tuned.
+- **Decision.** Linear classifier $\widehat{y}(A)$ + a per-input certificate that fires when $r_m < \Delta/2$.
 :::
 
-The empirical question — does the loss of theory hurt? — is the subject of § III.
+> *Persistence has a shape; landmarks give it an address—that's **PLACE**.*
 
-::: {.wire-stamp}
-Wire · Persistent-Homology Desk · Calcutta
+# § II.  Construction {.section-divider}
+
+::: {.section-deck}
+*The grid, the hat, the analytic weight rule.*
 :::
 
-# § III.  Experiments {.section-divider}
+## The pipeline
+
+::: {.byline}
+[§ II.]{.kicker} · [Construction]{} · [Five stages]{}
+:::
+
+::: {.plate data-plate="IV"}
+![](assets/landmark-grid.svg)
+:::
+
+::: {.plate-caption}
+**Pl. IV.**  *The PLACE pipeline.* `‹insert pipeline figure from Paper I — input · filtration · persistence · embedding · classify›`. Each stage's parameters are fixed analytically from training labels alone.
+:::
+
+## Landmark grid $G_R$
+
+::: {.byline}
+[§ II.]{.kicker} · [Construction]{} · [The scaffold]{}
+:::
+
+::: {.standfirst}
+Place landmarks on a uniform lattice $G_R \subset \mathbb{R}^2_{\geq}$ in the birth-death plane. Each landmark $a$ owns a square $d_\mathcal{B}$-cover of side $3R$ (axis-aligned in the $\ell_\infty$ metric).
+:::
+
+::: {.dispatches data-title="Why a grid"}
+- **Mitra–Virk (2024)** show $\mathrm{asdim}(\mathcal{D}^n,\, d_\mathcal{B}) \leq 2n$ — a finite-dimensional embedding exists.
+- The grid makes that existence *concrete*: $\ell$ landmarks at $N$ geometric scales $R_1, \ldots, R_N$, no learned parameters.
+- The cover-square geometry is what makes the weights closed-form.
+:::
+
+## Hat-function coordinates
+
+::: {.byline}
+[§ II.]{.kicker} · [Construction]{} · [The coordinates]{}
+:::
+
+For each landmark $a \in G_R$, define a compactly supported hat $\varphi_{R,p}\colon \mathbb{R}^2 \to \mathbb{R}_{\geq 0}$ that vanishes outside $a$'s cover square. The PLACE coordinate of a diagram $A$ is
+
+$$
+\Phi_p(A) \;=\; \sum_{a \in A} \boldsymbol{\varphi}_{R,p}(a) \;\in\; \mathbb{R}^{|G_R|}.
+$$
+
+::: {.dispatches data-title="Three properties, all closed-form"}
+- **Permutation-invariant** in $A$ (it's a sum).
+- **Lipschitz** in $d_\mathcal{B}$ — explicit constant from the hat width.
+- **Cheap** — $O(|A| \cdot N)$ at inference; no neural net to forward through.
+:::
+
+## The closed-form weight rule
+
+::: {.byline}
+[§ II.]{.kicker} · [Construction]{} · [No tuning]{}
+:::
+
+::: {.standfirst}
+Across the $N$ scales, weight each scale's contribution analytically:
+:::
+
+$$
+w_k^2 \;\propto\; \dfrac{d_{k+1}^2 - d_k^2}{R_k^2}.
+$$
+
+::: {.marginalia data-title="Lemma II.4 — sketch"}
+The weights $w_k$ are the *unique maximizer* of the Mitra–Virk distortion slope $\lambda(\nu)$ over the $N$-scale family, subject to the $G_R$-cover constraint. Proof: differentiate $\lambda$ in $w$ and set to zero — the constraint is convex.
+:::
+
+This is the *whole* model selection step. There is no held-out validation, no Bayesian search, no random seeds.
+
+# § III.  Theory {.section-divider}
+
+::: {.section-deck}
+*Three quantitative claims: stability, certificate, sharpness.*
+:::
+
+## Stability
+
+::: {.byline}
+[§ III.]{.kicker} · [Theory]{} · [Theorem 1]{}
+:::
+
+::: {.marginalia data-title="Theorem III.1 (Stability)"}
+For every pair of diagrams $A, A' \in \mathcal{D}^n$,
+$$
+\bigl\| \Phi(A) - \Phi(A') \bigr\|_2 \;\leq\; L \cdot d_\mathcal{B}(A, A'),
+$$
+with $L = L(N, R, p)$ explicit and computed in closed form from the grid parameters.
+:::
+
+::: {.standfirst}
+*Intuition.* The hat is Lipschitz; summing Lipschitz functions over $|A|$ matched pairs preserves Lipschitzness, with the constant accumulating only logarithmically over the geometric scale ladder.
+:::
+
+::: {.endmark}
+:::
+
+## The certificate
+
+::: {.byline}
+[§ III.]{.kicker} · [Theory]{} · [Theorem 2]{}
+:::
+
+::: {.marginalia data-title="Theorem III.2 (Classification certificate)"}
+Let $\hat{\mu}_c$ be the empirical class centroid in $\Phi$-space and $r_m$ the margin radius (closed form from training labels). For a test diagram $A_\star$, if
+$$
+\bigl\| \Phi(A_\star) - \hat{\mu}_c \bigr\|_2 \;<\; r_m,
+$$
+then the linear classifier outputs class $c$ *and* the prediction is provably correct under the assumed noise model.
+:::
+
+::: {.standfirst}
+The certificate is *per-input*: it fires on some test diagrams and stays silent on others. No global accuracy claim is made when it stays silent.
+:::
+
+## When the certificate fires
+
+::: {.byline}
+[§ III.]{.kicker} · [Theory]{} · [Sharpness]{}
+:::
+
+::: {.standfirst}
+Sharpness is governed by a single inequality: $r_m < \Delta/2$, where $\Delta$ is the inter-class separation in $\Phi$-space.
+:::
+
+::: {.dispatches data-title="The firing condition, in plain English"}
+- **$\Delta$ large** — classes are well-separated in PLACE coordinates → certificate fires often.
+- **$r_m$ small** — class clusters are tight → certificate fires often.
+- **Both fail** — certificate stays silent; classifier still predicts but without guarantee.
+:::
+
+The interesting question is *empirical*: on which datasets does the inequality hold for what fraction of test inputs? — § IV.
+
+::: {.handnote}
+note for the talk: emphasise that silent ≠ wrong.
+:::
+
+## Sample complexity
+
+::: {.byline}
+[§ III.]{.kicker} · [Theory]{} · [Theorem 3]{}
+:::
+
+::: {.marginalia data-title="Theorem III.3 (Sample complexity)"}
+With probability $\geq 1 - \delta$, the empirical centroids and $r_m$ converge to their population counterparts at rate
+$$
+n \;\geq\; O\bigl( L^2 \log(\ell/\delta) / \varepsilon^2 \bigr),
+$$
+where $L$ is the stability constant, $\ell = |G_R|$, and $\varepsilon$ is the desired margin slack.
+:::
+
+::: {.standfirst}
+*Take-away.* The cost of having a certificate is $O(L^2 \log \ell)$ samples — modest, and entirely a function of grid choices.
+:::
+
+# § IV.  Experiments {.section-divider}
+
+::: {.section-deck}
+*Three datasets, one table, one honest qualifier.*
+:::
 
 ## Headline results
 
 ::: {.byline}
-[§ III.]{.kicker} · [Experiments]{} · [Tabulated]{}
+[§ IV.]{.kicker} · [Experiments]{} · [Tabulated]{}
 :::
 
 ::: {.stop-press}
-Joint-4: 98.3 %
+MUTAG: certificate fires
 :::
 
-| Dataset           | GNN baseline | + PLACE-A | + PLACE-B |
-|-------------------|:------------:|:---------:|:---------:|
-| MUTAG             |    87.4      |  90.1     | **91.7**  |
-| NCI1              |    78.2      |  80.8     | **81.5**  |
-| Joint-4 (synth.)  |    50.0      | **98.3**  |   98.4    |
+| Dataset    | Strongest baseline | + PLACE       | Δ          |
+|------------|:------------------:|:-------------:|:----------:|
+| MUTAG      |    `‹baseline›`    | **`‹place›`** | `‹+Δ›` pp  |
+| NCI1       |    `‹baseline›`    |   `‹place›`   | `‹+Δ›` pp  |
+| ENZYMES    |    `‹baseline›`    |   `‹place›`   | `‹+Δ›` pp  |
 
-: **Tab. I.** — Mean accuracy (%) over five seeds; bold marks the best per row. *Joint-4* is the angular-density discriminator described in § II; the $H_0$-only variant is sufficient.
+: **Tab. I.** — Mean accuracy (%) over `‹k›` seeds, fixed split.
+The "Strongest baseline" is the best of {PI, PL, Euler, GNN-baseline} per row.
 
-::: {.errata data-title="Errata"}
-Tab. I, MUTAG row: an earlier draft reported 89.4 for PLACE-A. Read **90.1** (corrected after re-running the seed).
-:::
-
-## *A 4-point gain on MUTAG is a 4-point gain on MUTAG. The 98.3 % on Joint-4 is a story about $H_0$.* {.pull-quote}
-
-::: {.attribution}
-authors' own caveat
-:::
-
-## A denser look
+## When the certificate fires
 
 ::: {.byline}
-[§ III.]{.kicker} · [Experiments]{} · [In detail]{}
+[§ IV.]{.kicker} · [Experiments]{} · [Per-dataset]{}
 :::
 
-::: {.handnote}
-ask SM about Joint-4 ablations — does $H_1$ help at all here?
+::: {.standfirst}
+The classification certificate is a *per-input* statement. The fraction of test inputs on which it fires is itself a property of the dataset.
 :::
 
-::: {.broadsheet}
-The headline numbers come from the same architecture, the same five seeds, and the same hold-out split as the published baseline. Differences are not from hyperparameter retuning — we deliberately froze every choice that could otherwise be argued to favour PLACE.
-
-The Joint-4 result is the one that surprised us. Naive theory predicts 50% on this synthetic, because all four classes share the same global $H_1$ signature. Architecture A nevertheless reaches 98.3%, indicating that the *birth-merge structure* of $H_0$ is what carries the angular-density information — a finding we did not anticipate when we wrote § II.
-
-The MUTAG and NCI1 results are more conventional. They confirm that adding a topological coordinate to a vanilla GNN improves classification by a few points, in line with the persistence-on-graphs literature.
+::: {.dispatches data-title="Certificate-firing rate"}
+- **MUTAG.** `‹X›`% of test diagrams certified — the canonical "small + well-separated" win.
+- **NCI1.** `‹Y›`% certified — sparser, but where it fires, it's right.
+- **ENZYMES.** `‹Z›`% — the multi-class case; the certificate is silent on most of the ambiguous inputs.
 :::
 
-::: {.composing-rule .double}
-:::
+In every case the certified fraction has zero misclassifications.
 
-# § IV.  Looking Ahead {.section-divider}
-
-## Open threads
+## Where PLACE doesn't win
 
 ::: {.byline}
-[§ IV.]{.kicker} · [Future work]{} · [Three threads]{}
+[§ IV.]{.kicker} · [Experiments]{} · [Limitations]{}
 :::
 
-::: {.dispatches data-title="What we leave open"}
-- **PALACE.**  The same construction with a learned filtration. Differentiable; under review.
-- **Stability for B.**  No closed-form bound; Wasserstein conjecture holds empirically.
-- **Streaming PLACE.**  Constant-memory variant for online-graph settings.
+::: {.standfirst}
+The talk would be incomplete without the negative cases. Two patterns worth naming.
 :::
 
-::: {.endmark .thirty}
+::: {.dispatches data-title="Honest qualifiers"}
+- **Heterogeneous topology.** When the within-class variation in $H_*$ is large (e.g. `‹dataset›`), the centroid model under-fits and PLACE trails the GNN baseline by `‹δ›` pp.
+- **Tiny diagrams.** When $|A|$ is small (degenerate filtrations), the sum $\Phi(A)$ has few non-zero coordinates and the certificate cannot fire.
+:::
+
+These limitations are *part of the value proposition*: PLACE knows when it doesn't know.
+
+# § V.  The Wider Arc {.section-divider}
+
+::: {.section-deck}
+*Where PLACE sits in a longer programme.*
+:::
+
+## PALACE & CASTLE
+
+::: {.byline}
+[§ V.]{.kicker} · [Programme]{} · [Two siblings]{}
+:::
+
+::: {.dispatches data-title="The arc beyond Paper I"}
+- **PALACE** — the same construction with a *learned* filtration. Differentiable end-to-end; recovers PLACE in the limit of fixed-filtration training. Paper II, in submission.
+- **CASTLE** — the inferential layer: two-sample tests and topological power calculations on top of $\Phi$. Closes the loop from "predict" to "decide". Forthcoming.
+:::
+
+The shared scaffold is the Mitra–Virk landmark embedding; the three modules build on it without contradicting each other.
+
+## Open questions
+
+::: {.byline}
+[§ V.]{.kicker} · [Programme]{} · [Three threads]{}
+:::
+
+::: {.dispatches data-title="What we'd like to pull next"}
+- **Edge-weighted graphs.** Current PLACE uses unweighted Vietoris-Rips on graphs; how does the construction extend when edge weights matter?
+- **Streaming PLACE.** Constant-memory variant for online-graph settings; the per-scale weights are already analytic, but the centroids need a sketch.
+- **Beyond $H_0$ + $H_1$.** Paper I works in the lowest two dimensions; what changes when $H_2$ is informative (point clouds in $\mathbb{R}^4$ and above)?
+:::
+
+::: {.endmark .threefleur}
 :::
 
 ## Thank you {.colophon}
@@ -280,9 +384,9 @@ The MUTAG and NCI1 results are more conventional. They confirm that adding a top
 ```
 
 ::: {.contact}
-[smajhi.com](https://smajhi.com) · [s.majhi@email.gwu.edu](mailto:s.majhi@email.gwu.edu) · Washington, D.C. · MMXXVI
+[arXiv:2605.04046](https://arxiv.org/abs/2605.04046) · [smajhi.com](https://smajhi.com) · [s.majhi@gwu.edu](mailto:s.majhi@gwu.edu)
 :::
 
 ::: {.subscription}
-Subscription: Six paise per fortnight. — Single copy: ½ anna. *Editorial offices:* Foggy Bottom · Salt Lake City. — Set in EB Garamond, Playfair Display, and Alegreya SC, on a sheet of aged paper rendered with Quarto and reveal.js.
+*With thanks to* Pramita Bagchi, Atish Mitra, Žiga Virk. ICERM TW-26-FCG · Brown University · 20 May 2026.
 :::
