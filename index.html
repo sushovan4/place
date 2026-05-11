@@ -33,7 +33,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-ad01fe67588ccd44571c1a5b6a200579.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-6efcbb38f49d25dc8d4cfb6e852489d5.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -160,48 +160,40 @@ Sushovan Majhi
 
   <p class="date">20 May 2026</p>
 </section>
-<section>
 <section class="title-slide slide level1 section-divider center">
-<h1>In This Edition</h1>
-
-</section>
-<section class="slide level2 section-divider">
-<h2>The Plan of the Talk</h2>
-<div class="edition-badge">
-<p>Vol. MMXXVI · No.&nbsp;III · Calcutta–Washington Edition · Six paise</p>
-</div>
+<h1>The Plan of the Talk</h1>
 <div class="front-index" data-title="Inside today's edition">
 <table class="caption-top">
 <colgroup>
-<col style="width: 40%">
-<col style="width: 60%">
+<col style="width: 7%">
+<col style="width: 92%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Page</th>
+<th style="text-align: center;">§</th>
 <th style="text-align: left;">Article</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">I.</td>
-<td style="text-align: left;">Why placement matters — the puzzle motivating PLACE.</td>
+<td style="text-align: left;">Motivation — the certification gap in TDA-based classifiers.</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">II.</td>
-<td style="text-align: left;">The construction — local atlases from persistence.</td>
+<td style="text-align: left;">Construction — landmark grid, hat coordinates, closed-form weights.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">III.</td>
-<td style="text-align: left;">A theorem and its discontents.</td>
+<td style="text-align: left;">Theory — stability, the classification certificate, sharpness.</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">IV.</td>
-<td style="text-align: left;">Experiments — what the paper claims, and what it carefully does not.</td>
+<td style="text-align: left;">Experiments — MUTAG, NCI1, ENZYMES; where the certificate fires.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">V.</td>
-<td style="text-align: left;">Where this leaves us.</td>
+<td style="text-align: left;">The wider arc — PALACE, CASTLE, open questions.</td>
 </tr>
 </tbody>
 </table>
@@ -209,211 +201,307 @@ Sushovan Majhi
 <div class="composing-rule crosses">
 
 </div>
-</section></section>
+</section>
+
 <section>
 <section class="title-slide slide level1 section-divider center">
 <h1>§ I. Motivation</h1>
-
+<div class="section-deck">
+<p><em>Or, why a persistence-based classifier should come with a certificate.</em></p>
+</div>
 </section>
 <section class="slide level2">
-<h2>The Puzzle</h2>
+<h2>The certification gap</h2>
 <div class="byline">
-<p><span class="kicker">§ I.</span> · <span>Motivation</span> · <span>Six minutes</span></p>
+<p><span class="kicker">§ I.</span> · <span>Motivation</span> · <span>Three minutes</span></p>
 </div>
-<p>A learned representation of a point cloud usually answers <em>what is here?</em> — class, label, embedding. It rarely answers <em>where in the shape is here?</em></p>
-<div class="dispatches" data-title="The gap PLACE addresses">
+<div class="standfirst">
+<p>TDA-based classifiers report numbers; they rarely report when those numbers are <em>provably right</em>.</p>
+</div>
+<div class="dispatches" data-title="The state of the practice">
 <ul>
-<li>A vertex’s coordinate vector says nothing about its <strong>role</strong> in the shape.</li>
-<li>Two combinatorially-identical patches at different curvatures look the same to a vanilla MLP.</li>
-<li>Persistence already encodes shape <em>globally</em> — but global summaries flatten location.</li>
+<li><strong>Persistence vectorisations</strong> (PI, PL, Euler) — strong empirical baselines, no closed-form guarantees.</li>
+<li><strong>Neural-on-diagrams</strong> (PersLay, Set Transformer) — competitive but uninterpretable; calibration is an art.</li>
+<li><strong>Held-out tuning</strong> is the rule, not the exception. The model that ships is rarely the one the theory describes.</li>
 </ul>
 </div>
-</section>
-<section class="slide level2">
-<h2>What we want</h2>
-<div class="byline">
-<p><span class="kicker">§ I.</span> · <span>Motivation</span> · <span>Continued</span></p>
-</div>
-<div class="standfirst">
-<p>A point-wise embedding that is <em>aware</em> of the topological neighbourhood it inhabits — a coordinate with a sense of place.</p>
-</div>
-<div class="fig-right">
-<p><img data-src="assets/ornament.svg" width="220"></p>
-<p><em>Fig. 1.</em> — A printer’s flower, standing in for the figure your authors will provide on rendering.</p>
-</div>
-<p>Three desiderata:</p>
-<ol type="1">
-<li><strong>Equivariance</strong> under shape-preserving deformations.</li>
-<li><strong>Discriminating power</strong> for points distinguishable by local topology.</li>
-<li><strong>Cheap to compute</strong> at inference, even on graphs of millions of vertices.</li>
-</ol>
-<p>The first two are theory questions; the third is engineering.</p>
-<div class="endmark threefleur">
-
-</div>
-</section>
-<section class="slide level2 pull-quote">
-<h2><em>A coordinate that knows its place must remember, at minimum, the birth-merge structure of the components around it — a histogram of distances cannot.</em></h2>
-<div class="attribution">
-<p>Lemma I.2 (informal)</p>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 section-divider center">
-<h1>§ II. Construction</h1>
-
-</section>
-<section class="slide level2">
-<h2>Local atlas</h2>
-<div class="byline">
-<p><span class="kicker">§ II.</span> · <span>Construction</span> · <span>Architecture A</span></p>
-</div>
-<div class="standfirst">
-<p>For each point we cut a small ball, run a filtration on it, and read off a coordinate from the resulting persistence diagram.</p>
-</div>
-<p><span class="dateline">Calcutta, 16 May —</span> The construction proceeds in three steps:</p>
-<ol type="1">
-<li><strong>Localise.</strong> Around vertex <span class="math inline">v</span>, take a <span class="math inline">k</span>-NN ball <span class="math inline">B_k(v)</span> of radius <span class="math inline">r</span>.</li>
-<li><strong>Filter.</strong> Build the alpha filtration on <span class="math inline">B_k(v)</span> up to scale <span class="math inline">r</span>.</li>
-<li><strong>Read.</strong> Extract the <span class="math inline">H_0</span> persistence diagram and embed it as a fixed-length vector <span class="math inline">\Phi(v) \in \mathbb{R}^d</span>.</li>
-</ol>
-<p>The resulting map <span class="math inline">v \mapsto \Phi(v)</span> is the <strong>PLACE coordinate</strong> of <span class="math inline">v</span>.</p>
-</section>
-<section class="slide level2 section-divider">
-<h2>A picture is in order</h2>
-</section>
-<section class="slide level2">
-<h2>The PLACE construction at a glance</h2>
-<div class="plate" data-plate="II">
-<p><img data-src="assets/ornament.svg"></p>
-</div>
-<div class="plate-caption">
-<p><strong>Pl. II.</strong> <em>The PLACE construction at a single vertex.</em> Left: the local ball <span class="math inline">B_k(v)</span>. Centre: the alpha filtration at three scales <span class="math inline">r_1 &lt; r_2 &lt; r_3</span>. Right: the resulting <span class="math inline">H_0</span> diagram, embedded into <span class="math inline">\mathbb{R}^d</span> via the chosen vectorisation.</p>
-</div>
-</section>
-<section class="slide level2">
-<h2>A theorem we can prove</h2>
-<div class="byline">
-<p><span class="kicker">§ II.</span> · <span>Construction</span> · <span>Theory</span></p>
-</div>
-<div class="marginalia" data-title="Theorem II.1">
-<p>Let <span class="math inline">X, Y</span> be two finite metric spaces, and let <span class="math inline">f \colon X \to Y</span> be an <span class="math inline">\varepsilon</span>-isometry. Then for every <span class="math inline">v \in X</span> and every choice of vectorisation <span class="math inline">\nu</span> that is <span class="math inline">L</span>-Lipschitz on <span class="math inline">\mathcal{D}^{H_0}</span>, <span class="math display">
-\bigl\| \Phi_\nu(v) - \Phi_\nu(f(v)) \bigr\|_2 \;\leq\; 2 L \varepsilon.
-</span></p>
-</div>
-<p>The constant is sharp: equality is attained on the unit-circle pair at <span class="math inline">r = \pi/2</span>.</p>
+<p>The audience for FCG knows the construction zoo. The pitch today is different: <em>what if the pipeline were closed-form, end to end, with an explicit certificate firing on a fraction of inputs you can describe?</em></p>
 <div class="endmark">
 
 </div>
 </section>
 <section class="slide level2">
-<h2>A theorem we cannot</h2>
+<h2>PLACE in one slide</h2>
 <div class="byline">
-<p><span class="kicker">§ II.</span> · <span>Construction</span> · <span>Theory, continued</span></p>
+<p><span class="kicker">§ I.</span> · <span>Motivation</span> · <span>The pitch</span></p>
 </div>
 <div class="standfirst">
-<p>The <span class="math inline">H_0</span>-only variant is provably blind to certain <span class="math inline">H_1</span>-distinguishable pairs. Architecture B addresses this — at a price.</p>
+<p>Mitra–Virk landmarks on a uniform grid; analytic weights; a linear classifier with a sharp confidence ball. No held-out tuning at any stage.</p>
 </div>
-<div class="dispatches" data-title="What we trade">
+<div class="dispatches" data-title="What PLACE is, in three lines">
 <ul>
-<li><strong>Architecture A</strong> (<span class="math inline">H_0</span> only): cheap, Lipschitz-stable, blind to loops.</li>
-<li><strong>Architecture B</strong> (<span class="math inline">H_0 \oplus H_1</span>): ~3× more expensive, captures cycle birth, no closed-form stability bound.</li>
+<li><strong>Embedding.</strong> <span class="math inline">\Phi(A) = \sum_{a \in A} \boldsymbol{\varphi}_{R,p}(a) \in \mathbb{R}^{\ell}</span> — landmark hats summed over diagram points.</li>
+<li><strong>Weights.</strong> <span class="math inline">w_k^2 \propto (d_{k+1}^2 - d_k^2)/R_k^2</span> — <em>derived</em> from the Mitra–Virk distortion bound, not tuned.</li>
+<li><strong>Decision.</strong> Linear classifier <span class="math inline">\widehat{y}(A)</span> + a per-input certificate that fires when <span class="math inline">r_m &lt; \Delta/2</span>.</li>
 </ul>
 </div>
-<p>The empirical question — does the loss of theory hurt? — is the subject of § III.</p>
-<div class="wire-stamp">
-<p>Wire · Persistent-Homology Desk · Calcutta</p>
+<blockquote>
+<p><em>Persistence has a shape; landmarks give it an address—that’s <strong>PLACE</strong>.</em></p>
+</blockquote>
+</section></section>
+<section>
+<section class="title-slide slide level1 section-divider center">
+<h1>§ II. Construction</h1>
+<div class="section-deck">
+<p><em>The grid, the hat, the analytic weight rule.</em></p>
+</div>
+</section>
+<section class="slide level2">
+<h2>The pipeline</h2>
+<div class="byline">
+<p><span class="kicker">§ II.</span> · <span>Construction</span> · <span>Five stages</span></p>
+</div>
+<div class="plate" data-plate="IV">
+<p><img data-src="assets/landmark-grid.svg"></p>
+</div>
+<div class="plate-caption">
+<p><strong>Pl. IV.</strong> <em>The PLACE pipeline.</em> <code>‹insert pipeline figure from Paper I — input · filtration · persistence · embedding · classify›</code>. Each stage’s parameters are fixed analytically from training labels alone.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Landmark grid <span class="math inline">G_R</span></h2>
+<div class="byline">
+<p><span class="kicker">§ II.</span> · <span>Construction</span> · <span>The scaffold</span></p>
+</div>
+<div class="standfirst">
+<p>Place landmarks on a uniform lattice <span class="math inline">G_R \subset \mathbb{R}^2_{\geq}</span> in the birth-death plane. Each landmark <span class="math inline">a</span> owns a square <span class="math inline">d_\mathcal{B}</span>-cover of side <span class="math inline">3R</span> (axis-aligned in the <span class="math inline">\ell_\infty</span> metric).</p>
+</div>
+<div class="dispatches" data-title="Why a grid">
+<ul>
+<li><strong>Mitra–Virk (2024)</strong> show <span class="math inline">\mathrm{asdim}(\mathcal{D}^n,\, d_\mathcal{B}) \leq 2n</span> — a finite-dimensional embedding exists.</li>
+<li>The grid makes that existence <em>concrete</em>: <span class="math inline">\ell</span> landmarks at <span class="math inline">N</span> geometric scales <span class="math inline">R_1, \ldots, R_N</span>, no learned parameters.</li>
+<li>The cover-square geometry is what makes the weights closed-form.</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+<h2>Hat-function coordinates</h2>
+<div class="byline">
+<p><span class="kicker">§ II.</span> · <span>Construction</span> · <span>The coordinates</span></p>
+</div>
+<p>For each landmark <span class="math inline">a \in G_R</span>, define a compactly supported hat <span class="math inline">\varphi_{R,p}\colon \mathbb{R}^2 \to \mathbb{R}_{\geq 0}</span> that vanishes outside <span class="math inline">a</span>’s cover square. The PLACE coordinate of a diagram <span class="math inline">A</span> is</p>
+<p><span class="math display">
+\Phi_p(A) \;=\; \sum_{a \in A} \boldsymbol{\varphi}_{R,p}(a) \;\in\; \mathbb{R}^{|G_R|}.
+</span></p>
+<div class="dispatches" data-title="Three properties, all closed-form">
+<ul>
+<li><strong>Permutation-invariant</strong> in <span class="math inline">A</span> (it’s a sum).</li>
+<li><strong>Lipschitz</strong> in <span class="math inline">d_\mathcal{B}</span> — explicit constant from the hat width.</li>
+<li><strong>Cheap</strong> — <span class="math inline">O(|A| \cdot N)</span> at inference; no neural net to forward through.</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+<h2>The closed-form weight rule</h2>
+<div class="byline">
+<p><span class="kicker">§ II.</span> · <span>Construction</span> · <span>No tuning</span></p>
+</div>
+<div class="standfirst">
+<p>Across the <span class="math inline">N</span> scales, weight each scale’s contribution analytically:</p>
+</div>
+<p><span class="math display">
+w_k^2 \;\propto\; \dfrac{d_{k+1}^2 - d_k^2}{R_k^2}.
+</span></p>
+<div class="marginalia" data-title="Lemma II.4 — sketch">
+<p>The weights <span class="math inline">w_k</span> are the <em>unique maximizer</em> of the Mitra–Virk distortion slope <span class="math inline">\lambda(\nu)</span> over the <span class="math inline">N</span>-scale family, subject to the <span class="math inline">G_R</span>-cover constraint. Proof: differentiate <span class="math inline">\lambda</span> in <span class="math inline">w</span> and set to zero — the constraint is convex.</p>
+</div>
+<p>This is the <em>whole</em> model selection step. There is no held-out validation, no Bayesian search, no random seeds.</p>
+</section></section>
+<section>
+<section class="title-slide slide level1 section-divider center">
+<h1>§ III. Theory</h1>
+<div class="section-deck">
+<p><em>Three quantitative claims: stability, certificate, sharpness.</em></p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Stability</h2>
+<div class="byline">
+<p><span class="kicker">§ III.</span> · <span>Theory</span> · <span>Theorem 1</span></p>
+</div>
+<div class="marginalia" data-title="Theorem III.1 (Stability)">
+<p>For every pair of diagrams <span class="math inline">A, A' \in \mathcal{D}^n</span>, <span class="math display">
+\bigl\| \Phi(A) - \Phi(A') \bigr\|_2 \;\leq\; L \cdot d_\mathcal{B}(A, A'),
+</span> with <span class="math inline">L = L(N, R, p)</span> explicit and computed in closed form from the grid parameters.</p>
+</div>
+<div class="standfirst">
+<p><em>Intuition.</em> The hat is Lipschitz; summing Lipschitz functions over <span class="math inline">|A|</span> matched pairs preserves Lipschitzness, with the constant accumulating only logarithmically over the geometric scale ladder.</p>
+</div>
+<div class="endmark">
+
+</div>
+</section>
+<section class="slide level2">
+<h2>The certificate</h2>
+<div class="byline">
+<p><span class="kicker">§ III.</span> · <span>Theory</span> · <span>Theorem 2</span></p>
+</div>
+<div class="marginalia" data-title="Theorem III.2 (Classification certificate)">
+<p>Let <span class="math inline">\hat{\mu}_c</span> be the empirical class centroid in <span class="math inline">\Phi</span>-space and <span class="math inline">r_m</span> the margin radius (closed form from training labels). For a test diagram <span class="math inline">A_\star</span>, if <span class="math display">
+\bigl\| \Phi(A_\star) - \hat{\mu}_c \bigr\|_2 \;&lt;\; r_m,
+</span> then the linear classifier outputs class <span class="math inline">c</span> <em>and</em> the prediction is provably correct under the assumed noise model.</p>
+</div>
+<div class="standfirst">
+<p>The certificate is <em>per-input</em>: it fires on some test diagrams and stays silent on others. No global accuracy claim is made when it stays silent.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>When the certificate fires</h2>
+<div class="byline">
+<p><span class="kicker">§ III.</span> · <span>Theory</span> · <span>Sharpness</span></p>
+</div>
+<div class="standfirst">
+<p>Sharpness is governed by a single inequality: <span class="math inline">r_m &lt; \Delta/2</span>, where <span class="math inline">\Delta</span> is the inter-class separation in <span class="math inline">\Phi</span>-space.</p>
+</div>
+<div class="dispatches" data-title="The firing condition, in plain English">
+<ul>
+<li><strong><span class="math inline">\Delta</span> large</strong> — classes are well-separated in PLACE coordinates → certificate fires often.</li>
+<li><strong><span class="math inline">r_m</span> small</strong> — class clusters are tight → certificate fires often.</li>
+<li><strong>Both fail</strong> — certificate stays silent; classifier still predicts but without guarantee.</li>
+</ul>
+</div>
+<p>The interesting question is <em>empirical</em>: on which datasets does the inequality hold for what fraction of test inputs? — § IV.</p>
+<div class="handnote">
+<p>note for the talk: emphasise that silent ≠ wrong.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Sample complexity</h2>
+<div class="byline">
+<p><span class="kicker">§ III.</span> · <span>Theory</span> · <span>Theorem 3</span></p>
+</div>
+<div class="marginalia" data-title="Theorem III.3 (Sample complexity)">
+<p>With probability <span class="math inline">\geq 1 - \delta</span>, the empirical centroids and <span class="math inline">r_m</span> converge to their population counterparts at rate <span class="math display">
+n \;\geq\; O\bigl( L^2 \log(\ell/\delta) / \varepsilon^2 \bigr),
+</span> where <span class="math inline">L</span> is the stability constant, <span class="math inline">\ell = |G_R|</span>, and <span class="math inline">\varepsilon</span> is the desired margin slack.</p>
+</div>
+<div class="standfirst">
+<p><em>Take-away.</em> The cost of having a certificate is <span class="math inline">O(L^2 \log \ell)</span> samples — modest, and entirely a function of grid choices.</p>
 </div>
 </section></section>
 <section>
 <section class="title-slide slide level1 section-divider center">
-<h1>§ III. Experiments</h1>
-
+<h1>§ IV. Experiments</h1>
+<div class="section-deck">
+<p><em>Three datasets, one table, one honest qualifier.</em></p>
+</div>
 </section>
 <section class="slide level2">
 <h2>Headline results</h2>
 <div class="byline">
-<p><span class="kicker">§ III.</span> · <span>Experiments</span> · <span>Tabulated</span></p>
+<p><span class="kicker">§ IV.</span> · <span>Experiments</span> · <span>Tabulated</span></p>
 </div>
 <div class="stop-press">
-<p>Joint-4: 98.3 %</p>
+<p>MUTAG: certificate fires</p>
 </div>
 <table class="caption-top">
-<caption><strong>Tab. I.</strong> — Mean accuracy (%) over five seeds; bold marks the best per row. <em>Joint-4</em> is the angular-density discriminator described in § II; the <span class="math inline">H_0</span>-only variant is sufficient.</caption>
+<caption><strong>Tab. I.</strong> — Mean accuracy (%) over <code>‹k›</code> seeds, fixed split. The “Strongest baseline” is the best of {PI, PL, Euler, GNN-baseline} per row.</caption>
 <thead>
 <tr class="header">
 <th>Dataset</th>
-<th style="text-align: center;">GNN baseline</th>
-<th style="text-align: center;">+ PLACE-A</th>
-<th style="text-align: center;">+ PLACE-B</th>
+<th style="text-align: center;">Strongest baseline</th>
+<th style="text-align: center;">+ PLACE</th>
+<th style="text-align: center;">Δ</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>MUTAG</td>
-<td style="text-align: center;">87.4</td>
-<td style="text-align: center;">90.1</td>
-<td style="text-align: center;"><strong>91.7</strong></td>
+<td style="text-align: center;"><code>‹baseline›</code></td>
+<td style="text-align: center;"><strong><code>‹place›</code></strong></td>
+<td style="text-align: center;"><code>‹+Δ›</code> pp</td>
 </tr>
 <tr class="even">
 <td>NCI1</td>
-<td style="text-align: center;">78.2</td>
-<td style="text-align: center;">80.8</td>
-<td style="text-align: center;"><strong>81.5</strong></td>
+<td style="text-align: center;"><code>‹baseline›</code></td>
+<td style="text-align: center;"><code>‹place›</code></td>
+<td style="text-align: center;"><code>‹+Δ›</code> pp</td>
 </tr>
 <tr class="odd">
-<td>Joint-4 (synth.)</td>
-<td style="text-align: center;">50.0</td>
-<td style="text-align: center;"><strong>98.3</strong></td>
-<td style="text-align: center;">98.4</td>
+<td>ENZYMES</td>
+<td style="text-align: center;"><code>‹baseline›</code></td>
+<td style="text-align: center;"><code>‹place›</code></td>
+<td style="text-align: center;"><code>‹+Δ›</code> pp</td>
 </tr>
 </tbody>
 </table>
-<div class="errata" data-title="Errata">
-<p>Tab. I, MUTAG row: an earlier draft reported 89.4 for PLACE-A. Read <strong>90.1</strong> (corrected after re-running the seed).</p>
-</div>
-</section>
-<section class="slide level2 pull-quote">
-<h2><em>A 4-point gain on MUTAG is a 4-point gain on MUTAG. The 98.3 % on Joint-4 is a story about <span class="math inline">H_0</span>.</em></h2>
-<div class="attribution">
-<p>authors’ own caveat</p>
-</div>
 </section>
 <section class="slide level2">
-<h2>A denser look</h2>
+<h2>When the certificate fires</h2>
 <div class="byline">
-<p><span class="kicker">§ III.</span> · <span>Experiments</span> · <span>In detail</span></p>
+<p><span class="kicker">§ IV.</span> · <span>Experiments</span> · <span>Per-dataset</span></p>
 </div>
-<div class="handnote">
-<p>ask SM about Joint-4 ablations — does <span class="math inline">H_1</span> help at all here?</p>
+<div class="standfirst">
+<p>The classification certificate is a <em>per-input</em> statement. The fraction of test inputs on which it fires is itself a property of the dataset.</p>
 </div>
-<div class="broadsheet">
-<p>The headline numbers come from the same architecture, the same five seeds, and the same hold-out split as the published baseline. Differences are not from hyperparameter retuning — we deliberately froze every choice that could otherwise be argued to favour PLACE.</p>
-<p>The Joint-4 result is the one that surprised us. Naive theory predicts 50% on this synthetic, because all four classes share the same global <span class="math inline">H_1</span> signature. Architecture A nevertheless reaches 98.3%, indicating that the <em>birth-merge structure</em> of <span class="math inline">H_0</span> is what carries the angular-density information — a finding we did not anticipate when we wrote § II.</p>
-<p>The MUTAG and NCI1 results are more conventional. They confirm that adding a topological coordinate to a vanilla GNN improves classification by a few points, in line with the persistence-on-graphs literature.</p>
+<div class="dispatches" data-title="Certificate-firing rate">
+<ul>
+<li><strong>MUTAG.</strong> <code>‹X›</code>% of test diagrams certified — the canonical “small + well-separated” win.</li>
+<li><strong>NCI1.</strong> <code>‹Y›</code>% certified — sparser, but where it fires, it’s right.</li>
+<li><strong>ENZYMES.</strong> <code>‹Z›</code>% — the multi-class case; the certificate is silent on most of the ambiguous inputs.</li>
+</ul>
 </div>
-<div class="composing-rule double">
-
+<p>In every case the certified fraction has zero misclassifications.</p>
+</section>
+<section class="slide level2">
+<h2>Where PLACE doesn’t win</h2>
+<div class="byline">
+<p><span class="kicker">§ IV.</span> · <span>Experiments</span> · <span>Limitations</span></p>
 </div>
+<div class="standfirst">
+<p>The talk would be incomplete without the negative cases. Two patterns worth naming.</p>
+</div>
+<div class="dispatches" data-title="Honest qualifiers">
+<ul>
+<li><strong>Heterogeneous topology.</strong> When the within-class variation in <span class="math inline">H_*</span> is large (e.g.&nbsp;<code>‹dataset›</code>), the centroid model under-fits and PLACE trails the GNN baseline by <code>‹δ›</code> pp.</li>
+<li><strong>Tiny diagrams.</strong> When <span class="math inline">|A|</span> is small (degenerate filtrations), the sum <span class="math inline">\Phi(A)</span> has few non-zero coordinates and the certificate cannot fire.</li>
+</ul>
+</div>
+<p>These limitations are <em>part of the value proposition</em>: PLACE knows when it doesn’t know.</p>
 </section></section>
 <section>
 <section class="title-slide slide level1 section-divider center">
-<h1>§ IV. Looking Ahead</h1>
-
+<h1>§ V. The Wider Arc</h1>
+<div class="section-deck">
+<p><em>Where PLACE sits in a longer programme.</em></p>
+</div>
 </section>
 <section class="slide level2">
-<h2>Open threads</h2>
+<h2>PALACE &amp; CASTLE</h2>
 <div class="byline">
-<p><span class="kicker">§ IV.</span> · <span>Future work</span> · <span>Three threads</span></p>
+<p><span class="kicker">§ V.</span> · <span>Programme</span> · <span>Two siblings</span></p>
 </div>
-<div class="dispatches" data-title="What we leave open">
+<div class="dispatches" data-title="The arc beyond Paper I">
 <ul>
-<li><strong>PALACE.</strong> The same construction with a learned filtration. Differentiable; under review.</li>
-<li><strong>Stability for B.</strong> No closed-form bound; Wasserstein conjecture holds empirically.</li>
-<li><strong>Streaming PLACE.</strong> Constant-memory variant for online-graph settings.</li>
+<li><strong>PALACE</strong> — the same construction with a <em>learned</em> filtration. Differentiable end-to-end; recovers PLACE in the limit of fixed-filtration training. Paper II, in submission.</li>
+<li><strong>CASTLE</strong> — the inferential layer: two-sample tests and topological power calculations on top of <span class="math inline">\Phi</span>. Closes the loop from “predict” to “decide”. Forthcoming.</li>
 </ul>
 </div>
-<div class="endmark thirty">
+<p>The shared scaffold is the Mitra–Virk landmark embedding; the three modules build on it without contradicting each other.</p>
+</section>
+<section class="slide level2">
+<h2>Open questions</h2>
+<div class="byline">
+<p><span class="kicker">§ V.</span> · <span>Programme</span> · <span>Three threads</span></p>
+</div>
+<div class="dispatches" data-title="What we'd like to pull next">
+<ul>
+<li><strong>Edge-weighted graphs.</strong> Current PLACE uses unweighted Vietoris-Rips on graphs; how does the construction extend when edge weights matter?</li>
+<li><strong>Streaming PLACE.</strong> Constant-memory variant for online-graph settings; the per-scale weights are already analytic, but the centroids need a sketch.</li>
+<li><strong>Beyond <span class="math inline">H_0</span> + <span class="math inline">H_1</span>.</strong> Paper I works in the lowest two dimensions; what changes when <span class="math inline">H_2</span> is informative (point clouds in <span class="math inline">\mathbb{R}^4</span> and above)?</li>
+</ul>
+</div>
+<div class="endmark threefleur">
 
 </div>
 </section>
@@ -472,10 +560,10 @@ Sushovan Majhi
   </g>
 </svg>
 <div class="contact">
-<p><a href="https://smajhi.com">smajhi.com</a> · <a href="mailto:s.majhi@email.gwu.edu">s.majhi@email.gwu.edu</a> · Washington, D.C. · MMXXVI</p>
+<p><a href="https://arxiv.org/abs/2605.04046">arXiv:2605.04046</a> · <a href="https://smajhi.com">smajhi.com</a> · <a href="mailto:s.majhi@gwu.edu">s.majhi@gwu.edu</a></p>
 </div>
 <div class="subscription">
-<p>Subscription: Six paise per fortnight. — Single copy: ½ anna. <em>Editorial offices:</em> Foggy Bottom · Salt Lake City. — Set in EB Garamond, Playfair Display, and Alegreya SC, on a sheet of aged paper rendered with Quarto and reveal.js.</p>
+<p><em>With thanks to</em> Pramita Bagchi, Atish Mitra, Žiga Virk. ICERM TW-26-FCG · Brown University · 20 May 2026.</p>
 </div>
 
 </section></section>
@@ -664,7 +752,7 @@ Sushovan Majhi
         height: 800,
 
         // Factor of the display size that should remain empty around the content
-        margin: 6.0e-2,
+        margin: 0,
 
         // Bounds for smallest/largest possible scale to apply to content
         minScale: 0.2,
