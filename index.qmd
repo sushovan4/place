@@ -17,7 +17,7 @@ footer: "PLACE  ·  S. Majhi  ·  ICERM TW-26-FCG  ·  Brown University  ·  20 
 ::: {.front-index data-title="Inside today's edition"}
 | §    | Article                                                                    |
 |:----:|:---------------------------------------------------------------------------|
-|  I.  | Motivation — the certification gap in TDA-based classifiers.               |
+|  I.  | Motivation — stability · discriminability; the *band* that closes the gap. |
 |  II. | Construction — landmark grid, hat coordinates, closed-form weights.        |
 | III. | Theory — stability, the classification certificate, sharpness.             |
 |  IV. | Experiments — MUTAG, NCI1, ENZYMES; where the certificate fires.           |
@@ -39,7 +39,7 @@ footer: "PLACE  ·  S. Majhi  ·  ICERM TW-26-FCG  ·  Brown University  ·  20 
 :::
 
 ::: {.plate-caption}
-*From a shape — a point cloud, a graph — to a persistence diagram. The descriptor is found; the question is **what space** to put it in.*
+*An honest feature map lives **in the band** — bounded above (stability) and below (discriminability).*
 :::
 
 ## Classifying point clouds and graphs
@@ -219,84 +219,410 @@ Every classical recipe begins the same way: turn each instance into a vector. Th
 
 :::
 
-::: {.dispatches .fragment data-fragment-index="5" data-title="Notice to applicants" style="font-size: 0.82em; padding: 0.75rem 1.3rem 0.6rem; margin: 1.6rem auto 0.5rem;"}
-::: {style="font-size: 0.94em; margin-bottom: 0.5em; line-height: 1.4;"}
-For a [point cloud]{.term-with-icon data-icon="pointcloud"} or a [graph]{.term-with-icon data-icon="graph"}, three properties decide whether $\Phi$ is a feature map worth the name:
+::: {.dispatches .fragment data-fragment-index="5" data-title="Notice to applicants" style="font-size: 0.78em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;"}
+::: {style="font-size: 0.95em; margin-bottom: 0.45em; line-height: 1.35;"}
+For a [point cloud]{.term-with-icon data-icon="pointcloud"} or a [graph]{.term-with-icon data-icon="graph"}, four properties decide whether $\Phi$ is a feature map worth the name:
 :::
 
-- **Invariance.** $\Phi(X) = \Phi(g \cdot X)$ for every symmetry $g$ — relabeling of vertices in a graph; rotation / translation of a point cloud. Otherwise the corpus's labels are an accident of presentation.
-- **Stability.** Small perturbations of $X$ produce small perturbations of $\Phi(X)$. Quantitative: $\|\Phi(X) - \Phi(X')\| \leq L \, d(X, X')$ for some intrinsic distance $d$.
-- **Sample-efficient.** The map should be informative *without* needing $10^5$ examples to fit. Classical ML / GNNs over-fit in our regime.
+- **Invariance.** $\Phi(X) = \Phi(g \cdot X)$ for every symmetry $g$ (vertex relabeling; rotation / translation).
+- **Stability.** $\|\Phi(X) - \Phi(X')\| \leq L \, d(X, X')$ — close inputs ⇒ close outputs.
+- **Discriminability.** $\|\Phi(X) - \Phi(X')\| \geq \ell \, d(X, X')$ — distant inputs ⇒ distant outputs.
+- **Sample-efficient.** Informative without $10^5$ examples; ML / GNNs over-fit in our regime.
 :::
 
 ::: {.transition-line .fragment .fade-up}
-Topology meets all three. The **bill** comes *later*. [To follow →]{.followup-stamp}
+Topology meets all four. The **bill** comes *later*. [To follow →]{.followup-stamp .tilt-c}
 :::
 
 ## Topology as the descriptor
 
-::: {.standfirst}
-Persistence diagrams are the canonical multi-scale shape summary: invariant under isometry, stable under bottleneck distance, dimension-aware.
+::: {.standfirst style="font-style: normal;"}
+**Persistence diagrams**: the multi-scale shape summary — *isometry-invariant*, *GH-Lipschitz*, *dimension-aware*.
 :::
 
-For a point cloud $X \subset \mathbb{R}^d$, the Vietoris–Rips filtration $\{ \mathrm{VR}_r(X) \}_{r \geq 0}$ tracks the homology of $X$ at every scale; for a graph, the clique- or edge-weight filtration plays the same role. The resulting diagram $A = \{(b_i, d_i)\}$ in the birth–death plane is $1$-Lipschitz in the input — *the* descriptor for shape-aware classification.
+::: {.plate .fragment data-fragment-index="1"}
 
-::: {.dispatches data-title="So why don't we just plug it in?"}
-- **The space.**  $(\mathcal{D}, d_\mathcal{B})$ is not Euclidean. Standard ML wants vectors.
-- **The question.**  What kind of map $f \colon (\mathcal{D}, d_\mathcal{B}) \to \mathbb{R}^\ell$ is *good enough* for classification?
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 95">
+
+<!-- PANEL A: Point cloud (annulus, center 102, r=14) -->
+<g>
+<g fill="#6c1d1a" stroke="none">
+<circle cx="116" cy="48" r="2.2"/>
+<circle cx="113" cy="56" r="2.2"/>
+<circle cx="106" cy="61" r="2.2"/>
+<circle cx="98" cy="61" r="2.2"/>
+<circle cx="91" cy="56" r="2.2"/>
+<circle cx="88" cy="48" r="2.2"/>
+<circle cx="91" cy="40" r="2.2"/>
+<circle cx="98" cy="35" r="2.2"/>
+<circle cx="106" cy="35" r="2.2"/>
+<circle cx="113" cy="40" r="2.2"/>
+</g>
+<text x="102" y="88" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="10" letter-spacing="1.3" text-anchor="middle">POINT CLOUD</text>
+</g>
+
+<!-- STAGE 2: arrow + VR filtration (annulus, center 244, r=14) -->
+<g class="fragment" data-fragment-index="2">
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="138" y1="48" x2="198" y2="48"/>
+<path d="M 190 43 L 198 48 L 190 53"/>
+</g>
+<g fill="#6c1d1a" fill-opacity="0.13" stroke="none">
+<circle cx="258" cy="48" r="5"/>
+<circle cx="255" cy="56" r="5"/>
+<circle cx="248" cy="61" r="5"/>
+<circle cx="240" cy="61" r="5"/>
+<circle cx="233" cy="56" r="5"/>
+<circle cx="230" cy="48" r="5"/>
+<circle cx="233" cy="40" r="5"/>
+<circle cx="240" cy="35" r="5"/>
+<circle cx="248" cy="35" r="5"/>
+<circle cx="255" cy="40" r="5"/>
+</g>
+<g stroke="#6c1d1a" stroke-width="0.7" fill="none">
+<line x1="258" y1="48" x2="255" y2="56"/>
+<line x1="255" y1="56" x2="248" y2="61"/>
+<line x1="248" y1="61" x2="240" y2="61"/>
+<line x1="240" y1="61" x2="233" y2="56"/>
+<line x1="233" y1="56" x2="230" y2="48"/>
+<line x1="230" y1="48" x2="233" y2="40"/>
+<line x1="233" y1="40" x2="240" y2="35"/>
+<line x1="240" y1="35" x2="248" y2="35"/>
+<line x1="248" y1="35" x2="255" y2="40"/>
+<line x1="255" y1="40" x2="258" y2="48"/>
+</g>
+<g fill="#6c1d1a" stroke="none">
+<circle cx="258" cy="48" r="2.2"/>
+<circle cx="255" cy="56" r="2.2"/>
+<circle cx="248" cy="61" r="2.2"/>
+<circle cx="240" cy="61" r="2.2"/>
+<circle cx="233" cy="56" r="2.2"/>
+<circle cx="230" cy="48" r="2.2"/>
+<circle cx="233" cy="40" r="2.2"/>
+<circle cx="240" cy="35" r="2.2"/>
+<circle cx="248" cy="35" r="2.2"/>
+<circle cx="255" cy="40" r="2.2"/>
+</g>
+<text x="244" y="88" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="10" letter-spacing="1.3" text-anchor="middle">FILTRATION</text>
+</g>
+
+<!-- STAGE 3: arrow + barcode -->
+<g class="fragment" data-fragment-index="3">
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="290" y1="48" x2="350" y2="48"/>
+<path d="M 342 43 L 350 48 L 342 53"/>
+</g>
+<g stroke-linecap="round">
+<line x1="356" y1="30" x2="456" y2="30" stroke="#2b211a" stroke-width="1.8"/>
+<line x1="356" y1="38" x2="366" y2="38" stroke="#2b211a" stroke-width="1.5"/>
+<line x1="356" y1="44" x2="371" y2="44" stroke="#2b211a" stroke-width="1.5"/>
+<line x1="356" y1="50" x2="364" y2="50" stroke="#2b211a" stroke-width="1.5"/>
+<line x1="356" y1="56" x2="369" y2="56" stroke="#2b211a" stroke-width="1.5"/>
+<line x1="380" y1="64" x2="440" y2="64" stroke="#6c1d1a" stroke-width="2.2"/>
+</g>
+<text x="406" y="88" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="10" letter-spacing="1.3" text-anchor="middle">BARCODE</text>
+</g>
+
+<!-- STAGE 4: arrow + persistence diagram -->
+<g class="fragment" data-fragment-index="4">
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="462" y1="48" x2="522" y2="48"/>
+<path d="M 514 43 L 522 48 L 514 53"/>
+</g>
+<g stroke="#2b211a" fill="none" stroke-width="0.8">
+<line x1="540" y1="68" x2="640" y2="68"/>
+<line x1="540" y1="68" x2="540" y2="26"/>
+</g>
+<line x1="540" y1="68" x2="582" y2="26" stroke="#57473a" stroke-width="0.6" stroke-dasharray="2 2" fill="none"/>
+<g fill="#2b211a" stroke="none">
+<circle cx="541" cy="66" r="1.6"/>
+<circle cx="541" cy="65" r="1.6"/>
+<circle cx="542" cy="64" r="1.6"/>
+<circle cx="543" cy="63" r="1.6"/>
+</g>
+<circle cx="540" cy="28" r="1.8" fill="#2b211a" stroke="none"/>
+<text x="546" y="31" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="8">∞</text>
+<circle cx="548" cy="40" r="2.4" fill="#6c1d1a" stroke="none"/>
+<text x="644" y="71" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9">b</text>
+<text x="537" y="24" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9">d</text>
+<text x="588" y="88" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="10" letter-spacing="1.3" text-anchor="middle">DIAGRAM</text>
+</g>
+
+</svg>
+```
+
 :::
 
-The literature offers three families of answers. Each clears a different bar; one bar — we'll argue — is the right one and is still missing.
+::: {.dispatches .fragment data-fragment-index="5" data-title="The catch" style="font-size: 0.82em; padding: 0.75rem 1.3rem 0.6rem; margin: 1.6rem auto 0.5rem;"}
+- **The space.** $(\mathcal{D}, d_\mathcal{B})$ isn't Hilbertian — and ML wants vectors.
+- **The question.** What map $\Phi \colon (\mathcal{D}, d_\mathcal{B}) \to \mathbb{R}^\ell$ is *good enough* for classification?
+:::
 
-::: {.endmark}
+::: {.transition-line .fragment .fade-up}
+PDs answer the call — but they live in the wrong space. [[☞]{.manicule}Embed]{.followup-stamp .tilt-b}
 :::
 
 ## Existing embeddings — and what they miss
 
-::: {.standfirst}
-Maps from $(\mathcal{D}, d_\mathcal{B})$ into Euclidean space are everywhere. They all bound distortion from one side; almost none bound it from both.
+::: {.standfirst style="font-style: normal; font-size: 0.95em; margin: -0.5rem 0 0;"}
+Embeddings of $(\mathcal{D}, d_\mathcal{B})$ abound — all bound distortion *from one side only*.
 :::
 
-::: {.dispatches data-title="Three families"}
-- **Kernels.**  Persistence scale-space, sliced-Wasserstein, persistence-Fisher. Implicit map into an RKHS; Lipschitz in $d_\mathcal{B}$; no closed-form margin.
-- **Vectorisations.**  Persistence images, persistence landscapes, Euler characteristic curves. Explicit; Lipschitz; hyper-parameters tuned on held-out data.
-- **Neural-on-diagrams.**  PersLay, Set Transformer over PD. Strong empirically; opaque; bounds at best post-hoc.
+::: {.dataset-cards style="margin: -0.8rem auto 0.9rem; gap: 1.4rem;"}
+
+::: {.dataset-card .fragment data-fragment-index="1" style="padding: 0.45rem 0.6rem 0.5rem;"}
+
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" style="height: 48px; width: auto; max-height: 48px;">
+<line x1="8" y1="55" x2="92" y2="55" stroke="#2b211a" stroke-width="0.6"/>
+<path d="M 10 55 C 25 55, 38 16, 50 16 C 62 16, 75 55, 90 55" fill="#6c1d1a" fill-opacity="0.15" stroke="#6c1d1a" stroke-width="1.4" stroke-linejoin="round"/>
+<circle cx="50" cy="16" r="1.8" fill="#6c1d1a"/>
+</svg>
+```
+
+**KERNELS**
+
+*sliced-Wasserstein · persistence-Fisher · WKPI*
+
+Implicit RKHS map; Lipschitz in $d_\mathcal{B}$; *no closed-form margin*.
+
+[after Reininghaus '15 · Kusano '16 · Carrière '17 · Le-Yamada '18 · Zhao-Wang '19]{.card-cite}
+
 :::
 
-What all three share — and what we'll argue makes them *insufficient* — is an **upper bound on distortion**, with **no matching lower bound**. Two diagrams that are $\varepsilon$-apart in $d_\mathcal{B}$ can collide in feature space, and any classifier built on top is blind to that collision.
+::: {.dataset-card .fragment data-fragment-index="2" style="padding: 0.45rem 0.6rem 0.5rem;"}
 
-::: {.marginalia data-title="The analogy"}
-- **Upper bound** ($\|f(x) - f(y)\| \leq \rho_+(d(x,y))$): close in $d_\mathcal{B}$ ⇒ close in features. *No false positives* — we don't see differences that aren't there.
-- **Lower bound** ($\|f(x) - f(y)\| \geq \rho_-(d(x,y))$): far in $d_\mathcal{B}$ ⇒ far in features. *No false negatives* — we don't miss differences that are there.
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" style="height: 48px; width: auto; max-height: 48px;">
+<g stroke="#2b211a" stroke-width="0.5" fill="#6c1d1a">
+<rect x="22" y="14" width="12" height="12" fill-opacity="0.18"/>
+<rect x="36" y="14" width="12" height="12" fill-opacity="0.45"/>
+<rect x="50" y="14" width="12" height="12" fill-opacity="0.78"/>
+<rect x="64" y="14" width="12" height="12" fill-opacity="0.30"/>
+<rect x="22" y="28" width="12" height="12" fill-opacity="0.60"/>
+<rect x="36" y="28" width="12" height="12" fill-opacity="0.95"/>
+<rect x="50" y="28" width="12" height="12" fill-opacity="0.55"/>
+<rect x="64" y="28" width="12" height="12" fill-opacity="0.18"/>
+<rect x="22" y="42" width="12" height="12" fill-opacity="0.25"/>
+<rect x="36" y="42" width="12" height="12" fill-opacity="0.50"/>
+<rect x="50" y="42" width="12" height="12" fill-opacity="0.30"/>
+<rect x="64" y="42" width="12" height="12" fill-opacity="0.10"/>
+</g>
+</svg>
+```
 
-Stability without discriminability is a kind, lying microscope.
+**VECTORISATIONS**
+
+*persistence images · landscapes*
+
+Explicit map; Lipschitz; *hyper-parameters tuned on held-out data*.
+
+[after Bubenik '15 · Adams '17]{.card-cite}
+
 :::
 
-::: {.endmark}
+::: {.dataset-card .fragment data-fragment-index="3" style="padding: 0.45rem 0.6rem 0.5rem;"}
+
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" style="height: 48px; width: auto; max-height: 48px;">
+<g stroke="#2b211a" stroke-width="0.5" stroke-opacity="0.55" fill="none">
+<line x1="22" y1="14" x2="50" y2="25"/>
+<line x1="22" y1="14" x2="50" y2="45"/>
+<line x1="22" y1="35" x2="50" y2="25"/>
+<line x1="22" y1="35" x2="50" y2="45"/>
+<line x1="22" y1="56" x2="50" y2="25"/>
+<line x1="22" y1="56" x2="50" y2="45"/>
+<line x1="50" y1="25" x2="78" y2="35"/>
+<line x1="50" y1="45" x2="78" y2="35"/>
+</g>
+<g fill="#6c1d1a" stroke="#2b211a" stroke-width="0.6">
+<circle cx="22" cy="14" r="3"/>
+<circle cx="22" cy="35" r="3"/>
+<circle cx="22" cy="56" r="3"/>
+<circle cx="50" cy="25" r="3"/>
+<circle cx="50" cy="45" r="3"/>
+<circle cx="78" cy="35" r="3"/>
+</g>
+</svg>
+```
+
+**NEURAL-ON-PD**
+
+*PersLay · Set Transformer*
+
+Strong empirically; *opaque*; bounds at best post-hoc.
+
+[after Hofer '17 · Lee '19 · Carrière '20 · Zhao-Wang '20]{.card-cite}
+
+:::
+:::
+
+::: {.plate .fragment data-fragment-index="4"}
+
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 60">
+
+<!-- PD A (top) -->
+<g stroke="#2b211a" fill="none" stroke-width="0.7">
+<line x1="100" y1="26" x2="200" y2="26"/>
+<line x1="100" y1="26" x2="100" y2="4"/>
+</g>
+<line x1="100" y1="26" x2="122" y2="4" stroke="#57473a" stroke-width="0.5" stroke-dasharray="2 2" fill="none"/>
+<g fill="#6c1d1a" stroke="none">
+<circle cx="111" cy="10" r="1.8"/>
+<circle cx="124" cy="7" r="1.8"/>
+</g>
+<text x="208" y="14" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9">A</text>
+
+<!-- PD B (bottom) -->
+<g stroke="#2b211a" fill="none" stroke-width="0.7">
+<line x1="100" y1="56" x2="200" y2="56"/>
+<line x1="100" y1="56" x2="100" y2="34"/>
+</g>
+<line x1="100" y1="56" x2="122" y2="34" stroke="#57473a" stroke-width="0.5" stroke-dasharray="2 2" fill="none"/>
+<g fill="#6c1d1a" stroke="none">
+<circle cx="104" cy="52" r="1.5"/>
+<circle cx="109" cy="50" r="1.5"/>
+<circle cx="115" cy="47" r="1.5"/>
+<circle cx="121" cy="44" r="1.5"/>
+<circle cx="128" cy="40" r="1.5"/>
+</g>
+<text x="208" y="46" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9">B</text>
+
+<!-- merger lines into Φ -->
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="230" y1="14" x2="288" y2="28"/>
+<line x1="230" y1="46" x2="288" y2="32"/>
+</g>
+
+<!-- Φ box -->
+<rect x="290" y="20" width="44" height="22" rx="2" fill="none" stroke="#2b211a" stroke-width="1.1"/>
+<text x="312" y="36" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-size="16" text-anchor="middle">Φ</text>
+
+<!-- single outgoing arrow -->
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="338" y1="30" x2="430" y2="30"/>
+<path d="M 422 25 L 430 30 L 422 35"/>
+</g>
+
+<!-- vector v -->
+<g stroke="#2b211a" fill="none" stroke-width="1.0">
+<path d="M 450 8 L 443 8 L 443 52 L 450 52"/>
+<path d="M 487 8 L 494 8 L 494 52 L 487 52"/>
+</g>
+<g fill="#2b211a" stroke="none" font-family="EB Garamond, Georgia, serif" font-size="10" text-anchor="middle">
+<text x="468" y="20">v₁</text>
+<text x="468" y="32">v₂</text>
+<text x="468" y="44">v₃</text>
+</g>
+
+</svg>
+```
+
+:::
+
+::: {.transition-line .fragment .fade-up}
+Stability without discriminability is a *kind, lying microscope*. [[☞]{.manicule}Bound from below]{.followup-stamp .tilt-d}
 :::
 
 ## Coarse embedding into Hilbert space
 
-::: {.standfirst}
-The functional-analytic notion of an *honest* embedding: bounded from both sides.
+::: {.standfirst style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;"}
+An *honest* embedding — bounded from **both sides**.
 :::
 
-::: {.marginalia data-title="Definition (coarse embedding)"}
-A map $f \colon (X, d) \to H$ into a Hilbert space is a **coarse embedding** if there exist non-decreasing functions $\rho_-, \rho_+ \colon [0, \infty) \to [0, \infty]$ with $\rho_-(t) \to \infty$ as $t \to \infty$ such that
+::: {.dispatches .fragment data-fragment-index="1" data-title="Definition · coarse embedding" style="padding: 0.7rem 1.4rem 0.6rem; margin: 0.5rem auto 0.7rem; font-size: 0.82em; max-width: 42em;"}
+$\Phi \colon (X, d) \to \mathcal{H}$ is a **coarse embedding** if there exist non-decreasing $\rho_-, \rho_+ \colon [0, \infty) \to [0, \infty]$ with $\rho_-(t) \to \infty$, such that
+
 $$
-\rho_-\bigl(d(x, y)\bigr) \;\leq\; \bigl\| f(x) - f(y) \bigr\|_H \;\leq\; \rho_+\bigl(d(x, y)\bigr)
-\quad \text{for all } x, y \in X.
+\rho_-\bigl(d(x, y)\bigr) \;\leq\; \bigl\| \Phi(x) - \Phi(y) \bigr\|_\mathcal{H} \;\leq\; \rho_+\bigl(d(x, y)\bigr).
 $$
 :::
 
-::: {.dispatches data-title="What each bound buys"}
-- **$\rho_+$** — Lipschitz stability. Robustness to noise; no false positives of difference.
-- **$\rho_-$** — discriminating power. No collapse of distinct classes; no false negatives of difference.
+::: {.plate .fragment data-fragment-index="2"}
+
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180">
+
+<!-- ===== PANEL A: ρ-/ρ+ envelope for d_B ===== -->
+
+<!-- band fill -->
+<path d="M 70 140 C 150 90, 250 58, 340 40 L 340 86 C 250 112, 160 131, 70 140 Z" fill="#6c1d1a" fill-opacity="0.08" stroke="none"/>
+
+<!-- axes -->
+<line x1="70" y1="140" x2="350" y2="140" stroke="#2b211a" stroke-width="0.9"/>
+<line x1="70" y1="140" x2="70" y2="32" stroke="#2b211a" stroke-width="0.9"/>
+
+<!-- ρ+ upper bound -->
+<path d="M 70 140 C 150 90, 250 58, 340 40" stroke="#6c1d1a" stroke-width="1.7" fill="none"/>
+
+<!-- ρ- lower bound (dashed) -->
+<path d="M 70 140 C 170 131, 270 112, 340 86" stroke="#2b211a" stroke-width="1.3" fill="none" stroke-dasharray="3.5 2.5"/>
+
+<!-- sample points -->
+<g fill="#6c1d1a" stroke="none">
+<circle cx="130" cy="119" r="2.0"/>
+<circle cx="185" cy="99" r="2.0"/>
+<circle cx="240" cy="79" r="2.0"/>
+<circle cx="295" cy="65" r="2.0"/>
+</g>
+
+<!-- ρ labels -->
+<text x="318" y="30" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="16">ρ<tspan baseline-shift="sub" font-size="0.7em">+</tspan></text>
+<text x="320" y="82" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="16">ρ<tspan baseline-shift="sub" font-size="0.7em">−</tspan></text>
+
+<!-- axis labels -->
+<text x="74" y="23" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11">‖Φ(x)−Φ(y)‖<tspan baseline-shift="sub" font-size="0.75em">ℋ</tspan></text>
+<text x="354" y="144" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12">d<tspan baseline-shift="sub" font-size="0.75em">ℬ</tspan></text>
+
+<!-- Panel A caption -->
+<text x="200" y="172" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="10" letter-spacing="1.5" text-anchor="middle">(A) THE BAND</text>
+
+<!-- vertical separator between panels -->
+<line x1="370" y1="28" x2="370" y2="156" stroke="#c8b894" stroke-width="0.6" stroke-dasharray="2 2"/>
+
+<!-- ===== PANEL B: FP / FN confusion matrix ===== -->
+
+<!-- column headers -->
+<text x="500" y="46" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1" text-anchor="middle">close in ‖Φ‖</text>
+<text x="620" y="46" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1" text-anchor="middle">far in ‖Φ‖</text>
+
+<!-- row labels -->
+<text x="436" y="82" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1" text-anchor="end">close in d<tspan baseline-shift="sub" font-size="0.75em">ℬ</tspan></text>
+<text x="436" y="120" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1" text-anchor="end">far in d<tspan baseline-shift="sub" font-size="0.75em">ℬ</tspan></text>
+
+<!-- TL cell: close-close ✓ -->
+<rect x="442" y="58" width="116" height="38" fill="none" stroke="#2b211a" stroke-width="0.7"/>
+<text x="500" y="84" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-size="20" text-anchor="middle">✓</text>
+
+<!-- TR cell: close-far FP -->
+<rect x="558" y="58" width="124" height="38" fill="#6c1d1a" fill-opacity="0.18" stroke="#6c1d1a" stroke-width="0.8"/>
+<text x="620" y="84" fill="#6c1d1a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-weight="700" font-size="13" letter-spacing="1.6" text-anchor="middle">FP</text>
+
+<!-- BL cell: far-close FN -->
+<rect x="442" y="96" width="116" height="38" fill="#6c1d1a" fill-opacity="0.18" stroke="#6c1d1a" stroke-width="0.8"/>
+<text x="500" y="122" fill="#6c1d1a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-weight="700" font-size="13" letter-spacing="1.6" text-anchor="middle">FN</text>
+
+<!-- BR cell: far-far ✓ -->
+<rect x="558" y="96" width="124" height="38" fill="none" stroke="#2b211a" stroke-width="0.7"/>
+<text x="620" y="122" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-size="20" text-anchor="middle">✓</text>
+
+<!-- bound annotations -->
+<text x="620" y="150" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="10" text-anchor="middle">blocked by ρ<tspan baseline-shift="sub" font-size="0.7em">+</tspan></text>
+<text x="500" y="150" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="10" text-anchor="middle">blocked by ρ<tspan baseline-shift="sub" font-size="0.7em">−</tspan></text>
+
+<!-- Panel B caption -->
+<text x="560" y="172" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="10" letter-spacing="1.5" text-anchor="middle">(B) ERRORS BLOCKED</text>
+
+</svg>
+```
+
 :::
 
-This is the bar **Mitra–Virk (2021, 2024)** clear, *explicitly*, for $(\mathcal{D}^n, d_\mathcal{B})$ — with both control functions written down. PLACE is the classifier you get when you actually use that coarse embedding instead of just citing it.
-
-> *Persistence has a shape; landmarks give it an address—that's **PLACE**.*
+::: {.transition-line .fragment .fade-up}
+**Mitra–Virk** — *existence* in '21 (via asymdim); *explicit* in '24. [[☞]{.manicule}Use it]{.followup-stamp .tilt-a}
+:::
 
 # § II.  Construction {.section-divider}
 

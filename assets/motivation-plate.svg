@@ -1,86 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" preserveAspectRatio="xMidYMid meet">
-  <g stroke-linecap="round">
-    <g fill="#2b211a" stroke="none" opacity="0.85">
-      <circle cx="252.6" cy="197.8" r="2.6"/>
-      <circle cx="253.1" cy="218.2" r="2.6"/>
-      <circle cx="241.9" cy="226.9" r="2.6"/>
-      <circle cx="236.1" cy="240.4" r="2.6"/>
-      <circle cx="223.7" cy="256.0" r="2.6"/>
-      <circle cx="215.1" cy="266.0" r="2.6"/>
-      <circle cx="206.1" cy="276.2" r="2.6"/>
-      <circle cx="188.4" cy="287.0" r="2.6"/>
-      <circle cx="179.2" cy="284.7" r="2.6"/>
-      <circle cx="163.4" cy="295.1" r="2.6"/>
-      <circle cx="140.8" cy="292.3" r="2.6"/>
-      <circle cx="125.2" cy="286.7" r="2.6"/>
-      <circle cx="109.3" cy="279.3" r="2.6"/>
-      <circle cx="100.8" cy="274.2" r="2.6"/>
-      <circle cx="88.4" cy="260.2" r="2.6"/>
-      <circle cx="82.6" cy="244.0" r="2.6"/>
-      <circle cx="76.8" cy="231.6" r="2.6"/>
-      <circle cx="76.9" cy="216.2" r="2.6"/>
-      <circle cx="65.9" cy="197.0" r="2.6"/>
-      <circle cx="69.6" cy="179.5" r="2.6"/>
-      <circle cx="72.3" cy="167.6" r="2.6"/>
-      <circle cx="78.3" cy="156.7" r="2.6"/>
-      <circle cx="94.2" cy="145.4" r="2.6"/>
-      <circle cx="99.9" cy="132.6" r="2.6"/>
-      <circle cx="113.4" cy="123.7" r="2.6"/>
-      <circle cx="130.6" cy="116.5" r="2.6"/>
-      <circle cx="141.1" cy="112.1" r="2.6"/>
-      <circle cx="157.7" cy="113.7" r="2.6"/>
-      <circle cx="172.6" cy="112.8" r="2.6"/>
-      <circle cx="187.8" cy="112.2" r="2.6"/>
-      <circle cx="207.7" cy="125.5" r="2.6"/>
-      <circle cx="223.3" cy="127.8" r="2.6"/>
-      <circle cx="222.5" cy="142.5" r="2.6"/>
-      <circle cx="243.5" cy="155.2" r="2.6"/>
-      <circle cx="240.5" cy="172.0" r="2.6"/>
-      <circle cx="253.6" cy="182.7" r="2.6"/>
-    </g>
-    <g stroke="#6c1d1a" fill="none" stroke-width="0.7" opacity="0.55">
-      <circle cx="228.9" cy="257.9" r="16" stroke-dasharray="2 2"/>
-      <circle cx="228.9" cy="257.9" r="26" stroke-dasharray="2 3"/>
-      <circle cx="102.1" cy="268.9" r="16" stroke-dasharray="2 2"/>
-      <circle cx="102.1" cy="268.9" r="26" stroke-dasharray="2 3"/>
-      <circle cx="115.0" cy="122.1" r="16" stroke-dasharray="2 2"/>
-      <circle cx="115.0" cy="122.1" r="26" stroke-dasharray="2 3"/>
-    </g>
-    <g fill="#57473a" stroke="none" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="14" letter-spacing="2" text-anchor="middle">
-      <text x="160" y="340">A SHAPE</text>
-    </g>
-    <text x="160" y="360" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13" text-anchor="middle">point cloud · graph · …</text>
-    <g stroke="#6c1d1a" fill="none" stroke-width="1.0" opacity="0.85">
-      <line x1="295" y1="200" x2="395" y2="200"/>
-      <path d="M 388 195 L 395 200 L 388 205"/>
-    </g>
-    <text x="345" y="190" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13" text-anchor="middle">filtration</text>
-    <g stroke="#2b211a" fill="none" stroke-width="0.75" opacity="0.65">
-      <line x1="440" y1="290" x2="660" y2="290"/>
-      <line x1="440" y1="290" x2="440" y2="80"/>
-      <path d="M 654 287 L 660 290 L 654 293"/>
-      <path d="M 437 86 L 440 80 L 443 86"/>
-    </g>
-    <g fill="#2b211a" stroke="none" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="14" opacity="0.7">
-      <text x="665" y="294" text-anchor="start">b</text>
-      <text x="436" y="77" text-anchor="end">d</text>
-    </g>
-    <line x1="440" y1="290" x2="650" y2="80" fill="none" stroke="#2b211a" stroke-width="0.6" stroke-dasharray="5 3" opacity="0.6"/>
-    <g fill="#2b211a" stroke="none" opacity="0.78">
-      <circle cx="460" cy="260" r="2.8"/>
-      <circle cx="480" cy="240" r="2.8"/>
-      <circle cx="500" cy="220" r="2.8"/>
-      <circle cx="520" cy="200" r="2.8"/>
-      <circle cx="540" cy="180" r="2.8"/>
-    </g>
-    <g>
-      <circle cx="478" cy="130" r="9" fill="none" stroke="#6c1d1a" stroke-width="0.55" opacity="0.5"/>
-      <circle cx="478" cy="130" r="4" fill="#6c1d1a" opacity="0.95"/>
-      <circle cx="508" cy="150" r="9" fill="none" stroke="#6c1d1a" stroke-width="0.55" opacity="0.5"/>
-      <circle cx="508" cy="150" r="4" fill="#6c1d1a" opacity="0.95"/>
-    </g>
-    <g fill="#57473a" stroke="none" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="14" letter-spacing="2" text-anchor="middle">
-      <text x="550" y="340">A DIAGRAM</text>
-    </g>
-    <text x="550" y="360" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13" text-anchor="middle">but in what space?</text>
-  </g></svg>
+  <!-- subtle inner frame rule -->
+  <rect x="36" y="36" width="648" height="328" fill="none" stroke="#c8b894" stroke-width="0.6"/>
+
+  <!-- masthead-style title -->
+  <text x="360" y="68" fill="#6c1d1a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-weight="500" font-size="16" letter-spacing="4" text-anchor="middle">STABILITY  ·  DISCRIMINABILITY</text>
+
+  <!-- italic deck under title -->
+  <text x="360" y="92" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13" text-anchor="middle">— two sides of an honest embedding —</text>
+
+  <!-- horizontal hairline under deck -->
+  <line x1="120" y1="104" x2="600" y2="104" stroke="#c8b894" stroke-width="0.5"/>
+
+  <!-- band fill (valid-region between ρ- and ρ+) -->
+  <path d="M 80 330 C 200 280, 400 180, 640 110 L 640 210 C 480 255, 280 300, 80 330 Z" fill="#6c1d1a" fill-opacity="0.11" stroke="none"/>
+
+  <!-- ρ+ upper bound -->
+  <path d="M 80 330 C 200 280, 400 180, 640 110" stroke="#6c1d1a" stroke-width="2.2" fill="none"/>
+
+  <!-- ρ- lower bound (dashed) -->
+  <path d="M 80 330 C 280 300, 480 255, 640 210" stroke="#2b211a" stroke-width="1.6" fill="none" stroke-dasharray="5.5 3.5"/>
+
+  <!-- axes -->
+  <line x1="80" y1="330" x2="660" y2="330" stroke="#2b211a" stroke-width="1.0"/>
+  <line x1="80" y1="330" x2="80" y2="115" stroke="#2b211a" stroke-width="1.0"/>
+
+  <!-- sample Φ points along an honest embedding curve -->
+  <g fill="#6c1d1a" stroke="none">
+    <circle cx="170" cy="312" r="3.3"/>
+    <circle cx="260" cy="282" r="3.3"/>
+    <circle cx="350" cy="248" r="3.3"/>
+    <circle cx="440" cy="215" r="3.3"/>
+    <circle cx="530" cy="180" r="3.3"/>
+    <circle cx="610" cy="148" r="3.3"/>
+  </g>
+
+  <!-- curve labels -->
+  <text x="624" y="106" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="28">ρ<tspan baseline-shift="sub" font-size="0.65em">+</tspan></text>
+  <text x="624" y="220" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="28">ρ<tspan baseline-shift="sub" font-size="0.65em">−</tspan></text>
+
+  <!-- axis labels -->
+  <text x="84" y="126" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="15">‖Φ(x) − Φ(y)‖<tspan baseline-shift="sub" font-size="0.7em">ℋ</tspan></text>
+  <text x="660" y="350" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="15" text-anchor="end">d<tspan baseline-shift="sub" font-size="0.7em">ℬ</tspan>(x, y)</text>
+
+  <!-- corner fleurons (small ornaments) -->
+  <text x="50" y="56" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20">❦</text>
+  <text x="678" y="56" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20" text-anchor="end">❦</text>
+  <text x="50" y="356" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20">❦</text>
+  <text x="678" y="356" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20" text-anchor="end">❦</text>
+
+  <!-- caption stripe at bottom -->
+  <text x="360" y="356" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="3" text-anchor="middle">— THE BAND —</text>
+</svg>

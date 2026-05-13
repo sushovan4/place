@@ -190,6 +190,9 @@ html, body {
   margin: 0 0 1.1rem;
   max-width: 32em;
 }
+.reveal .standfirst em {
+  color: var(--oxblood);
+}
 
 // Body paragraphs — justified with hyphenation, like print
 .reveal p {
@@ -367,24 +370,42 @@ html body div.reveal div.slides .qr-plate > svg {
   color: var(--oxblood);
   letter-spacing: 0.02em;
 }
-// Inline rubber-stamp at the end of a transition-line ("TO FOLLOW →")
+// Inline rubber-stamp at the end of a transition-line — Victorian print style
+// with a printer's manicule (☞), small-caps slab feel, triple-ruled cartouche.
+// Default tilt looks hand-applied (off-axis, off-baseline).  For variety across
+// slides, use one of the .tilt-{a,b,c,d} modifiers to override.
 .reveal .followup-stamp {
   display: inline-block;
   margin-left: 0.9em;
-  padding: 0.18em 0.7em 0.14em;
-  border: 2.5px double var(--oxblood);
+  padding: 0.22em 0.85em 0.18em;
+  border: 3px double var(--oxblood);
+  box-shadow: 0 0 0 1.2px var(--paper), 0 0 0 2.4px var(--oxblood);
   font-family: var(--smallcaps);
   font-style: normal;
   font-weight: 700;
   font-size: 0.55em;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.30em;
   color: var(--oxblood);
-  background: rgba(245, 239, 222, 0.55);
+  background: rgba(245, 239, 222, 0.6);
   text-transform: uppercase;
   white-space: nowrap;
-  transform: rotate(-4deg) translateY(-0.1em);
+  transform: rotate(-7.3deg) translate(0.18em, -0.18em) skewY(-0.6deg);
   vertical-align: middle;
   line-height: 1;
+}
+.reveal .followup-stamp.tilt-a { transform: rotate(-7.3deg) translate(0.18em, -0.18em) skewY(-0.6deg); }
+.reveal .followup-stamp.tilt-b { transform: rotate( 5.4deg) translate(-0.12em, 0.08em) skewY( 0.4deg); }
+.reveal .followup-stamp.tilt-c { transform: rotate(-3.1deg) translate(0.05em, -0.28em) skewX(-0.8deg); }
+.reveal .followup-stamp.tilt-d { transform: rotate( 8.6deg) translate(-0.2em, -0.05em) skewX( 0.5deg); }
+.reveal .followup-stamp .manicule {
+  display: inline-block;
+  margin-right: 0.45em;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0;
+  font-size: 1.4em;
+  vertical-align: -0.12em;
+  line-height: 0;
 }
 // Smaller asterism above the transition line (was bumped to 1.6em earlier)
 .reveal .dataset-cards + .composing-rule {
@@ -448,6 +469,54 @@ html body div.reveal div.slides .qr-plate > svg {
   color: var(--oxblood);
   display: block;
   margin: 0.15em 0 0.35em;
+}
+// Theorem-style centered definition box.  Use:  ::: {.def-box data-title="Definition"}
+.reveal .def-box {
+  margin: 0.9rem auto 0.7rem;
+  padding: 0.85rem 1.6rem 0.55rem;
+  max-width: 40em;
+  background: var(--paper-soft);
+  border-top: 3px double var(--ink);
+  border-bottom: 3px double var(--ink);
+  position: relative;
+}
+.reveal .def-box[data-title]::before {
+  content: attr(data-title);
+  position: absolute;
+  top: -0.75em;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--paper);
+  padding: 0.05em 0.9em;
+  font-family: var(--smallcaps);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  font-size: 0.62em;
+  color: var(--oxblood);
+  white-space: nowrap;
+}
+.reveal .def-box p {
+  margin: 0.3em 0;
+  font-size: 0.92em;
+  text-align: center;
+  line-height: 1.4;
+}
+
+// Tiny newspaper-style "by-line" at the foot of a card, for citations.
+.reveal .dataset-card .card-cite {
+  display: block;
+  margin-top: 0.55em;
+  padding-top: 0.4em;
+  border-top: 1px dotted var(--rule);
+  font-family: var(--smallcaps);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.72em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+  opacity: 0.88;
+  line-height: 1.3;
 }
 
 // ---------------------------------------------------------------------------
