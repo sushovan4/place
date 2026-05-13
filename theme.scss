@@ -136,23 +136,30 @@ html, body {
 }
 
 // Standard slide title: small-caps with a tab-rule above, ink color.
-// Excludes the auto title slide, section dividers, pull-quote slides, and
-// colophon — those carry their own treatments below.
-// Title and tab-rule are horizontally centered.
+// Applies to both h1 (level-1 stack-root slides without .section-divider)
+// and h2 (vertical sub-slides). Excludes the auto title-block, dividers,
+// pull-quote, and colophon — those carry their own treatments below.
+.reveal .slides > section:not(.section-divider):not(.pull-quote):not(.colophon):not(.quarto-title-block) > h1,
 .reveal .slides > section:not(.section-divider):not(.pull-quote):not(.colophon):not(.quarto-title-block) > h2,
+.reveal .slides > section > section:not(.section-divider):not(.pull-quote):not(.colophon) > h1,
 .reveal .slides > section > section:not(.section-divider):not(.pull-quote):not(.colophon) > h2 {
   position: relative;
-  font-family: var(--smallcaps);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  font-size: 1.55em;
-  line-height: 1.15;
-  color: var(--ink);
-  margin: 0 auto 0.55em;
-  padding-top: 0.55em;
-  text-align: center;
+  font-family: var(--smallcaps) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  font-size: 1.55em !important;
+  line-height: 1.15 !important;
+  color: var(--ink) !important;
+  margin: 0 auto 0.55em !important;
+  padding: 0.55em 0 0 !important;
+  text-align: center !important;
+  border: none !important;
+  text-shadow: none !important;
+  text-transform: none !important;
 }
+.reveal .slides > section:not(.section-divider):not(.pull-quote):not(.colophon):not(.quarto-title-block) > h1::before,
 .reveal .slides > section:not(.section-divider):not(.pull-quote):not(.colophon):not(.quarto-title-block) > h2::before,
+.reveal .slides > section > section:not(.section-divider):not(.pull-quote):not(.colophon) > h1::before,
 .reveal .slides > section > section:not(.section-divider):not(.pull-quote):not(.colophon) > h2::before {
   content: "";
   display: block;
@@ -334,6 +341,185 @@ html body div.reveal div.slides .qr-plate > svg {
 // in the homepage's engraved-plate treatment: paper bg, hairline ink rule,
 // ink outline at 4px offset. Single real DOM element, no pseudo duplication.
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Scene-break transition line — italic Playfair sentence sitting under an
+// asterism (composing-rule). Used to close a body slide and tee up the next.
+// ---------------------------------------------------------------------------
+.reveal .transition-line {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 1.3;
+  color: var(--ink);
+  text-align: center;
+  max-width: 36em;
+  margin: 0.5em auto 0;
+  padding: 0.5em 1em 0.02em;
+  hyphens: none;
+  background: var(--paper-soft);
+  border-top: 4px double var(--ink);
+  border-bottom: 4px double var(--ink);
+}
+.reveal .transition-line em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--oxblood);
+  letter-spacing: 0.02em;
+}
+// Inline rubber-stamp at the end of a transition-line ("TO FOLLOW →")
+.reveal .followup-stamp {
+  display: inline-block;
+  margin-left: 0.9em;
+  padding: 0.18em 0.7em 0.14em;
+  border: 2.5px double var(--oxblood);
+  font-family: var(--smallcaps);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.55em;
+  letter-spacing: 0.22em;
+  color: var(--oxblood);
+  background: rgba(245, 239, 222, 0.55);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(-4deg) translateY(-0.1em);
+  vertical-align: middle;
+  line-height: 1;
+}
+// Smaller asterism above the transition line (was bumped to 1.6em earlier)
+.reveal .dataset-cards + .composing-rule {
+  font-size: 0.7em !important;
+  margin: 0.4rem auto 0.2rem !important;
+  opacity: 0.6;
+}
+
+// ---------------------------------------------------------------------------
+// Dataset cards — a row of three framed-plate cards, each with an SVG
+// illustration on top and a name + caption below. Used on §I.1 to introduce
+// ORBIT5K, MUTAG, NCI1 visually.
+// ---------------------------------------------------------------------------
+.reveal .dataset-cards {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0.9rem;
+  margin: 0.8rem auto;
+  max-width: 100%;
+}
+.reveal .dataset-card {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  background: var(--paper);
+  padding: 0.6rem 0.7rem 0.7rem;
+  border: 1px solid var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.reveal .dataset-card img,
+.reveal .dataset-card svg {
+  display: block;
+  width: 100%;
+  max-height: 280px;
+  height: auto;
+  margin: 0 auto;
+  background: var(--paper);
+}
+.reveal .dataset-card p {
+  margin: 0.4em 0 0;
+  text-align: center;
+  font-size: 0.78em;
+  line-height: 1.4;
+  hyphens: none;
+}
+.reveal .dataset-card p:first-of-type {
+  margin-top: 0.6em;
+}
+.reveal .dataset-card strong {
+  font-family: var(--smallcaps);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  font-size: 1.05em;
+  color: var(--oxblood);
+  display: block;
+  margin: 0.15em 0 0.35em;
+}
+
+// ---------------------------------------------------------------------------
+// Inline term decoration — small engraving-style icon set immediately
+// before a key noun in body prose. Used in §I to mark "point clouds" and
+// "graphs". Icon set via mask-image so colour follows currentColor.
+// ---------------------------------------------------------------------------
+.reveal .term-with-icon {
+  display: inline;
+  font-weight: 500;
+  color: var(--oxblood);
+  white-space: nowrap;
+}
+.reveal .term-with-icon::before {
+  content: "";
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  margin-right: 0.25em;
+  vertical-align: -0.35em;
+  background: var(--ink);
+  -webkit-mask: var(--icon-mask) center / contain no-repeat;
+          mask: var(--icon-mask) center / contain no-repeat;
+}
+.reveal .term-with-icon[data-icon="pointcloud"]::before {
+  --icon-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2028%2028'%3E%3Cg%20fill%3D'black'%3E%3Ccircle%20cx%3D'6'%20cy%3D'9'%20r%3D'1.6'%2F%3E%3Ccircle%20cx%3D'11'%20cy%3D'6'%20r%3D'1.6'%2F%3E%3Ccircle%20cx%3D'16'%20cy%3D'8'%20r%3D'1.6'%2F%3E%3Ccircle%20cx%3D'9'%20cy%3D'13'%20r%3D'1.6'%2F%3E%3Ccircle%20cx%3D'14'%20cy%3D'14'%20r%3D'1.6'%2F%3E%3Ccircle%20cx%3D'20'%20cy%3D'11'%20r%3D'1.6'%2F%3E%3Ccircle%20cx%3D'11'%20cy%3D'19'%20r%3D'1.6'%2F%3E%3Ccircle%20cx%3D'17'%20cy%3D'20'%20r%3D'1.6'%2F%3E%3Ccircle%20cx%3D'22'%20cy%3D'17'%20r%3D'1.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+}
+.reveal .term-with-icon[data-icon="graph"]::before {
+  --icon-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2028%2028'%3E%3Cg%20stroke%3D'black'%20fill%3D'black'%20stroke-width%3D'1.0'%3E%3Cline%20x1%3D'6'%20y1%3D'7'%20x2%3D'14'%20y2%3D'11'%20fill%3D'none'%2F%3E%3Cline%20x1%3D'14'%20y1%3D'11'%20x2%3D'22'%20y2%3D'8'%20fill%3D'none'%2F%3E%3Cline%20x1%3D'14'%20y1%3D'11'%20x2%3D'9'%20y2%3D'20'%20fill%3D'none'%2F%3E%3Cline%20x1%3D'14'%20y1%3D'11'%20x2%3D'20'%20y2%3D'21'%20fill%3D'none'%2F%3E%3Cline%20x1%3D'9'%20y1%3D'20'%20x2%3D'20'%20y2%3D'21'%20fill%3D'none'%2F%3E%3Cline%20x1%3D'22'%20y1%3D'8'%20x2%3D'20'%20y2%3D'21'%20fill%3D'none'%2F%3E%3Ccircle%20cx%3D'6'%20cy%3D'7'%20r%3D'2.4'%2F%3E%3Ccircle%20cx%3D'14'%20cy%3D'11'%20r%3D'2.4'%2F%3E%3Ccircle%20cx%3D'22'%20cy%3D'8'%20r%3D'2.4'%2F%3E%3Ccircle%20cx%3D'9'%20cy%3D'20'%20r%3D'2.4'%2F%3E%3Ccircle%20cx%3D'20'%20cy%3D'21'%20r%3D'2.4'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+}
+
+// ---------------------------------------------------------------------------
+// Section kicker — newspaper-department strip at the top of the FIRST slide
+// of each section. Replaces the dedicated section-divider slide; carries the
+// section number + name + italic deck on one ruled line.
+// ---------------------------------------------------------------------------
+.reveal .section-kicker {
+  display: block;
+  text-align: center;
+  font-family: var(--smallcaps);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: -0.4em auto 1.2em;
+  padding: 0.45em 1em;
+  max-width: 50em;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.reveal .section-kicker .section-num {
+  color: var(--oxblood);
+  font-weight: 700;
+  margin-right: 0.6em;
+  letter-spacing: 0.18em;
+}
+.reveal .section-kicker .section-name {
+  color: var(--ink);
+  font-weight: 500;
+}
+.reveal .section-kicker .section-deck {
+  display: inline;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.15em;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-soft);
+  margin-left: 0.6em;
+}
+
 // ---------------------------------------------------------------------------
 // 3. VOL/NO badge — small smallcaps strip above the masthead, ruled top &
 // bottom in the broadsheet-volume style. Cells separated by oxblood middots.
@@ -806,6 +992,32 @@ html body div.reveal div.slides section.section-divider > h2 {
   text-align: center;
   hyphens: none;
 }
+// Section-divider plates should dominate the slide visually.
+.reveal section.section-divider .plate {
+  width: 60% !important;
+  max-width: 800px !important;
+  margin: 1.2rem auto 0.4rem !important;
+  padding: 0.8rem !important;
+}
+.reveal section.section-divider .plate img,
+.reveal section.section-divider .plate svg {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 48vh !important;
+}
+.reveal section.section-divider .plate-caption {
+  font-size: 1.0rem;
+  max-width: 48rem;
+}
+
+// Suppress the fleuron on section dividers — it collided with reveal's
+// bottom navigation chevron in `edges` controls layout.
+.reveal section.section-divider::after {
+  content: none !important;
+  display: none !important;
+}
 .reveal .section-divider::after {
   content: "";
   display: block;
@@ -826,11 +1038,11 @@ html body div.reveal div.slides section.section-divider > h2 {
 // =========================================================================
 .reveal .plate {
   background: var(--paper);
-  padding: 0.6rem;
-  border: 8px double var(--ink);
-  margin: 0.4rem auto;
+  padding: 0.05rem 0.4rem;
+  border: 6px double var(--ink);
+  margin: 0.2rem auto;
   position: relative;
-  max-width: 760px;
+  max-width: 1100px;
 }
 .reveal .plate img,
 .reveal .plate svg {
@@ -1670,14 +1882,41 @@ html body div.reveal div.slides section.colophon > h2 {
 // =========================================================================
 // CONTROLS, PROGRESS, SLIDE NUMBER — print-coded chrome
 // =========================================================================
+// =========================================================================
+// Custom oxblood engraving-style nav arrows — replace reveal's default
+// chevrons. Single thin shaft, open V-tip, small dot at the tail.
+// =========================================================================
 .reveal .controls {
-  color: var(--oxblood);
+  color: var(--oxblood) !important;
 }
-.reveal .controls .navigate-left:hover,
-.reveal .controls .navigate-right:hover,
-.reveal .controls .navigate-up:hover,
-.reveal .controls .navigate-down:hover {
-  color: var(--oxblood-dim);
+.reveal .controls .controls-arrow {
+  position: relative !important;
+  width: 2.6em !important;
+  height: 2.6em !important;
+  font-size: 14px;
+}
+// Replace reveal's clip-path triangle with our oxblood engraving arrow.
+// Reveal already rotates .controls-arrow per direction; we use a single
+// right-pointing mask and let the rotation orient it.
+.reveal .controls .controls-arrow::before,
+.reveal .controls .controls-arrow::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: var(--oxblood) !important;
+  clip-path: none !important;
+  -webkit-clip-path: none !important;
+  transform: none !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%20%3Cline%20x1%3D%223%22%20y1%3D%2212%22%20x2%3D%2221%22%20y2%3D%2212%22%2F%3E%20%3Cpolyline%20points%3D%2216%2C7%2021%2C12%2016%2C17%22%2F%3E%20%3Ccircle%20cx%3D%223%22%20cy%3D%2212%22%20r%3D%221.4%22%20fill%3D%22black%22%20stroke%3D%22none%22%2F%3E%20%3C%2Fsvg%3E") center / contain no-repeat !important;
+          mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.7%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%20%3Cline%20x1%3D%223%22%20y1%3D%2212%22%20x2%3D%2221%22%20y2%3D%2212%22%2F%3E%20%3Cpolyline%20points%3D%2216%2C7%2021%2C12%2016%2C17%22%2F%3E%20%3Ccircle%20cx%3D%223%22%20cy%3D%2212%22%20r%3D%221.4%22%20fill%3D%22black%22%20stroke%3D%22none%22%2F%3E%20%3C%2Fsvg%3E") center / contain no-repeat !important;
+  transition: opacity 0.15s ease !important;
+}
+.reveal .controls button:hover .controls-arrow::before,
+.reveal .controls button:hover .controls-arrow::after {
+  opacity: 0.8;
 }
 .reveal .progress {
   background: rgba(43, 33, 26, 0.08);

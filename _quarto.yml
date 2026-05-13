@@ -9,9 +9,7 @@ format:
     theme: [default, theme.scss]
     slide-number: c/t
     progress: false
-    controls: true
-    controls-layout: edges
-    controls-back-arrows: faded
+    controls: false
     navigation-mode: vertical
     transition: slide
     transition-speed: slow
@@ -29,7 +27,7 @@ format:
     code-line-numbers: false
     highlight-style: breeze
     fig-align: center
-    incremental: false
+    incremental: true
     auto-stretch: false
     include-after-body:
       text: |
