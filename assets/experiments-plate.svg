@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" preserveAspectRatio="xMidYMid meet">
+  <!-- inner frame rule -->
+  <rect x="36" y="36" width="648" height="328" fill="none" stroke="#c8b894" stroke-width="0.6"/>
+
+  <!-- title masthead -->
+  <text x="360" y="68" fill="#6c1d1a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-weight="500" font-size="16" letter-spacing="4" text-anchor="middle">WHERE THE CERTIFICATE FIRES</text>
+
+  <!-- italic deck -->
+  <text x="360" y="92" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13" text-anchor="middle">— twelve benchmarks · six fully certified · two partial · four silent —</text>
+
+  <!-- horizontal hairline -->
+  <line x1="100" y1="104" x2="620" y2="104" stroke="#c8b894" stroke-width="0.5"/>
+
+  <!-- ====================================================================
+       12-cell grid (4 columns × 3 rows). Each cell shows the dataset name
+       and a filled-circle indicator coloured by firing status:
+         full   (≥99%, n=6)  →  solid oxblood
+         partial (4–12%, n=2) →  half-filled oxblood
+         silent (0%, n=4)    →  faint ring
+       ==================================================================== -->
+
+  <!-- ROW 1: full-fire chemical datasets -->
+  <g>
+    <text x="148" y="148" fill="#2b211a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">MUTAG</text>
+    <circle cx="148" cy="178" r="10" fill="#6c1d1a" stroke="#2b211a" stroke-width="1.0"/>
+    <text x="148" y="206" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">100%</text>
+  </g>
+  <g>
+    <text x="288" y="148" fill="#2b211a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">PROTEINS</text>
+    <circle cx="288" cy="178" r="10" fill="#6c1d1a" stroke="#2b211a" stroke-width="1.0"/>
+    <text x="288" y="206" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">100%</text>
+  </g>
+  <g>
+    <text x="428" y="148" fill="#2b211a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">NCI1</text>
+    <circle cx="428" cy="178" r="10" fill="#6c1d1a" stroke="#2b211a" stroke-width="1.0"/>
+    <text x="428" y="206" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">100%</text>
+  </g>
+  <g>
+    <text x="568" y="148" fill="#2b211a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">NCI109</text>
+    <circle cx="568" cy="178" r="10" fill="#6c1d1a" stroke="#2b211a" stroke-width="1.0"/>
+    <text x="568" y="206" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">100%</text>
+  </g>
+
+  <!-- ROW 2: DHFR (99%, full); DD (100%, full); REDDIT-5K (4%, partial); IMDB-B (12%, partial) -->
+  <g>
+    <text x="148" y="228" fill="#2b211a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">DHFR</text>
+    <circle cx="148" cy="258" r="10" fill="#6c1d1a" stroke="#2b211a" stroke-width="1.0"/>
+    <text x="148" y="286" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">99%</text>
+  </g>
+  <g>
+    <text x="288" y="228" fill="#2b211a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">DD</text>
+    <circle cx="288" cy="258" r="10" fill="#6c1d1a" stroke="#2b211a" stroke-width="1.0"/>
+    <text x="288" y="286" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">100%</text>
+  </g>
+  <g>
+    <text x="428" y="228" fill="#2b211a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">IMDB-B</text>
+    <!-- partial fire: half-filled circle (left half oxblood, right half empty) -->
+    <circle cx="428" cy="258" r="10" fill="none" stroke="#6c1d1a" stroke-width="1.0"/>
+    <path d="M 428 248 A 10 10 0 0 0 428 268 Z" fill="#6c1d1a"/>
+    <text x="428" y="286" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">12%</text>
+  </g>
+  <g>
+    <text x="568" y="228" fill="#2b211a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">REDDIT-5K</text>
+    <circle cx="568" cy="258" r="10" fill="none" stroke="#6c1d1a" stroke-width="1.0"/>
+    <path d="M 568 248 A 10 10 0 0 0 568 268 Z" fill="#6c1d1a" fill-opacity="0.5"/>
+    <text x="568" y="286" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">4%</text>
+  </g>
+
+  <!-- ROW 3: 0% — signal-to-noise regime -->
+  <g>
+    <text x="148" y="308" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">COX2</text>
+    <circle cx="148" cy="338" r="10" fill="none" stroke="#c8b894" stroke-width="1.1"/>
+    <text x="148" y="364" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11" text-anchor="middle">silent</text>
+  </g>
+  <g>
+    <text x="288" y="308" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">PTC</text>
+    <circle cx="288" cy="338" r="10" fill="none" stroke="#c8b894" stroke-width="1.1"/>
+    <text x="288" y="364" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11" text-anchor="middle">silent</text>
+  </g>
+  <g>
+    <text x="428" y="308" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">IMDB-M</text>
+    <circle cx="428" cy="338" r="10" fill="none" stroke="#c8b894" stroke-width="1.1"/>
+    <text x="428" y="364" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11" text-anchor="middle">silent</text>
+  </g>
+  <g>
+    <text x="568" y="308" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="2" text-anchor="middle">ORBIT5K</text>
+    <circle cx="568" cy="338" r="10" fill="none" stroke="#c8b894" stroke-width="1.1"/>
+    <text x="568" y="364" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11" text-anchor="middle">silent</text>
+  </g>
+
+  <!-- corner fleurons -->
+  <text x="50" y="56" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20">❦</text>
+  <text x="678" y="56" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20" text-anchor="end">❦</text>
+</svg>

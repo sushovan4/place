@@ -181,15 +181,15 @@ Sushovan Majhi
 </tr>
 <tr class="even">
 <td style="text-align: center;">II.</td>
-<td style="text-align: left;">Construction — landmark grid, hat coordinates, closed-form weights.</td>
+<td style="text-align: left;">Construction — one knob <span class="math inline">N</span>; an analytic engine; a certified <span class="math inline">\Phi</span>.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">III.</td>
-<td style="text-align: left;">Theory — stability, the classification certificate, sharpness.</td>
+<td style="text-align: left;">Theory — <span class="math inline">\lambda \to \Delta</span>; tight margin &amp; minimax; the NC certificate.</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">IV.</td>
-<td style="text-align: left;">Experiments — MUTAG, NCI1, ENZYMES; where the certificate fires.</td>
+<td style="text-align: left;">Experiments — twelve benchmarks; where the certificate fires; silent ≠ wrong.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">V.</td>
@@ -737,13 +737,13 @@ Sushovan Majhi
 <section class="title-slide slide level1 section-divider center">
 <h1>§ II. Construction</h1>
 <div class="section-deck">
-<p><em>The grid, the hat, the analytic weight rule.</em></p>
+<p><em>One knob (<span class="math inline">N</span>), an analytic engine, a certified <span class="math inline">\Phi</span>.</em></p>
 </div>
 <div class="plate">
 <p><img data-src="assets/construction-plate.svg"></p>
 </div>
 <div class="plate-caption">
-<p><em>From the <strong>band</strong> to <strong>coordinates</strong> — a landmark grid on the birth–death plane, a hat over each cell, an analytic weight per scale.</em></p>
+<p><em>From corpus to certified <span class="math inline">\Phi</span> — <span class="math inline">\tau^*</span>, <span class="math inline">R_k</span> and <span class="math inline">w_k</span> all flow from the data; only <span class="math inline">N</span> is ours to set.</em></p>
 </div>
 </section>
 <section class="slide level2">
@@ -1079,114 +1079,67 @@ Sushovan Majhi
 <section class="slide level2">
 <h2>The engine</h2>
 <div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.4rem;">
-<p>Every parameter — <em>chosen analytically</em>. No held-out tuning, no random seeds.</p>
+<p><strong>One knob</strong> — <span class="math inline">N</span> (default 10). <em>Everything else from the data.</em></p>
 </div>
 <div class="plate fragment" data-fragment-index="1">
-<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 720 80">
-<!-- 5-stage flow: shape → PD → grid+hat → multi-scale Φ → certify -->
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 720 90">
 
-<!-- Stage 1: SHAPE -->
-<g fill="#6c1d1a" stroke="none">
-<circle cx="46" cy="38" r="1.7"></circle>
-<circle cx="52" cy="32" r="1.7"></circle>
-<circle cx="56" cy="42" r="1.7"></circle>
-<circle cx="42" cy="46" r="1.7"></circle>
-<circle cx="50" cy="50" r="1.7"></circle>
-<circle cx="60" cy="36" r="1.7"></circle>
-</g>
-<text x="50" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">SHAPE</text>
+<!-- INPUT: corpus + N -->
+<text x="55" y="40" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="14" text-anchor="middle">{A<tspan baseline-shift="sub" font-size="0.7em">i</tspan>},  N</text>
+<text x="55" y="78" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="8" letter-spacing="1.3" text-anchor="middle">INPUT</text>
 
-<!-- arrow -->
+<!-- arrow 1 -->
 <g stroke="#6c1d1a" fill="none" stroke-width="0.9">
-<line x1="78" y1="42" x2="118" y2="42"></line>
-<path d="M 110 37 L 118 42 L 110 47"></path>
+<line x1="105" y1="42" x2="180" y2="42"></line>
+<path d="M 172 37 L 180 42 L 172 47"></path>
 </g>
+<text x="142" y="32" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9" text-anchor="middle">from data</text>
 
-<!-- Stage 2: PD -->
-<g stroke="#2b211a" fill="none" stroke-width="0.7">
-<line x1="135" y1="60" x2="195" y2="60"></line>
-<line x1="135" y1="60" x2="135" y2="14"></line>
-</g>
-<line x1="135" y1="60" x2="180" y2="14" stroke="#57473a" stroke-width="0.5" stroke-dasharray="2 2" fill="none"></line>
-<g fill="#6c1d1a" stroke="none">
-<circle cx="146" cy="36" r="1.6"></circle>
-<circle cx="158" cy="28" r="1.6"></circle>
-<circle cx="166" cy="42" r="1.6"></circle>
-</g>
-<text x="167" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">PD</text>
+<!-- Stage 2: τ* (scale center) -->
+<text x="220" y="40" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="16" text-anchor="middle">τ*</text>
+<text x="220" y="78" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="8" letter-spacing="1.3" text-anchor="middle">SCALE CENTER</text>
 
-<!-- arrow -->
+<!-- arrow 2 -->
 <g stroke="#6c1d1a" fill="none" stroke-width="0.9">
-<line x1="210" y1="42" x2="250" y2="42"></line>
-<path d="M 242 37 L 250 42 L 242 47"></path>
+<line x1="248" y1="42" x2="318" y2="42"></line>
+<path d="M 310 37 L 318 42 L 310 47"></path>
 </g>
+<text x="282" y="32" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9" text-anchor="middle">geometric</text>
 
-<!-- Stage 3: GRID + HAT -->
-<g stroke="#2b211a" fill="none" stroke-width="0.5">
-<line x1="270" y1="60" x2="335" y2="60"></line>
-<line x1="270" y1="60" x2="270" y2="14"></line>
-</g>
-<line x1="270" y1="60" x2="320" y2="14" stroke="#57473a" stroke-width="0.4" stroke-dasharray="2 2" fill="none"></line>
-<g fill="#2b211a" stroke="none">
-<circle cx="282" cy="50" r="1.4"></circle>
-<circle cx="294" cy="38" r="1.4"></circle>
-<circle cx="282" cy="38" r="1.4"></circle>
-<circle cx="306" cy="26" r="1.4"></circle>
-<circle cx="294" cy="26" r="1.4"></circle>
-<circle cx="282" cy="26" r="1.4"></circle>
-</g>
-<path d="M 286 50 Q 297 18, 308 50 Z" fill="#6c1d1a" fill-opacity="0.30" stroke="#6c1d1a" stroke-width="0.6"></path>
-<text x="305" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">GRID + HAT</text>
+<!-- Stage 3: R_1, ..., R_N -->
+<text x="365" y="40" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="14" text-anchor="middle">R<tspan baseline-shift="sub" font-size="0.7em">1</tspan>, …, R<tspan baseline-shift="sub" font-size="0.7em">N</tspan></text>
+<text x="365" y="78" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="8" letter-spacing="1.3" text-anchor="middle">SCALES</text>
 
-<!-- arrow -->
+<!-- arrow 3 -->
 <g stroke="#6c1d1a" fill="none" stroke-width="0.9">
-<line x1="350" y1="42" x2="390" y2="42"></line>
-<path d="M 382 37 L 390 42 L 382 47"></path>
+<line x1="412" y1="42" x2="478" y2="42"></line>
+<path d="M 470 37 L 478 42 L 470 47"></path>
 </g>
+<text x="445" y="32" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9" text-anchor="middle">max λ(ν)</text>
 
-<!-- Stage 4: MULTI-SCALE Φ -->
-<g stroke="#2b211a" fill="none" stroke-width="0.9">
-<path d="M 425 18 L 418 18 L 418 66 L 425 66"></path>
-<path d="M 460 18 L 467 18 L 467 66 L 460 66"></path>
-</g>
-<g stroke="#c8b894" stroke-width="0.4" stroke-dasharray="1.5 1" fill="none">
-<line x1="418" y1="34" x2="467" y2="34"></line>
-<line x1="418" y1="50" x2="467" y2="50"></line>
-</g>
-<g fill="#2b211a" stroke="none" font-family="EB Garamond, Georgia, serif" font-size="8" text-anchor="middle">
-<text x="442" y="29">Φ<tspan baseline-shift="sub" font-size="0.6em">R₁</tspan></text>
-<text x="442" y="45">Φ<tspan baseline-shift="sub" font-size="0.6em">R₂</tspan></text>
-<text x="442" y="61">⋮</text>
-</g>
-<text x="442" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">Φ(A)</text>
+<!-- Stage 4: w_k -->
+<text x="510" y="40" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="14" text-anchor="middle">w<tspan baseline-shift="sub" font-size="0.7em">k</tspan></text>
+<text x="510" y="78" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="8" letter-spacing="1.3" text-anchor="middle">WEIGHTS</text>
 
-<!-- arrow -->
+<!-- arrow 4 -->
 <g stroke="#6c1d1a" fill="none" stroke-width="0.9">
-<line x1="485" y1="42" x2="525" y2="42"></line>
-<path d="M 517 37 L 525 42 L 517 47"></path>
+<line x1="540" y1="42" x2="610" y2="42"></line>
+<path d="M 602 37 L 610 42 L 602 47"></path>
 </g>
+<text x="575" y="32" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9" text-anchor="middle">concat.</text>
 
-<!-- Stage 5: CERTIFY (band) -->
-<line x1="545" y1="62" x2="640" y2="62" stroke="#2b211a" stroke-width="0.8"></line>
-<line x1="545" y1="62" x2="545" y2="14" stroke="#2b211a" stroke-width="0.8"></line>
-<path d="M 545 62 L 640 18 L 640 24 L 555 62 Z" fill="#6c1d1a" fill-opacity="0.18" stroke="none"></path>
-<path d="M 545 62 L 640 18" stroke="#6c1d1a" stroke-width="1.2" fill="none"></path>
-<path d="M 555 62 L 580 52 L 605 38 L 640 24" stroke="#2b211a" stroke-width="1.0" fill="none" stroke-dasharray="2 1.5"></path>
-<text x="592" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">CERTIFY</text>
+<!-- OUTPUT: Φ(A), ρ_- -->
+<text x="660" y="40" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="14" text-anchor="middle">Φ(A), ρ<tspan baseline-shift="sub" font-size="0.7em">−</tspan></text>
+<text x="660" y="78" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="8" letter-spacing="1.3" text-anchor="middle">CERTIFIED Φ</text>
 
-<!-- final arrow + classifier label -->
-<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
-<line x1="660" y1="42" x2="700" y2="42"></line>
-<path d="M 692 37 L 700 42 L 692 47"></path>
-</g>
 </svg>
 </div>
-<div class="dispatches fragment" data-fragment-index="2" data-title="Closed-form throughout · Paper I" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;">
+<div class="dispatches fragment" data-fragment-index="2" data-title="Fit by data, configured by one knob · Paper I" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;">
 <ul>
-<li class="fragment"><strong>Grid</strong> <span class="math inline">\mathbb{G}_R</span> — <span class="math inline">\{(mR, nR) : m\text{ odd},\, n\text{ even},\, n \geq m+3\}</span>.</li>
-<li class="fragment"><strong>Hat</strong> <span class="math inline">\varphi_{R,p}</span> — <span class="math inline">\bigl(\tfrac{3R}{2} - \|x - p\|_\infty\bigr)_+</span>.</li>
-<li class="fragment"><strong>Scales</strong> <span class="math inline">R_1 &lt; \cdots &lt; R_N</span> — geometric progression from the data scale.</li>
-<li class="fragment"><strong>Weights</strong> <span class="math inline">w_k</span> — <span class="math inline">w_k^2 \propto (d_{k+1}^2 - d_k^2)/R_k^2</span>, the unique maximiser of <span class="math inline">\lambda(\nu)</span>. <span class="followup-stamp tilt-c"><span class="manicule">☞</span>Onto theory</span></li>
+<li class="fragment"><strong><span class="math inline">N</span></strong> — model complexity, default 10. <em>Robust</em>: accuracy varies <span class="math inline">&lt;2.5\%</span> across <span class="math inline">N \in \{5, 10, 15, 20\}</span> (Paper I, Tab. N-sweep).</li>
+<li class="fragment"><strong><span class="math inline">\tau^*</span></strong> — adaptive scale centre from the corpus: median half-persistence (proxy) or class-aware crossing.</li>
+<li class="fragment"><strong><span class="math inline">R_1 &lt; \cdots &lt; R_N</span></strong> — geometric progression around <span class="math inline">\tau^*</span>.</li>
+<li class="fragment"><strong><span class="math inline">w_k</span></strong> — closed-form, unique maximiser of <span class="math inline">\lambda(\nu)</span> (Lemma II.4). <span class="followup-stamp tilt-c"><span class="manicule">☞</span>Onto theory</span></li>
 </ul>
 </div>
 </section></section>
@@ -1194,144 +1147,536 @@ Sushovan Majhi
 <section class="title-slide slide level1 section-divider center">
 <h1>§ III. Theory</h1>
 <div class="section-deck">
-<p><em>Three quantitative claims: stability, certificate, sharpness.</em></p>
+<p><em>Guarantees no other diagram-based classifier can give.</em></p>
 </div>
 <div class="plate">
-<p><img data-src="assets/ornament.svg" width="480"></p>
+<p><img data-src="assets/theory-plate.svg"></p>
 </div>
 <div class="plate-caption">
-<p><em><code>‹ TODO: insert centroid-and-confidence-ball schematic from Paper I figure ›</code></em></p>
+<p><em>The classifier we will certify: nearest-centroid on <span class="math inline">\Phi</span>-coordinates. A test diagram inside a ball gets a <strong>proven</strong> label.</em></p>
 </div>
 </section>
 <section class="slide level2">
-<h2>Stability</h2>
-<div class="marginalia" data-title="Theorem III.1 (Stability)">
-<p>For every pair of diagrams <span class="math inline">A, A' \in \mathcal{D}^n</span>, <span class="math display">
-\bigl\| \Phi(A) - \Phi(A') \bigr\|_2 \;\leq\; L \cdot d_\mathcal{B}(A, A'),
-</span> with <span class="math inline">L = L(N, R, p)</span> explicit and computed in closed form from the grid parameters.</p>
+<h2>The class margin Δ</h2>
+<div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;">
+<p>A labeled corpus <span class="math inline">\{(A_i, y_i)\}</span>, <span class="math inline">y_i \in \{1,\ldots,k\}</span>. Each class <span class="math inline">c</span> has a <em>population mean</em> <span class="math inline">\bar A_c \in (\mathcal{D}^n, d_\mathcal{B})</span> with image <span class="math inline">\hat\mu_c = \Phi(\bar A_c)</span>. Classification rides on one quantity: <strong><span class="math inline">\Delta = \min_{c \neq c'} \|\hat\mu_c - \hat\mu_{c'}\|_2</span></strong> — the class margin in Φ-space.</p>
 </div>
-<div class="standfirst">
-<p><em>Intuition.</em> The hat is Lipschitz; summing Lipschitz functions over <span class="math inline">|A|</span> matched pairs preserves Lipschitzness, with the constant accumulating only logarithmically over the geometric scale ladder.</p>
-</div>
-<div class="endmark">
+<div class="plate fragment" data-fragment-index="1">
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 720 160">
 
+<!-- ============= LEFT PANEL: bottleneck space ============= -->
+<rect x="20" y="22" width="280" height="118" fill="none" stroke="#c8b894" stroke-width="0.6"></rect>
+<text x="160" y="16" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11" text-anchor="middle">(𝒟ⁿ, d<tspan baseline-shift="sub" font-size="0.75em">ℬ</tspan>)</text>
+
+<!-- Class 1 cloud (oxblood) -->
+<g fill="#6c1d1a" stroke="none">
+<circle cx="74" cy="60" r="2.0"></circle>
+<circle cx="92" cy="55" r="2.0"></circle>
+<circle cx="108" cy="63" r="2.0"></circle>
+<circle cx="78" cy="76" r="2.0"></circle>
+<circle cx="96" cy="80" r="2.0"></circle>
+<circle cx="62" cy="70" r="2.0"></circle>
+</g>
+<!-- Class 1 mean (larger) -->
+<circle cx="84" cy="68" r="3.6" fill="#6c1d1a" stroke="#2b211a" stroke-width="1.0"></circle>
+<text x="84" y="48" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">Ā<tspan baseline-shift="sub" font-size="0.7em">1</tspan></text>
+
+<!-- Class 2 cloud (ink) -->
+<g fill="#2b211a" stroke="none">
+<circle cx="210" cy="100" r="2.0"></circle>
+<circle cx="228" cy="95" r="2.0"></circle>
+<circle cx="244" cy="106" r="2.0"></circle>
+<circle cx="218" cy="118" r="2.0"></circle>
+<circle cx="232" cy="124" r="2.0"></circle>
+<circle cx="200" cy="112" r="2.0"></circle>
+</g>
+<!-- Class 2 mean -->
+<circle cx="220" cy="110" r="3.6" fill="#2b211a" stroke="#6c1d1a" stroke-width="1.0"></circle>
+<text x="232" y="135" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">Ā<tspan baseline-shift="sub" font-size="0.7em">2</tspan></text>
+
+<!-- δ_class arrow between class means -->
+<g stroke="#2b211a" stroke-width="0.9" fill="none">
+<line x1="92" y1="72" x2="212" y2="106"></line>
+<path d="M 206 102 L 212 106 L 206 110"></path>
+</g>
+<text x="148" y="80" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">δ<tspan baseline-shift="sub" font-size="0.75em">class</tspan></text>
+
+<!-- ============= MIDDLE ARROW with Φ ============= -->
+<g stroke="#6c1d1a" fill="none" stroke-width="1.2">
+<line x1="310" y1="85" x2="400" y2="85"></line>
+<path d="M 390 78 L 400 85 L 390 92"></path>
+</g>
+<text x="355" y="76" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="20" text-anchor="middle">Φ</text>
+
+<!-- ============= RIGHT PANEL: Φ-space ============= -->
+<rect x="420" y="22" width="280" height="118" fill="none" stroke="#c8b894" stroke-width="0.6"></rect>
+<text x="560" y="16" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11" text-anchor="middle">ℝ<tspan baseline-shift="super" font-size="0.7em">ℓ</tspan> (Φ-space)</text>
+
+<!-- Class 1 cluster -->
+<g fill="#6c1d1a" stroke="none">
+<circle cx="460" cy="50" r="2.0"></circle>
+<circle cx="478" cy="44" r="2.0"></circle>
+<circle cx="494" cy="55" r="2.0"></circle>
+<circle cx="468" cy="65" r="2.0"></circle>
+<circle cx="486" cy="70" r="2.0"></circle>
+<circle cx="450" cy="62" r="2.0"></circle>
+</g>
+<!-- Class 1 centroid -->
+<circle cx="473" cy="58" r="3.8" fill="#6c1d1a" stroke="#2b211a" stroke-width="1.0"></circle>
+<text x="473" y="38" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">μ̂<tspan baseline-shift="sub" font-size="0.7em">1</tspan></text>
+
+<!-- Class 2 cluster (further apart - amplified) -->
+<g fill="#2b211a" stroke="none">
+<circle cx="630" cy="112" r="2.0"></circle>
+<circle cx="650" cy="106" r="2.0"></circle>
+<circle cx="668" cy="118" r="2.0"></circle>
+<circle cx="640" cy="126" r="2.0"></circle>
+<circle cx="658" cy="130" r="2.0"></circle>
+<circle cx="620" cy="120" r="2.0"></circle>
+</g>
+<!-- Class 2 centroid -->
+<circle cx="644" cy="120" r="3.8" fill="#2b211a" stroke="#6c1d1a" stroke-width="1.0"></circle>
+<text x="654" y="138" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="middle">μ̂<tspan baseline-shift="sub" font-size="0.7em">2</tspan></text>
+
+<!-- Δ arrow between centroids -->
+<g stroke="#2b211a" stroke-width="1.0" fill="none">
+<line x1="486" y1="64" x2="632" y2="117"></line>
+<path d="M 624 111 L 632 117 L 624 120"></path>
+</g>
+<text x="552" y="84" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="16" text-anchor="middle">Δ</text>
+
+</svg>
+</div>
+<div class="def-box fragment" data-fragment-index="2" data-title="λ × δ → Δ — Paper I, Prop. III.1" style="margin: 1.5rem auto 0.6rem;">
+<p>For class means at bottleneck distance <span class="math inline">\delta_{\text{class}} = d_\mathcal{B}(\bar A_c, \bar A_{c'}) \geq R_1</span> (under <span class="math inline">\nu</span>-coherence): <span class="math display">
+\Delta \;\geq\; \lambda(\nu)\,(\delta_{\text{class}} - R_1) \;-\; 2 \max_c D_c.
+</span> The bottleneck slope <strong><span class="math inline">\lambda</span></strong> <em>passes through</em> into <span class="math inline">\Delta</span> — the only PD construction that gives a closed-form lower bound on the class margin.</p>
 </div>
 </section>
 <section class="slide level2">
-<h2>The certificate</h2>
-<div class="marginalia" data-title="Theorem III.2 (Classification certificate)">
-<p>Let <span class="math inline">\hat{\mu}_c</span> be the empirical class centroid in <span class="math inline">\Phi</span>-space and <span class="math inline">r_m</span> the margin radius (closed form from training labels). For a test diagram <span class="math inline">A_\star</span>, if <span class="math display">
-\bigl\| \Phi(A_\star) - \hat{\mu}_c \bigr\|_2 \;&lt;\; r_m,
-</span> then the linear classifier outputs class <span class="math inline">c</span> <em>and</em> the prediction is provably correct under the assumed noise model.</p>
+<h2>Picking the descriptor</h2>
+<div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;">
+<p>Different filtration descriptors give different diagrams — and different accuracies (<strong>5–15 pp</strong> swings across 12 benchmarks). <strong>Zhao–Wang (WKPI, ’19)</strong> flagged this as a key open problem: <em>which descriptor to use, in closed form</em>.</p>
 </div>
-<div class="standfirst">
-<p>The certificate is <em>per-input</em>: it fires on some test diagrams and stays silent on others. No global accuracy claim is made when it stays silent.</p>
+<div class="def-box fragment" data-fragment-index="1" data-title="Closed-form descriptor selector · Paper I, §III">
+<p>For each candidate descriptor <span class="math inline">f</span> in a pool, compute <em>once</em> (no classifier training): <span class="math display">
+\hat f^\star \;=\; \arg\max_{f}\; \hat\rho_{\mathrm{Mah}}(f) \quad\text{(Mahalanobis, heterogeneous pools)}; \quad \hat\Delta(f) / \sqrt{\ell(f)} \quad\text{(isotropic surrogate, homogeneous pools)}.
+</span></p>
 </div>
-</section>
-<section class="slide level2">
-<h2>When the certificate fires</h2>
-<div class="standfirst">
-<p>Sharpness is governed by a single inequality: <span class="math inline">r_m &lt; \Delta/2</span>, where <span class="math inline">\Delta</span> is the inter-class separation in <span class="math inline">\Phi</span>-space.</p>
-</div>
-<div class="dispatches" data-title="The firing condition, in plain English">
+<div class="dispatches fragment" data-fragment-index="2" data-title="Closing the WKPI open problem · Paper I, Thm. III.2" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;">
 <ul>
-<li class="fragment"><strong><span class="math inline">\Delta</span> large</strong> — classes are well-separated in PLACE coordinates → certificate fires often.</li>
-<li class="fragment"><strong><span class="math inline">r_m</span> small</strong> — class clusters are tight → certificate fires often.</li>
-<li class="fragment"><strong>Both fail</strong> — certificate stays silent; classifier still predicts but without guarantee.</li>
+<li class="fragment"><strong>Mahalanobis margin</strong> <span class="math inline">\hat\rho_{\mathrm{Mah}}</span> (LDA Bayes-margin form, Ledoit–Wolf-shrunk Σ) — <em>empirically strongest</em> closed-form ranker on a heterogeneous 64-descriptor chemical-graph pool.</li>
+<li class="fragment"><strong>Isotropic surrogate</strong> <span class="math inline">\hat\Delta/\sqrt{\ell}</span> admits a closed-form <em>selection-consistency rate</em> on homogeneous (14–15 descriptor) pools.</li>
+<li class="fragment"><em>No held-out validation, no CV.</em> The first closed-form answer to <strong>Zhao–Wang’s open problem</strong>.</li>
 </ul>
 </div>
-<p>The interesting question is <em>empirical</em>: on which datasets does the inequality hold for what fraction of test inputs? — § IV.</p>
-<div class="handnote">
-<p>note for the talk: emphasise that silent ≠ wrong.</p>
+</section>
+<section class="slide level2">
+<h2>Excess risk &amp; minimax — tight</h2>
+<div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;">
+<p>The margin bound and its sample-starved lower bound <em>match</em>.</p>
+</div>
+<div class="def-box fragment" data-fragment-index="1" data-title="Excess risk · Paper I, Thm. III.3" style="margin: 0.8rem auto 0.6rem;">
+<p><span class="math display">
+\mathbb{E}\bigl[\mathrm{err}(\hat g)\bigr] \;-\; \mathrm{err}(g^\star) \;\leq\; O\!\left(\frac{k\,R}{\Delta\,\sqrt{m_{\min}}}\right).
+</span> <span class="math inline">k</span> classes; <span class="math inline">R</span> embedding radius; <span class="math inline">m_{\min}</span> smallest per-class sample size.</p>
+</div>
+<div class="def-box fragment" data-fragment-index="2" data-title="Minimax lower bound · Paper I, Thm. III.4">
+<p>For <span class="math inline">m_{\min} \lesssim R/\Delta</span>, <em>no</em> classifier achieves better than constant excess risk on the worst-case PLACE-distribution family.</p>
+</div>
+<p>::: {.dispatches .fragment data-fragment-index=“3” data-title=“What”tight” means” style=“font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;”} - The <span class="math inline">\Delta</span> in the upper bound and the <span class="math inline">\Delta</span> in the lower bound are the <strong>same</strong> quantity. - For <span class="math inline">m \gtrsim R/\Delta</span>, the rate <span class="math inline">1/\sqrt{m}</span> kicks in — <em>Δ is the only knob that lowers the sample need</em>. - No PD vectorisation with only an upper distortion bound can prove an analogous minimax claim — <em>Δ requires <span class="math inline">\lambda</span></em>. :::</p>
+</section>
+<section class="slide level2">
+<h2>The nearest-centroid certificate</h2>
+<div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;">
+<p><em>Per-input</em> guarantee — fires when the test point lies inside the margin ball.</p>
+</div>
+<div class="plate fragment" data-fragment-index="1">
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 720 130">
+
+<!-- Two class balls -->
+<circle cx="220" cy="68" r="55" fill="#6c1d1a" fill-opacity="0.10" stroke="#6c1d1a" stroke-width="1.2" stroke-dasharray="4 3"></circle>
+<circle cx="220" cy="68" r="3.2" fill="#6c1d1a" stroke="none"></circle>
+<text x="220" y="138" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13" text-anchor="middle">μ̂<tspan baseline-shift="sub" font-size="0.65em">c</tspan></text>
+
+<circle cx="490" cy="60" r="48" fill="#6c1d1a" fill-opacity="0.10" stroke="#6c1d1a" stroke-width="1.2" stroke-dasharray="4 3"></circle>
+<circle cx="490" cy="60" r="3.2" fill="#6c1d1a" stroke="none"></circle>
+<text x="490" y="135" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13" text-anchor="middle">μ̂<tspan baseline-shift="sub" font-size="0.65em">c′</tspan></text>
+
+<!-- Test point inside left ball -->
+<circle cx="238" cy="84" r="2.8" fill="#2b211a" stroke="none"></circle>
+<text x="246" y="89" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11">Φ(A<tspan baseline-shift="sub" font-size="0.65em">⋆</tspan>)</text>
+
+<!-- Stamp "CERTIFIED" -->
+<g transform="rotate(-7 220 50)">
+<rect x="190" y="38" width="60" height="22" fill="rgba(245, 239, 222, 0.6)" stroke="#6c1d1a" stroke-width="1.6" rx="1"></rect>
+<rect x="192" y="40" width="56" height="18" fill="none" stroke="#6c1d1a" stroke-width="0.6"></rect>
+<text x="220" y="53" fill="#6c1d1a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-weight="700" font-size="9" letter-spacing="1.6" text-anchor="middle">CERTIFIED</text>
+</g>
+
+<!-- r_m arrow inside left ball -->
+<g stroke="#57473a" stroke-width="0.5" fill="none">
+<line x1="220" y1="68" x2="270" y2="38"></line>
+<path d="M 264 36 L 270 38 L 266 42"></path>
+</g>
+<text x="266" y="30" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11">r<tspan baseline-shift="sub" font-size="0.7em">m</tspan></text>
+
+<!-- Δ between centroids -->
+<g stroke="#2b211a" stroke-width="0.8" fill="none">
+<line x1="232" y1="55" x2="478" y2="50"></line>
+<path d="M 238 51 L 232 55 L 238 60"></path>
+<path d="M 474 47 L 478 50 L 473 55"></path>
+</g>
+<text x="355" y="45" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="14" text-anchor="middle">Δ</text>
+
+</svg>
+</div>
+<div class="def-box fragment" data-fragment-index="2" data-title="Certificate · Paper I, Thm. III.5" style="margin: 0.8rem auto 0.6rem;">
+<p><span class="math display">
+\bigl\| \Phi(A_\star) - \hat\mu_c \bigr\|_2 \;&lt;\; r_m
+\quad\Longrightarrow\quad
+\text{NC classifier returns class } c, \text{ provably correct.}
+</span> The radius <span class="math inline">r_m</span> comes from a closed-form Pinelis–Bernstein concentration; <strong>no held-out calibration</strong>.</p>
+</div>
+<div class="dispatches fragment" data-fragment-index="3" data-title="When the certificate fires" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;">
+<ul>
+<li class="fragment">Fires when <span class="math inline">r_m &lt; \Delta/2</span> — <em>sharpness condition</em>.</li>
+<li class="fragment"><span class="math inline">r_m</span> from Pinelis–Bernstein concentration — <em>closed-form, no held-out calibration</em>.</li>
+<li class="fragment">Empirical: <span class="math inline">940 / 940</span> MUTAG test predictions agree with the population NC rule (Paper I, §IV).</li>
+</ul>
 </div>
 </section>
 <section class="slide level2">
-<h2>Sample complexity</h2>
-<div class="marginalia" data-title="Theorem III.3 (Sample complexity)">
-<p>With probability <span class="math inline">\geq 1 - \delta</span>, the empirical centroids and <span class="math inline">r_m</span> converge to their population counterparts at rate <span class="math display">
-n \;\geq\; O\bigl( L^2 \log(\ell/\delta) / \varepsilon^2 \bigr),
-</span> where <span class="math inline">L</span> is the stability constant, <span class="math inline">\ell = |G_R|</span>, and <span class="math inline">\varepsilon</span> is the desired margin slack.</p>
+<h2>PLACE-only territory</h2>
+<div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;">
+<p>Of the diagram-based classifiers, only PLACE delivers <em>all five</em> closed-form guarantees.</p>
 </div>
-<div class="standfirst">
-<p><em>Take-away.</em> The cost of having a certificate is <span class="math inline">O(L^2 \log \ell)</span> samples — modest, and entirely a function of grid choices.</p>
+<div class="dispatches fragment" data-fragment-index="1" data-title="Five guarantees, one family · Paper I, §1" style="font-size: 0.74em; padding: 0.7rem 1.1rem 0.55rem; margin: 0.5rem auto 0.6rem; max-width: 54em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>PD-classifier family</strong></th>
+<th style="text-align: center;"><strong>closed-form <span class="math inline">w_k</span></strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\Delta \!\ge\! \lambda\,\delta</span> bound</strong></th>
+<th style="text-align: center;"><strong>excess risk + minimax tight</strong></th>
+<th style="text-align: center;"><strong>per-input certificate</strong></th>
+<th style="text-align: center;"><strong>descriptor selection (closed-form)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Persistence images, landscapes</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kernels — sliced-Wasserstein · P-Fisher · PWGK</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Learned-weight kernels — WKPI</td>
+<td style="text-align: center;"><em>learned</em></td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗ <em>(open, Zhao–Wang ’19)</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Neural-on-PD — Hofer · PersLay · PEGN</td>
+<td style="text-align: center;"><em>learned</em></td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>PLACE</strong></td>
+<td style="text-align: center;"><strong>✓</strong></td>
+<td style="text-align: center;"><strong>✓</strong></td>
+<td style="text-align: center;"><strong>✓</strong></td>
+<td style="text-align: center;"><strong>✓</strong></td>
+<td style="text-align: center;"><strong>✓</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="transition-line fragment fade-up">
+<p>The gap from <span class="math inline">\lambda</span> — passed through <span class="math inline">\Delta</span> — opens the door to <em>all five</em> guarantees. <span class="followup-stamp tilt-d"><span class="manicule">☞</span>Experiments</span></p>
 </div>
 </section></section>
 <section>
 <section class="title-slide slide level1 section-divider center">
 <h1>§ IV. Experiments</h1>
 <div class="section-deck">
-<p><em>Three datasets, one table, one honest qualifier.</em></p>
+<p><em>Twelve benchmarks — where the certificate fires, where it stays silent.</em></p>
 </div>
 <div class="plate">
-<p><img data-src="assets/persistence-diagram.svg" width="480"></p>
+<p><img data-src="assets/experiments-plate.svg"></p>
 </div>
 <div class="plate-caption">
-<p><em>A persistence diagram from MUTAG: <span class="math inline">H_1</span> features above the diagonal (oxblood), <span class="math inline">H_0</span> near it (ink).</em></p>
+<p><em>Variance-aware Pinelis–Bernstein firing rate per dataset (Paper I, Tab. cert_firing). Six chemical benchmarks fully certified; two partial; four silent.</em></p>
 </div>
 </section>
 <section class="slide level2">
-<h2>Headline results</h2>
-<div class="stop-press">
-<p>MUTAG: certificate fires</p>
+<h2>Headline accuracy</h2>
+<div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;">
+<p>PLACE leads diagram-based methods on <strong>Orbit5k</strong>; matches the strongest topology baseline on <strong>MUTAG</strong> within statistical noise — using <em>no learned weights</em>.</p>
 </div>
+<div class="dispatches fragment" data-fragment-index="1" data-title="Accuracy · Paper I, Tab. exp1" style="font-size: 0.78em; padding: 0.7rem 1.3rem 0.55rem; margin: 0.5rem auto 0.6rem; max-width: 48em;">
 <table class="caption-top">
-<caption><strong>Tab. I.</strong> — Mean accuracy (%) over <code>‹k›</code> seeds, fixed split. The “Strongest baseline” is the best of {PI, PL, Euler, GNN-baseline} per row.</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Dataset</th>
-<th style="text-align: center;">Strongest baseline</th>
-<th style="text-align: center;">+ PLACE</th>
-<th style="text-align: center;">Δ</th>
+<th style="text-align: left;"><strong>Dataset</strong></th>
+<th style="text-align: center;"><strong>PLACE (lin-SVM)</strong></th>
+<th style="text-align: center;"><strong>PersLay</strong></th>
+<th style="text-align: center;"><strong>WKPI-kC</strong></th>
+<th style="text-align: center;"><strong>Persformer</strong></th>
+<th style="text-align: center;"><strong>GIN</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>MUTAG</td>
-<td style="text-align: center;"><code>‹baseline›</code></td>
-<td style="text-align: center;"><strong><code>‹place›</code></strong></td>
-<td style="text-align: center;"><code>‹+Δ›</code> pp</td>
+<td style="text-align: left;">Orbit5k (α-<span class="math inline">H_1</span>)</td>
+<td style="text-align: center;"><strong>87.2</strong> <span class="math inline">{\pm 0.6}</span></td>
+<td style="text-align: center;"><span class="math inline">87.7 {\pm 1.0}</span></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><span class="math inline">91.2 {\pm 0.8}</span></td>
+<td style="text-align: center;">—</td>
 </tr>
 <tr class="even">
-<td>NCI1</td>
-<td style="text-align: center;"><code>‹baseline›</code></td>
-<td style="text-align: center;"><code>‹place›</code></td>
-<td style="text-align: center;"><code>‹+Δ›</code> pp</td>
+<td style="text-align: left;">MUTAG</td>
+<td style="text-align: center;"><strong>88.4</strong> <span class="math inline">{\pm 7.9}</span></td>
+<td style="text-align: center;"><span class="math inline">89.8</span></td>
+<td style="text-align: center;"><span class="math inline">88.3</span></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><span class="math inline">90.0</span></td>
 </tr>
 <tr class="odd">
-<td>ENZYMES</td>
-<td style="text-align: center;"><code>‹baseline›</code></td>
-<td style="text-align: center;"><code>‹place›</code></td>
-<td style="text-align: center;"><code>‹+Δ›</code> pp</td>
+<td style="text-align: left;">PROTEINS</td>
+<td style="text-align: center;"><span class="math inline">71.5 {\pm 4.3}</span></td>
+<td style="text-align: center;"><span class="math inline">74.8</span></td>
+<td style="text-align: center;"><span class="math inline">75.2</span></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><span class="math inline">76.2</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NCI1</td>
+<td style="text-align: center;"><span class="math inline">71.3 {\pm 1.9}</span></td>
+<td style="text-align: center;"><span class="math inline">73.5</span></td>
+<td style="text-align: center;"><span class="math inline">84.5</span></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><span class="math inline">82.7</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DD</td>
+<td style="text-align: center;"><span class="math inline">76.3 {\pm 3.4}</span></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><span class="math inline">80.3</span></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="transition-line fragment fade-up">
+<p>PLACE <em>leads diagram-based</em> on Orbit5k; <em>trails learned-weight</em> methods where labels carry the signal — <em>by design</em>. <span class="followup-stamp tilt-a"><span class="manicule">☞</span>What we picked</span></p>
+</div>
 </section>
 <section class="slide level2">
-<h2>When the certificate fires</h2>
-<div class="standfirst">
-<p>The classification certificate is a <em>per-input</em> statement. The fraction of test inputs on which it fires is itself a property of the dataset.</p>
+<h2>What we picked — the closed-form selector at work</h2>
+<div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;">
+<p>The closed-form rule from §III ranks descriptors <em>once</em>, no training. Here is what it chose — and how well the ranking tracks test accuracy.</p>
 </div>
-<div class="dispatches" data-title="Certificate-firing rate">
+<div class="dispatches fragment" data-fragment-index="1" data-title="Selector picks · Paper I, Tab. picks" style="font-size: 0.78em; padding: 0.7rem 1.3rem 0.55rem; margin: 0.5rem auto 0.6rem; max-width: 50em;">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 17%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Dataset</strong></th>
+<th style="text-align: center;"><strong>pool size</strong></th>
+<th style="text-align: center;"><strong>rule</strong></th>
+<th style="text-align: left;"><strong>descriptor picked</strong></th>
+<th style="text-align: center;"><strong>test acc.</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Orbit5k</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><span class="math inline">\hat\Delta/\sqrt{\ell}</span></td>
+<td style="text-align: left;">alpha-<span class="math inline">H_1</span></td>
+<td style="text-align: center;"><strong>87.2</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MUTAG</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;"><span class="math inline">\hat\rho_{\mathrm{Mah}}</span></td>
+<td style="text-align: left;">deg <span class="math inline">+</span> HKS<span class="math inline">_{10}</span> (joint)</td>
+<td style="text-align: center;"><strong>88.4</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PROTEINS</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;"><span class="math inline">\hat\rho_{\mathrm{Mah}}</span></td>
+<td style="text-align: left;">HKS<span class="math inline">_{10}</span></td>
+<td style="text-align: center;"><strong>71.5</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NCI1</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;"><span class="math inline">\hat\rho_{\mathrm{Mah}}</span></td>
+<td style="text-align: left;">HKS<span class="math inline">_{10}</span></td>
+<td style="text-align: center;"><strong>71.3</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DD</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;"><span class="math inline">\hat\Delta/\sqrt{\ell}</span></td>
+<td style="text-align: left;">HKS<span class="math inline">_{0.1}</span></td>
+<td style="text-align: center;"><strong>76.3</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="dispatches fragment" data-fragment-index="2" data-title="Selection-quality vs. test accuracy · Paper I, §IV.3" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.4rem auto 0.4rem;">
 <ul>
-<li class="fragment"><strong>MUTAG.</strong> <code>‹X›</code>% of test diagrams certified — the canonical “small + well-separated” win.</li>
-<li class="fragment"><strong>NCI1.</strong> <code>‹Y›</code>% certified — sparser, but where it fires, it’s right.</li>
-<li class="fragment"><strong>ENZYMES.</strong> <code>‹Z›</code>% — the multi-class case; the certificate is silent on most of the ambiguous inputs.</li>
+<li class="fragment"><strong>Spearman <span class="math inline">\rho \approx +0.54</span></strong> between <span class="math inline">\hat\rho_{\mathrm{Mah}}</span> rank and test-accuracy rank, averaged across 10 chemical benchmarks.</li>
+<li class="fragment"><strong>Positive on 9 of 10</strong> chemical datasets (PTC the lone outlier — <span class="math inline">\rho_- \approx -0.08</span>).</li>
+<li class="fragment"><em>Closes</em> the open problem posed by <strong>Zhao–Wang (WKPI, ’19)</strong> — the first closed-form descriptor selector with empirical validation. <span class="followup-stamp tilt-b"><span class="manicule">☞</span>Fires</span></li>
 </ul>
 </div>
-<p>In every case the certified fraction has zero misclassifications.</p>
 </section>
 <section class="slide level2">
-<h2>Where PLACE doesn’t win</h2>
-<div class="standfirst">
-<p>The talk would be incomplete without the negative cases. Two patterns worth naming.</p>
+<h2>Where the certificate fires</h2>
+<div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;">
+<p><strong>Eight of twelve</strong> benchmarks satisfy the firing condition <span class="math inline">r_m^{\mathrm{vP}} &lt; \tfrac{1}{2}\hat\Delta_c</span> — a <em>property of the data</em>, decided at training time, no held-out calibration.</p>
 </div>
-<div class="dispatches" data-title="Honest qualifiers">
+<div class="dispatches fragment" data-fragment-index="1" data-title="Firing diagnostic · Paper I, Tab. cert_firing" style="font-size: 0.76em; padding: 0.7rem 1.3rem 0.55rem; margin: 0.5rem auto 0.6rem; max-width: 48em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Dataset</strong></th>
+<th style="text-align: center;"><span class="math inline">m_{\min}</span></th>
+<th style="text-align: center;"><span class="math inline">r_m^{\,\mathrm{vP}}</span></th>
+<th style="text-align: center;"><span class="math inline">\hat\Delta/2</span></th>
+<th style="text-align: center;"><strong>fire %</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MUTAG</td>
+<td style="text-align: center;">57</td>
+<td style="text-align: center;">0.35</td>
+<td style="text-align: center;">0.78</td>
+<td style="text-align: center;"><strong>100 %</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PROTEINS</td>
+<td style="text-align: center;">405</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.91</td>
+<td style="text-align: center;"><strong>100 %</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NCI1</td>
+<td style="text-align: center;">1,848</td>
+<td style="text-align: center;">0.011</td>
+<td style="text-align: center;">0.047</td>
+<td style="text-align: center;"><strong>100 %</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NCI109</td>
+<td style="text-align: center;">1,843</td>
+<td style="text-align: center;">0.011</td>
+<td style="text-align: center;">0.046</td>
+<td style="text-align: center;"><strong>100 %</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DD</td>
+<td style="text-align: center;">438</td>
+<td style="text-align: center;">1.29</td>
+<td style="text-align: center;">4.10</td>
+<td style="text-align: center;"><strong>100 %</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DHFR</td>
+<td style="text-align: center;">265</td>
+<td style="text-align: center;">0.038</td>
+<td style="text-align: center;">0.047</td>
+<td style="text-align: center;"><strong>99 %</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IMDB-B</td>
+<td style="text-align: center;">450</td>
+<td style="text-align: center;">0.79</td>
+<td style="text-align: center;">0.41</td>
+<td style="text-align: center;">12 %</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">REDDIT-5K</td>
+<td style="text-align: center;">899</td>
+<td style="text-align: center;">0.075</td>
+<td style="text-align: center;">0.059</td>
+<td style="text-align: center;">4 %</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="transition-line fragment fade-up">
+<p>On MUTAG, the empirical NC predictions agree with the <strong>population NC rule</strong> on every one of <em>940 / 940</em> held-out tests (Clopper–Pearson 95% lower bound <span class="math inline">\geq 0.984</span>). <span class="followup-stamp tilt-b"><span class="manicule">☞</span>The silent four</span></p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Where it stays silent</h2>
+<div class="standfirst" style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;">
+<p>Four datasets sit in a <em>structurally distinct</em> regime: <span class="math inline">\|\Sigma_c\|_{\mathrm{op}} / \hat\Delta_c^2 \in [3,\,90]</span> — population SNR too low for any sample-mean concentration argument.</p>
+</div>
+<div class="dispatches fragment" data-fragment-index="1" data-title="The silent four · honest qualifiers" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 0.5rem auto 0.6rem;">
 <ul>
-<li class="fragment"><strong>Heterogeneous topology.</strong> When the within-class variation in <span class="math inline">H_*</span> is large (e.g.&nbsp;<code>‹dataset›</code>), the centroid model under-fits and PLACE trails the GNN baseline by <code>‹δ›</code> pp.</li>
-<li class="fragment"><strong>Tiny diagrams.</strong> When <span class="math inline">|A|</span> is small (degenerate filtrations), the sum <span class="math inline">\Phi(A)</span> has few non-zero coordinates and the certificate cannot fire.</li>
+<li class="fragment"><strong>COX2, PTC, IMDB-M, Orbit5k</strong> — <em>linearly separable</em> (linear-SVM accuracy <span class="math inline">\geq 70\%</span>) but not <em>nearest-centroid separable</em>.</li>
+<li class="fragment">The certificate’s silence is a <em>structural diagnostic</em>: any Pinelis / Pinelis–Bernstein / Gaussian / Hanson–Wright bound would need <span class="math inline">m_c \geq c\,\|\Sigma_c\|_\mathrm{op}\log(k/\alpha)/\hat\Delta_c^2</span> samples — exceeds <span class="math inline">m_{\min}</span> by orders of magnitude.</li>
+<li class="fragment">Silent ≠ wrong: linear-SVM accuracies stay competitive; the certificate is <em>correctly abstaining</em>.</li>
 </ul>
 </div>
-<p>These limitations are <em>part of the value proposition</em>: PLACE knows when it doesn’t know.</p>
+<div class="transition-line fragment fade-up">
+<p><strong>Silent ≠ wrong</strong>: PLACE <em>knows when it does not know.</em> <span class="followup-stamp tilt-c"><span class="manicule">☞</span>Wider arc</span></p>
+</div>
 </section></section>
 <section>
 <section class="title-slide slide level1 section-divider center">
