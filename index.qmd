@@ -1239,7 +1239,7 @@ $k$ classes; $R$ embedding radius; $m_{\min}$ smallest per-class sample size.
 For $m_{\min} \lesssim R/\Delta$, *no* classifier achieves better than constant excess risk on the worst-case PLACE-distribution family.
 :::
 
-::: {.dispatches .fragment data-fragment-index="3" data-title="What "tight" means" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;"}
+::: {.dispatches .fragment data-fragment-index="3" data-title="What 'tight' means" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;"}
 - The $\Delta$ in the upper bound and the $\Delta$ in the lower bound are the **same** quantity.
 - For $m \gtrsim R/\Delta$, the rate $1/\sqrt{m}$ kicks in — *Δ is the only knob that lowers the sample need*.
 - No PD vectorization with only an upper distortion bound can prove an analogous minimax claim — *Δ requires $\lambda$*.
