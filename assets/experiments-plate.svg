@@ -13,7 +13,7 @@
 
   <!-- ====================================================================
        12-cell grid (4 columns × 3 rows). Each cell shows the dataset name
-       and a filled-circle indicator coloured by firing status:
+       and a filled-circle indicator colored by firing status:
          full   (≥99%, n=6)  →  solid oxblood
          partial (4–12%, n=2) →  half-filled oxblood
          silent (0%, n=4)    →  faint ring
