@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" preserveAspectRatio="xMidYMid meet">
+  <!-- inner frame rule -->
+  <rect x="36" y="36" width="648" height="328" fill="none" stroke="#c8b894" stroke-width="0.6"/>
+
+  <!-- title masthead -->
+  <text x="360" y="68" fill="#6c1d1a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-weight="500" font-size="16" letter-spacing="4" text-anchor="middle">GRID  ·  HAT  ·  WEIGHT</text>
+
+  <!-- italic deck -->
+  <text x="360" y="92" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13" text-anchor="middle">— the analytic construction —</text>
+
+  <!-- horizontal hairline -->
+  <line x1="120" y1="104" x2="600" y2="104" stroke="#c8b894" stroke-width="0.5"/>
+
+  <!-- ===== birth-death plane ===== -->
+
+  <!-- diagonal -->
+  <line x1="100" y1="330" x2="320" y2="110" stroke="#57473a" stroke-width="0.8" stroke-dasharray="5 3" opacity="0.55"/>
+
+  <!-- axes -->
+  <line x1="100" y1="330" x2="560" y2="330" stroke="#2b211a" stroke-width="1.0"/>
+  <line x1="100" y1="330" x2="100" y2="115" stroke="#2b211a" stroke-width="1.0"/>
+
+  <!-- 3 cover squares (illustrating G_R cover) -->
+  <rect x="180" y="170" width="60" height="60" fill="none" stroke="#c8b894" stroke-width="0.7" stroke-dasharray="3 2"/>
+  <rect x="180" y="100" width="60" height="60" fill="none" stroke="#c8b894" stroke-width="0.7" stroke-dasharray="3 2"/>
+  <rect x="250" y="100" width="60" height="60" fill="none" stroke="#c8b894" stroke-width="0.7" stroke-dasharray="3 2"/>
+
+  <!-- hat function silhouette over (210, 200) -->
+  <path d="M 180 230 Q 210 165, 240 230 Z" fill="#6c1d1a" fill-opacity="0.25" stroke="#6c1d1a" stroke-width="1.2"/>
+
+  <!-- a faint smaller hat silhouette over (210, 130) -->
+  <path d="M 180 160 Q 210 95, 240 160 Z" fill="#6c1d1a" fill-opacity="0.12" stroke="#6c1d1a" stroke-width="1.0"/>
+
+  <!-- lattice grid points (landmarks) -->
+  <g fill="#2b211a" stroke="none">
+    <circle cx="140" cy="270" r="3.5"/>
+    <circle cx="140" cy="200" r="3.5"/>
+    <circle cx="210" cy="200" r="3.5"/>
+    <circle cx="140" cy="130" r="3.5"/>
+    <circle cx="210" cy="130" r="3.5"/>
+    <circle cx="280" cy="130" r="3.5"/>
+  </g>
+
+  <!-- persistence-diagram dots (oxblood) -->
+  <g fill="#6c1d1a" stroke="none">
+    <circle cx="170" cy="240" r="4"/>
+    <circle cx="195" cy="200" r="4"/>
+    <circle cx="225" cy="170" r="4"/>
+    <circle cx="260" cy="150" r="4"/>
+  </g>
+
+  <!-- ===== analytic-weights motif on the right ===== -->
+  <!-- 3 weight bars w_1, w_2, w_3 (diminishing height) -->
+  <g fill="#6c1d1a" fill-opacity="0.55" stroke="#6c1d1a" stroke-width="0.6">
+    <rect x="430" y="195" width="22" height="135"/>
+    <rect x="468" y="225" width="22" height="105"/>
+    <rect x="506" y="260" width="22" height="70"/>
+    <rect x="544" y="290" width="22" height="40"/>
+  </g>
+  <!-- weight axis baseline -->
+  <line x1="425" y1="330" x2="572" y2="330" stroke="#2b211a" stroke-width="1.0"/>
+
+  <!-- w_k label -->
+  <text x="498" y="180" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="18" text-anchor="middle">w<tspan baseline-shift="sub" font-size="0.65em">k</tspan></text>
+
+  <!-- axis labels -->
+  <text x="554" y="350" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13" text-anchor="end">birth</text>
+  <text x="104" y="122" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13">death</text>
+
+  <!-- corner fleurons -->
+  <text x="50" y="56" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20">❦</text>
+  <text x="678" y="56" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20" text-anchor="end">❦</text>
+  <text x="50" y="356" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20">❦</text>
+  <text x="678" y="356" fill="#c8b894" font-family="EB Garamond, Georgia, serif" font-size="20" text-anchor="end">❦</text>
+
+  <!-- caption stripe at bottom -->
+  <text x="360" y="356" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="11" letter-spacing="3" text-anchor="middle">— THE COORDINATES —</text>
+</svg>

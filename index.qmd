@@ -371,7 +371,7 @@ Embeddings of $(\mathcal{D}, d_\mathcal{B})$ abound — all bound distortion *fr
 
 ::: {.dataset-cards style="margin: -0.8rem auto 0.9rem; gap: 1.4rem;"}
 
-::: {.dataset-card .fragment data-fragment-index="1" style="padding: 0.45rem 0.6rem 0.5rem;"}
+::: {.dataset-card .fragment data-fragment-index="1" style="padding: 0.25rem 0.3rem 0.35rem;"}
 
 ```{=html}
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" style="height: 48px; width: auto; max-height: 48px;">
@@ -391,7 +391,7 @@ Implicit RKHS map; Lipschitz in $d_\mathcal{B}$; *no closed-form margin*.
 
 :::
 
-::: {.dataset-card .fragment data-fragment-index="2" style="padding: 0.45rem 0.6rem 0.5rem;"}
+::: {.dataset-card .fragment data-fragment-index="2" style="padding: 0.25rem 0.3rem 0.35rem;"}
 
 ```{=html}
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" style="height: 48px; width: auto; max-height: 48px;">
@@ -422,7 +422,7 @@ Explicit map; Lipschitz; *hyper-parameters tuned on held-out data*.
 
 :::
 
-::: {.dataset-card .fragment data-fragment-index="3" style="padding: 0.45rem 0.6rem 0.5rem;"}
+::: {.dataset-card .fragment data-fragment-index="3" style="padding: 0.25rem 0.3rem 0.35rem;"}
 
 ```{=html}
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" style="height: 48px; width: auto; max-height: 48px;">
@@ -543,7 +543,7 @@ $$
 ::: {.plate .fragment data-fragment-index="2"}
 
 ```{=html}
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" style="max-height: 220px;">
 
 <!-- ===== PANEL A: ρ-/ρ+ envelope for d_B ===== -->
 
@@ -621,7 +621,7 @@ $$
 :::
 
 ::: {.transition-line .fragment .fade-up}
-**Mitra–Virk** — *existence* in '21 (via asymdim); *explicit* in '24. [[☞]{.manicule}Use it]{.followup-stamp .tilt-a}
+**Mitra–Virk** — *existence* in '21 (via asymdim); *explicit* in '24. [[☞]{.manicule}Landmark coordinates]{.followup-stamp .tilt-a}
 :::
 
 # § II.  Construction {.section-divider}
@@ -631,64 +631,505 @@ $$
 :::
 
 ::: {.plate}
-![](assets/landmark-grid.svg){width="480"}
+![](assets/construction-plate.svg)
 :::
 
 ::: {.plate-caption}
-*The landmark grid $G_R$ on the birth–death plane — the scaffold that turns persistence into coordinates.*
+*From the **band** to **coordinates** — a landmark grid on the birth–death plane, a hat over each cell, an analytic weight per scale.*
 :::
 
-## The pipeline
+## Construction at one scale
 
-::: {.plate data-plate="IV"}
-![](assets/landmark-grid.svg)
+::: {.standfirst style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;"}
+At scale $R$: a *grid* $\mathbb{G}_R^+$, a *hat* $\varphi_{R,p}$, *summed* over the diagram.
 :::
 
-::: {.plate-caption}
-**Pl. IV.**  *The PLACE pipeline.* `‹insert pipeline figure from Paper I — input · filtration · persistence · embedding · classify›`. Each stage's parameters are fixed analytically from training labels alone.
+::: {.dataset-cards style="margin: 0.3rem auto 0.7rem; gap: 0.6rem;"}
+
+::: {.dataset-card .fragment data-fragment-index="1" style="padding: 0.25rem 0.3rem 0.35rem;"}
+
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 0 160 145" style="height: 285px; width: 100%; max-height: 285px;">
+<!-- axes -->
+<line x1="30" y1="120" x2="180" y2="120" stroke="#2b211a" stroke-width="0.8"/>
+<line x1="30" y1="120" x2="30" y2="20" stroke="#2b211a" stroke-width="0.8"/>
+<!-- birth-axis tick marks: R, 3R, 5R, 7R (odd m) -->
+<g stroke="#57473a" stroke-width="0.5">
+<line x1="40" y1="120" x2="40" y2="124"/>
+<line x1="60" y1="120" x2="60" y2="124"/>
+<line x1="80" y1="120" x2="80" y2="124"/>
+<line x1="100" y1="120" x2="100" y2="124"/>
+</g>
+<g fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="7" text-anchor="middle">
+<text x="40" y="132">R</text>
+<text x="60" y="132">3R</text>
+<text x="80" y="132">5R</text>
+<text x="100" y="132">7R</text>
+</g>
+<!-- death-axis tick marks: 4R, 6R, 8R, 10R (even n) -->
+<g stroke="#57473a" stroke-width="0.5">
+<line x1="30" y1="80" x2="26" y2="80"/>
+<line x1="30" y1="60" x2="26" y2="60"/>
+<line x1="30" y1="40" x2="26" y2="40"/>
+<line x1="30" y1="20" x2="26" y2="20"/>
+</g>
+<g fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="7" text-anchor="end">
+<text x="24" y="82">4R</text>
+<text x="24" y="62">6R</text>
+<text x="24" y="42">8R</text>
+<text x="24" y="22">10R</text>
+</g>
+<!-- diagonal -->
+<line x1="30" y1="120" x2="130" y2="20" stroke="#57473a" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.6"/>
+<!-- landmarks at (mR, nR), m odd, n even, n ≥ m+3 -->
+<g fill="#2b211a" stroke="none">
+<circle cx="40" cy="80" r="2.8"/>
+<circle cx="40" cy="60" r="2.8"/>
+<circle cx="60" cy="60" r="2.8"/>
+<circle cx="40" cy="40" r="2.8"/>
+<circle cx="60" cy="40" r="2.8"/>
+<circle cx="80" cy="40" r="2.8"/>
+<circle cx="40" cy="20" r="2.8"/>
+<circle cx="60" cy="20" r="2.8"/>
+<circle cx="80" cy="20" r="2.8"/>
+<circle cx="100" cy="20" r="2.8"/>
+</g>
+<!-- diagonal landmark ★ near origin -->
+<rect x="33" y="113" width="6" height="6" fill="#c8b894" stroke="#2b211a" stroke-width="0.4"/>
+<text x="43" y="119" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-size="9">∗</text>
+<text x="22" y="16" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9">death</text>
+<text x="178" y="135" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9" text-anchor="end">birth</text>
+</svg>
+```
+
+**LANDMARK BASIS**
+
 :::
 
-## Landmark grid $G_R$
+::: {.dataset-card .fragment data-fragment-index="2" style="padding: 0.25rem 0.3rem 0.35rem;"}
 
-::: {.standfirst}
-Place landmarks on a uniform lattice $G_R \subset \mathbb{R}^2_{\geq}$ in the birth-death plane. Each landmark $a$ owns a square $d_\mathcal{B}$-cover of side $3R$ (axis-aligned in the $\ell_\infty$ metric).
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 0 160 145" style="height: 285px; width: 100%; max-height: 285px;">
+<!-- axes -->
+<line x1="30" y1="120" x2="180" y2="120" stroke="#2b211a" stroke-width="0.8"/>
+<line x1="30" y1="120" x2="30" y2="20" stroke="#2b211a" stroke-width="0.8"/>
+<!-- diagonal -->
+<line x1="30" y1="120" x2="130" y2="20" stroke="#57473a" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.55"/>
+<!-- 10 cover rectangles (3R = 30px side), one per landmark -->
+<g fill="#6c1d1a" fill-opacity="0.07" stroke="#c8b894" stroke-width="0.55" stroke-dasharray="2 1.5">
+<rect x="25" y="65" width="30" height="30"/>
+<rect x="25" y="45" width="30" height="30"/>
+<rect x="45" y="45" width="30" height="30"/>
+<rect x="25" y="25" width="30" height="30"/>
+<rect x="45" y="25" width="30" height="30"/>
+<rect x="65" y="25" width="30" height="30"/>
+<rect x="25" y="5" width="30" height="30"/>
+<rect x="45" y="5" width="30" height="30"/>
+<rect x="65" y="5" width="30" height="30"/>
+<rect x="85" y="5" width="30" height="30"/>
+</g>
+<!-- landmarks at cover centres (muted, like neighbors in panel c) -->
+<g fill="#2b211a" fill-opacity="0.45" stroke="none">
+<circle cx="40" cy="80" r="1.6"/>
+<circle cx="40" cy="60" r="1.6"/>
+<circle cx="60" cy="60" r="1.6"/>
+<circle cx="40" cy="40" r="1.6"/>
+<circle cx="60" cy="40" r="1.6"/>
+<circle cx="80" cy="40" r="1.6"/>
+<circle cx="40" cy="20" r="1.6"/>
+<circle cx="60" cy="20" r="1.6"/>
+<circle cx="80" cy="20" r="1.6"/>
+<circle cx="100" cy="20" r="1.6"/>
+</g>
+<text x="22" y="16" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9">death</text>
+<text x="178" y="135" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9" text-anchor="end">birth</text>
+</svg>
+```
+
+**COVER**
+
 :::
 
-::: {.dispatches data-title="Why a grid"}
-- **Mitra–Virk (2024)** show $\mathrm{asdim}(\mathcal{D}^n,\, d_\mathcal{B}) \leq 2n$ — a finite-dimensional embedding exists.
-- The grid makes that existence *concrete*: $\ell$ landmarks at $N$ geometric scales $R_1, \ldots, R_N$, no learned parameters.
-- The cover-square geometry is what makes the weights closed-form.
+::: {.dataset-card .fragment data-fragment-index="3" style="padding: 0.25rem 0.3rem 0.35rem;"}
+
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 0 160 145" style="height: 285px; width: 100%; max-height: 285px;">
+<!-- 4 neighboring covers (drawn first so central pyramid sits on top) -->
+<g fill="#c8b894" fill-opacity="0.08" stroke="#c8b894" stroke-width="0.5" stroke-dasharray="2 1.5">
+<polygon points="70,39 115,65 70,91 25,65"/>
+<polygon points="130,39 175,65 130,91 85,65"/>
+<polygon points="130,73 175,99 130,125 85,99"/>
+<polygon points="70,73 115,99 70,125 25,99"/>
+</g>
+<!-- small landmark dots at neighbor centers -->
+<g fill="#2b211a" fill-opacity="0.45" stroke="none">
+<circle cx="70" cy="65" r="1.6"/>
+<circle cx="130" cy="65" r="1.6"/>
+<circle cx="130" cy="99" r="1.6"/>
+<circle cx="70" cy="99" r="1.6"/>
+</g>
+<!-- CENTRAL base parallelogram -->
+<polygon points="100,55 145,82 100,109 55,82" fill="#c8b894" fill-opacity="0.22" stroke="#c8b894" stroke-width="0.6" stroke-dasharray="2 1.5"/>
+<!-- hidden edges -->
+<g stroke="#2b211a" stroke-width="0.7" stroke-dasharray="2.5 2" fill="none" opacity="0.55">
+<line x1="100" y1="35" x2="55" y2="82"/>
+<line x1="100" y1="35" x2="100" y2="109"/>
+</g>
+<!-- visible FRONT face -->
+<polygon points="100,35 100,55 145,82" fill="#6c1d1a" fill-opacity="0.30" stroke="#6c1d1a" stroke-width="1.1"/>
+<!-- visible RIGHT face -->
+<polygon points="100,35 145,82 100,109" fill="#6c1d1a" fill-opacity="0.50" stroke="#6c1d1a" stroke-width="1.1"/>
+<!-- landmark p at base centre -->
+<circle cx="100" cy="82" r="2.8" fill="#2b211a"/>
+<!-- dashed height indicator -->
+<line x1="100" y1="82" x2="100" y2="35" stroke="#57473a" stroke-width="0.5" stroke-dasharray="1.5 1.5" opacity="0.85"/>
+<!-- apex dot -->
+<circle cx="100" cy="35" r="1.8" fill="#6c1d1a"/>
+<!-- 3R/2 height label -->
+<text x="108" y="58" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11">3R/2</text>
+<!-- p label -->
+<text x="106" y="92" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11">p</text>
+<!-- test point a on the base, off-center -->
+<circle cx="118" cy="96" r="2.4" fill="#6c1d1a"/>
+<text x="122" y="100" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11">a</text>
+<!-- dashed vertical from a (base) to pyramid surface above it -->
+<line x1="118" y1="96" x2="118" y2="73" stroke="#6c1d1a" stroke-width="0.6" stroke-dasharray="1.5 1.5" opacity="0.85"/>
+<!-- φ(a) marker on the pyramid surface -->
+<circle cx="118" cy="73" r="1.6" fill="#6c1d1a"/>
+<!-- φ(a) label -->
+<text x="122" y="86" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="10">φ(a)</text>
+</svg>
+```
+
+**COORDINATES** $\textcolor{#6c1d1a}{\varphi_{R,p}}$
+
 :::
 
-## Hat-function coordinates
+::: {.dataset-card .fragment data-fragment-index="4" style="padding: 0.25rem 0.3rem 0.35rem;"}
 
-For each landmark $a \in G_R$, define a compactly supported hat $\varphi_{R,p}\colon \mathbb{R}^2 \to \mathbb{R}_{\geq 0}$ that vanishes outside $a$'s cover square. The PLACE coordinate of a diagram $A$ is
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 0 160 145" style="height: 285px; width: 100%; max-height: 285px;">
+<!-- axes -->
+<line x1="30" y1="120" x2="180" y2="120" stroke="#2b211a" stroke-width="0.8"/>
+<line x1="30" y1="120" x2="30" y2="20" stroke="#2b211a" stroke-width="0.8"/>
+<!-- diagonal -->
+<line x1="30" y1="120" x2="130" y2="20" stroke="#57473a" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.55"/>
+<!-- 10 cover rectangles, faded -->
+<g fill="#6c1d1a" fill-opacity="0.07" stroke="#c8b894" stroke-width="0.55" stroke-dasharray="2 1.5">
+<rect x="25" y="65" width="30" height="30"/>
+<rect x="25" y="45" width="30" height="30"/>
+<rect x="45" y="45" width="30" height="30"/>
+<rect x="25" y="25" width="30" height="30"/>
+<rect x="45" y="25" width="30" height="30"/>
+<rect x="65" y="25" width="30" height="30"/>
+<rect x="25" y="5" width="30" height="30"/>
+<rect x="45" y="5" width="30" height="30"/>
+<rect x="65" y="5" width="30" height="30"/>
+<rect x="85" y="5" width="30" height="30"/>
+</g>
+<!-- landmarks (muted) -->
+<g fill="#2b211a" fill-opacity="0.45" stroke="none">
+<circle cx="40" cy="80" r="1.6"/>
+<circle cx="40" cy="60" r="1.6"/>
+<circle cx="60" cy="60" r="1.6"/>
+<circle cx="40" cy="40" r="1.6"/>
+<circle cx="60" cy="40" r="1.6"/>
+<circle cx="80" cy="40" r="1.6"/>
+<circle cx="40" cy="20" r="1.6"/>
+<circle cx="60" cy="20" r="1.6"/>
+<circle cx="80" cy="20" r="1.6"/>
+<circle cx="100" cy="20" r="1.6"/>
+</g>
+<!-- PD dots (a random diagram A overlaid) -->
+<g fill="#6c1d1a" stroke="none">
+<circle cx="36" cy="92" r="3.2"/>
+<circle cx="52" cy="71" r="3.2"/>
+<circle cx="48" cy="46" r="3.2"/>
+<circle cx="73" cy="58" r="3.2"/>
+<circle cx="88" cy="32" r="3.2"/>
+<circle cx="105" cy="14" r="3.2"/>
+</g>
+<text x="22" y="16" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9">death</text>
+<text x="178" y="135" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9" text-anchor="end">birth</text>
+</svg>
+```
 
+$\textcolor{#6c1d1a}{\Phi_R(A) = \bigl(\sum_a \varphi_{R,p}(a)\bigr)_p}$
+
+:::
+:::
+
+::: {.dispatches .fragment data-fragment-index="5" data-title="No single R wins · Paper I, §2.5" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.8rem auto 0.4rem;"}
+- **Coarse $R$**: bound only fires for $d_\mathcal{B} \geq 3R$ — *close pairs entirely missed.*
+- **Fine $R$** (under $\nu$-coherence): $\|\Phi_R(A) - \Phi_R(B)\|_{\ell^2} \geq \tfrac{R\sqrt{2}}{8}$ — *vanishes with $R$.*
+- **The fix**: fine for close pairs, coarse for far. [[☞]{.manicule}Stack them]{.followup-stamp .tilt-b}
+:::
+
+## Construction at many scales
+
+::: {.standfirst style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.3rem;"}
+Stack scales $R_1 < \cdots < R_N$ with weights $w_k$ chosen *analytically* to maximise $\lambda$.
+:::
+
+::: {.dataset-cards style="margin: 0.3rem auto 0.7rem; gap: 0.6rem;"}
+
+::: {.dataset-card .fragment data-fragment-index="1" style="padding: 0.25rem 0.3rem 0.35rem;"}
+
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 0 160 145" style="height: 285px; width: 100%; max-height: 285px;">
+<!-- =========== TOP PLOT: R_1 (fine) =========== -->
+<!-- axes -->
+<line x1="35" y1="65" x2="100" y2="65" stroke="#2b211a" stroke-width="0.7"/>
+<line x1="35" y1="65" x2="35" y2="5" stroke="#2b211a" stroke-width="0.7"/>
+<!-- diagonal -->
+<line x1="35" y1="65" x2="95" y2="5" stroke="#57473a" stroke-width="0.4" stroke-dasharray="2 1.5" opacity="0.55"/>
+<!-- R_1 cover rectangles (3R_1 = 18 px side) -->
+<g fill="#6c1d1a" fill-opacity="0.06" stroke="#c8b894" stroke-width="0.4" stroke-dasharray="1.5 1">
+<rect x="32" y="32" width="18" height="18"/>
+<rect x="32" y="20" width="18" height="18"/>
+<rect x="32" y="8" width="18" height="18"/>
+<rect x="32" y="-4" width="18" height="18"/>
+<rect x="44" y="20" width="18" height="18"/>
+<rect x="44" y="8" width="18" height="18"/>
+<rect x="44" y="-4" width="18" height="18"/>
+<rect x="56" y="8" width="18" height="18"/>
+<rect x="56" y="-4" width="18" height="18"/>
+<rect x="68" y="-4" width="18" height="18"/>
+</g>
+<!-- R_1 = 1 lattice (10 landmarks, parity rule) -->
+<g fill="#2b211a" stroke="none">
+<circle cx="41" cy="41" r="1.6"/>
+<circle cx="41" cy="29" r="1.6"/>
+<circle cx="41" cy="17" r="1.6"/>
+<circle cx="41" cy="5" r="1.6"/>
+<circle cx="53" cy="29" r="1.6"/>
+<circle cx="53" cy="17" r="1.6"/>
+<circle cx="53" cy="5" r="1.6"/>
+<circle cx="65" cy="17" r="1.6"/>
+<circle cx="65" cy="5" r="1.6"/>
+<circle cx="77" cy="5" r="1.6"/>
+</g>
+<!-- R_1 label -->
+<text x="115" y="38" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13">R<tspan baseline-shift="sub" font-size="0.65em">1</tspan></text>
+
+<!-- horizontal dashed separator between the two plots -->
+<line x1="30" y1="70" x2="170" y2="70" stroke="#c8b894" stroke-width="0.6" stroke-dasharray="3 2"/>
+
+<!-- =========== BOTTOM PLOT: R_2 (coarser) =========== -->
+<!-- axes -->
+<line x1="35" y1="135" x2="100" y2="135" stroke="#2b211a" stroke-width="0.7"/>
+<line x1="35" y1="135" x2="35" y2="75" stroke="#2b211a" stroke-width="0.7"/>
+<!-- diagonal -->
+<line x1="35" y1="135" x2="95" y2="75" stroke="#57473a" stroke-width="0.4" stroke-dasharray="2 1.5" opacity="0.55"/>
+<!-- R_2 cover rectangles (3R_2 = 27 px side) -->
+<g fill="#6c1d1a" fill-opacity="0.08" stroke="#c8b894" stroke-width="0.4" stroke-dasharray="1.5 1">
+<rect x="30" y="85" width="27" height="27"/>
+<rect x="30" y="67" width="27" height="27"/>
+<rect x="48" y="67" width="27" height="27"/>
+</g>
+<!-- R_2 = 1.5 lattice (3 landmarks, parity rule scaled) -->
+<g fill="#6c1d1a" stroke="none">
+<circle cx="44" cy="99" r="2.4"/>
+<circle cx="44" cy="81" r="2.4"/>
+<circle cx="62" cy="81" r="2.4"/>
+</g>
+<!-- R_2 label -->
+<text x="115" y="108" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13">R<tspan baseline-shift="sub" font-size="0.65em">2</tspan></text>
+</svg>
+```
+
+**STACK**
+
+:::
+
+::: {.dataset-card .fragment data-fragment-index="2" style="padding: 0.25rem 0.3rem 0.35rem;"}
+
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 0 160 145" style="height: 285px; width: 100%; max-height: 285px;">
+<!-- Φ(A) = prefix -->
+<text x="22" y="83" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="14">Φ(A) =</text>
+<!-- vector brackets -->
+<path d="M 90 26 L 82 26 L 82 130 L 90 130" stroke="#2b211a" stroke-width="1.2" fill="none"/>
+<path d="M 140 26 L 148 26 L 148 130 L 140 130" stroke="#2b211a" stroke-width="1.2" fill="none"/>
+<!-- ∈ ℝ^ℓ annotation -->
+<text x="153" y="86" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="13">∈ ℝ<tspan baseline-shift="super" font-size="0.7em">ℓ</tspan></text>
+<!-- block separators (dotted) -->
+<g stroke="#c8b894" stroke-width="0.5" stroke-dasharray="2 1.5" fill="none">
+<line x1="82" y1="52" x2="148" y2="52"/>
+<line x1="82" y1="78" x2="148" y2="78"/>
+<line x1="82" y1="104" x2="148" y2="104"/>
+</g>
+<!-- block contents (Paper I Eq. 8: w_k · 2^{-3/2} · Φ_{R_k}(A)) -->
+<g font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="11" text-anchor="middle" fill="#2b211a">
+<text x="115" y="42">w<tspan baseline-shift="sub" font-size="0.65em">1</tspan> 2<tspan baseline-shift="super" font-size="0.65em">−3/2</tspan> Φ<tspan baseline-shift="sub" font-size="0.75em">R<tspan baseline-shift="sub" font-size="0.8em">1</tspan></tspan>(A)</text>
+<text x="115" y="66">w<tspan baseline-shift="sub" font-size="0.65em">2</tspan> 2<tspan baseline-shift="super" font-size="0.65em">−3/2</tspan> Φ<tspan baseline-shift="sub" font-size="0.75em">R<tspan baseline-shift="sub" font-size="0.8em">2</tspan></tspan>(A)</text>
+<text x="115" y="90">w<tspan baseline-shift="sub" font-size="0.65em">3</tspan> 2<tspan baseline-shift="super" font-size="0.65em">−3/2</tspan> Φ<tspan baseline-shift="sub" font-size="0.75em">R<tspan baseline-shift="sub" font-size="0.8em">3</tspan></tspan>(A)</text>
+<text x="115" y="118" font-size="14">⋮</text>
+</g>
+</svg>
+```
+
+**EMBEDDING**
+
+:::
+
+::: {.dataset-card .fragment data-fragment-index="3" style="padding: 0.25rem 0.3rem 0.35rem;"}
+
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 0 160 145" style="height: 285px; width: 100%; max-height: 285px;">
+<!-- axes -->
+<line x1="38" y1="125" x2="175" y2="125" stroke="#2b211a" stroke-width="0.8"/>
+<line x1="38" y1="125" x2="38" y2="22" stroke="#2b211a" stroke-width="0.8"/>
+<!-- band fill (between ρ_+ and ρ_-, both linear per Paper I Eqs. 11, 15) -->
+<path d="M 38 125 L 175 18 L 175 32 L 50 125 Z" fill="#6c1d1a" fill-opacity="0.10" stroke="none"/>
+<!-- upper bound ρ_+ : linear in t (slope = N_max), Paper I Eq. (15) -->
+<path d="M 38 125 L 175 18" stroke="#6c1d1a" stroke-width="1.6" fill="none"/>
+<!-- lower bound ρ_- : flat to R_1, then linear with slope λ(ν), Paper I Eq. (11) -->
+<path d="M 38 125 L 50 125 L 175 32" stroke="#2b211a" stroke-width="1.4" fill="none" stroke-dasharray="3 2"/>
+<!-- R_1 tick on x-axis -->
+<line x1="50" y1="123" x2="50" y2="128" stroke="#2b211a" stroke-width="0.6"/>
+<text x="50" y="138" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="9" text-anchor="middle">R<tspan baseline-shift="sub" font-size="0.65em">1</tspan></text>
+<!-- ρ_+ label -->
+<text x="172" y="10" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="end">ρ<tspan baseline-shift="sub" font-size="0.7em">+</tspan></text>
+<!-- ρ_- label -->
+<text x="172" y="55" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="12" text-anchor="end">ρ<tspan baseline-shift="sub" font-size="0.7em">−</tspan></text>
+<!-- y-axis label -->
+<text x="42" y="30" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="10">‖Φ(A) − Φ(B)‖</text>
+<!-- x-axis label -->
+<text x="173" y="138" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="10" text-anchor="end">d<tspan baseline-shift="sub" font-size="0.75em">ℬ</tspan>(A, B)</text>
+</svg>
+```
+
+**CERTIFICATE**
+
+:::
+:::
+
+::: {.def-box .fragment data-fragment-index="4" data-title="Lower bound · Paper I, Eqs. (11), (13)" style="margin: 1.8rem auto 0.6rem;"}
+For $d_\mathcal{B}(A, B) \geq R_1$ under **ν-coherence** (Eq. 14):
 $$
-\Phi_p(A) \;=\; \sum_{a \in A} \boldsymbol{\varphi}_{R,p}(a) \;\in\; \mathbb{R}^{|G_R|}.
+\rho_-(t;\nu) \;=\; \lambda(\nu)\,(t - R_1), \qquad
+\lambda(\nu) \;=\; \tfrac{1}{48} \min\!\left\{ \min_{2 \leq i \leq N} \tfrac{\sqrt{\sum_{k=1}^{i-1} w_k^2 R_k^2}}{R_i - R_1},\; \tfrac{\sqrt{\sum_{k=1}^{N} w_k^2 R_k^2}}{L - R_1} \right\}.
 $$
-
-::: {.dispatches data-title="Three properties, all closed-form"}
-- **Permutation-invariant** in $A$ (it's a sum).
-- **Lipschitz** in $d_\mathcal{B}$ — explicit constant from the hat width.
-- **Cheap** — $O(|A| \cdot N)$ at inference; no neural net to forward through.
 :::
 
-## The closed-form weight rule
+## The engine
 
-::: {.standfirst}
-Across the $N$ scales, weight each scale's contribution analytically:
+::: {.standfirst style="font-style: normal; font-size: 0.95em; margin: -0.3rem 0 0.4rem;"}
+Every parameter — *chosen analytically*. No held-out tuning, no random seeds.
 :::
 
-$$
-w_k^2 \;\propto\; \dfrac{d_{k+1}^2 - d_k^2}{R_k^2}.
-$$
+::: {.plate .fragment data-fragment-index="1"}
 
-::: {.marginalia data-title="Lemma II.4 — sketch"}
-The weights $w_k$ are the *unique maximizer* of the Mitra–Virk distortion slope $\lambda(\nu)$ over the $N$-scale family, subject to the $G_R$-cover constraint. Proof: differentiate $\lambda$ in $w$ and set to zero — the constraint is convex.
+```{=html}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 80">
+<!-- 5-stage flow: shape → PD → grid+hat → multi-scale Φ → certify -->
+
+<!-- Stage 1: SHAPE -->
+<g fill="#6c1d1a" stroke="none">
+<circle cx="46" cy="38" r="1.7"/>
+<circle cx="52" cy="32" r="1.7"/>
+<circle cx="56" cy="42" r="1.7"/>
+<circle cx="42" cy="46" r="1.7"/>
+<circle cx="50" cy="50" r="1.7"/>
+<circle cx="60" cy="36" r="1.7"/>
+</g>
+<text x="50" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">SHAPE</text>
+
+<!-- arrow -->
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="78" y1="42" x2="118" y2="42"/>
+<path d="M 110 37 L 118 42 L 110 47"/>
+</g>
+
+<!-- Stage 2: PD -->
+<g stroke="#2b211a" fill="none" stroke-width="0.7">
+<line x1="135" y1="60" x2="195" y2="60"/>
+<line x1="135" y1="60" x2="135" y2="14"/>
+</g>
+<line x1="135" y1="60" x2="180" y2="14" stroke="#57473a" stroke-width="0.5" stroke-dasharray="2 2" fill="none"/>
+<g fill="#6c1d1a" stroke="none">
+<circle cx="146" cy="36" r="1.6"/>
+<circle cx="158" cy="28" r="1.6"/>
+<circle cx="166" cy="42" r="1.6"/>
+</g>
+<text x="167" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">PD</text>
+
+<!-- arrow -->
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="210" y1="42" x2="250" y2="42"/>
+<path d="M 242 37 L 250 42 L 242 47"/>
+</g>
+
+<!-- Stage 3: GRID + HAT -->
+<g stroke="#2b211a" fill="none" stroke-width="0.5">
+<line x1="270" y1="60" x2="335" y2="60"/>
+<line x1="270" y1="60" x2="270" y2="14"/>
+</g>
+<line x1="270" y1="60" x2="320" y2="14" stroke="#57473a" stroke-width="0.4" stroke-dasharray="2 2" fill="none"/>
+<g fill="#2b211a" stroke="none">
+<circle cx="282" cy="50" r="1.4"/>
+<circle cx="294" cy="38" r="1.4"/>
+<circle cx="282" cy="38" r="1.4"/>
+<circle cx="306" cy="26" r="1.4"/>
+<circle cx="294" cy="26" r="1.4"/>
+<circle cx="282" cy="26" r="1.4"/>
+</g>
+<path d="M 286 50 Q 297 18, 308 50 Z" fill="#6c1d1a" fill-opacity="0.30" stroke="#6c1d1a" stroke-width="0.6"/>
+<text x="305" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">GRID + HAT</text>
+
+<!-- arrow -->
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="350" y1="42" x2="390" y2="42"/>
+<path d="M 382 37 L 390 42 L 382 47"/>
+</g>
+
+<!-- Stage 4: MULTI-SCALE Φ -->
+<g stroke="#2b211a" fill="none" stroke-width="0.9">
+<path d="M 425 18 L 418 18 L 418 66 L 425 66"/>
+<path d="M 460 18 L 467 18 L 467 66 L 460 66"/>
+</g>
+<g stroke="#c8b894" stroke-width="0.4" stroke-dasharray="1.5 1" fill="none">
+<line x1="418" y1="34" x2="467" y2="34"/>
+<line x1="418" y1="50" x2="467" y2="50"/>
+</g>
+<g fill="#2b211a" stroke="none" font-family="EB Garamond, Georgia, serif" font-size="8" text-anchor="middle">
+<text x="442" y="29">Φ<tspan baseline-shift="sub" font-size="0.6em">R₁</tspan></text>
+<text x="442" y="45">Φ<tspan baseline-shift="sub" font-size="0.6em">R₂</tspan></text>
+<text x="442" y="61">⋮</text>
+</g>
+<text x="442" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">Φ(A)</text>
+
+<!-- arrow -->
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="485" y1="42" x2="525" y2="42"/>
+<path d="M 517 37 L 525 42 L 517 47"/>
+</g>
+
+<!-- Stage 5: CERTIFY (band) -->
+<line x1="545" y1="62" x2="640" y2="62" stroke="#2b211a" stroke-width="0.8"/>
+<line x1="545" y1="62" x2="545" y2="14" stroke="#2b211a" stroke-width="0.8"/>
+<path d="M 545 62 L 640 18 L 640 24 L 555 62 Z" fill="#6c1d1a" fill-opacity="0.18" stroke="none"/>
+<path d="M 545 62 L 640 18" stroke="#6c1d1a" stroke-width="1.2" fill="none"/>
+<path d="M 555 62 L 580 52 L 605 38 L 640 24" stroke="#2b211a" stroke-width="1.0" fill="none" stroke-dasharray="2 1.5"/>
+<text x="592" y="70" fill="#57473a" font-family="Alegreya SC, EB Garamond, Georgia, serif" font-size="9" letter-spacing="1.3" text-anchor="middle">CERTIFY</text>
+
+<!-- final arrow + classifier label -->
+<g stroke="#6c1d1a" fill="none" stroke-width="0.9">
+<line x1="660" y1="42" x2="700" y2="42"/>
+<path d="M 692 37 L 700 42 L 692 47"/>
+</g>
+</svg>
+```
+
 :::
 
-This is the *whole* model selection step. There is no held-out validation, no Bayesian search, no random seeds.
+::: {.dispatches .fragment data-fragment-index="2" data-title="Closed-form throughout · Paper I" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;"}
+- **Grid** $\mathbb{G}_R$ — $\{(mR, nR) : m\text{ odd},\, n\text{ even},\, n \geq m+3\}$.
+- **Hat** $\varphi_{R,p}$ — $\bigl(\tfrac{3R}{2} - \|x - p\|_\infty\bigr)_+$.
+- **Scales** $R_1 < \cdots < R_N$ — geometric progression from the data scale.
+- **Weights** $w_k$ — $w_k^2 \propto (d_{k+1}^2 - d_k^2)/R_k^2$, the unique maximiser of $\lambda(\nu)$. [[☞]{.manicule}Onto theory]{.followup-stamp .tilt-c}
+:::
 
 # § III.  Theory {.section-divider}
 

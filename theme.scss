@@ -454,9 +454,10 @@ html body div.reveal div.slides .qr-plate > svg {
 .reveal .dataset-card p {
   margin: 0.4em 0 0;
   text-align: center;
-  font-size: 0.78em;
+  font-size: 0.68em;
   line-height: 1.4;
   hyphens: none;
+  white-space: nowrap;
 }
 .reveal .dataset-card p:first-of-type {
   margin-top: 0.6em;
@@ -464,11 +465,11 @@ html body div.reveal div.slides .qr-plate > svg {
 .reveal .dataset-card strong {
   font-family: var(--smallcaps);
   font-weight: 500;
-  letter-spacing: 0.16em;
-  font-size: 1.05em;
+  letter-spacing: 0.12em;
+  font-size: 0.78em;
   color: var(--oxblood);
-  display: block;
-  margin: 0.15em 0 0.35em;
+  display: inline;
+  margin: 0;
 }
 // Theorem-style centered definition box.  Use:  ::: {.def-box data-title="Definition"}
 .reveal .def-box {
