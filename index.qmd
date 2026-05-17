@@ -17,11 +17,11 @@ footer: "PLACE  ·  S. Majhi  ·  ICERM TW-26-FCG  ·  Brown University  ·  20 
 ::: {.front-index data-title="Inside today's edition"}
 | §    | Article                                                                    |
 |:----:|:---------------------------------------------------------------------------|
-|  I.  | Motivation — stability · discriminability; the *band* that closes the gap. |
-|  II. | Construction — one knob $N$; an analytic engine; a certified $\Phi$.        |
-| III. | Theory — $\lambda \to \Delta$; tight margin & minimax; the NC certificate. |
-|  IV. | Experiments — twelve benchmarks; where the certificate fires; silent ≠ wrong. |
-|   V. | The wider arc — PALACE, CASTLE, open questions.                            |
+|  I.  | [**Motivation**]{style="color: var(--oxblood);"}: stability · discriminability; the *band* that closes the gap. |
+|  II. | [**Construction**]{style="color: var(--oxblood);"}: one knob $N$; an analytic engine; a certified $\Phi$.        |
+| III. | [**Theory**]{style="color: var(--oxblood);"}: $\lambda \to \Delta$; tight margin & minimax; the NC certificate. |
+|  IV. | [**Experiments**]{style="color: var(--oxblood);"}: twelve benchmarks; where the certificate fires; silent ≠ wrong. |
+|   V. | [**The wider arc**]{style="color: var(--oxblood);"}: `PALACE`, `CASTLE`, open questions.                            |
 
 :::
 
@@ -31,7 +31,7 @@ footer: "PLACE  ·  S. Majhi  ·  ICERM TW-26-FCG  ·  Brown University  ·  20 
 # § I.  Motivation {.section-divider}
 
 ::: {.section-deck}
-*Or, from point clouds to certified classifiers — via topology.*
+*From point clouds to certified classifiers, via topology.*
 :::
 
 ::: {.plate}
@@ -39,10 +39,10 @@ footer: "PLACE  ·  S. Majhi  ·  ICERM TW-26-FCG  ·  Brown University  ·  20 
 :::
 
 ::: {.plate-caption}
-*An honest feature map lives **in the band** — bounded above (stability) and below (discriminability).*
+An honest feature map lives **in the band**.
 :::
 
-## Classifying point clouds and graphs
+## The task
 
 ::: {.standfirst}
 Given a labeled corpus of [point clouds]{.term-with-icon data-icon="pointcloud"} or [graphs]{.term-with-icon data-icon="graph"}, learn a rule that predicts the label of a new instance.
@@ -89,7 +89,7 @@ Given a labeled corpus of [point clouds]{.term-with-icon data-icon="pointcloud"}
 
 **ORBIT5K**
 
-`‹5 000›` synthetic point clouds; five classes from orbit dynamics on the torus. *Canonical TDA point-cloud benchmark.*
+`‹5 000›` synthetic point clouds; five orbit-dynamics classes. *Canonical TDA point-cloud benchmark.*
 :::
 
 ::: {.dataset-card .fragment data-fragment-index="2"}
@@ -105,7 +105,7 @@ Given a labeled corpus of [point clouds]{.term-with-icon data-icon="pointcloud"}
 
 **NCI1**
 
-`‹4 110›` chemical compounds; active vs. inactive in a cancer-cell-line screen. *Medium, binary, harder.*
+`‹4 110›` chemical compounds; active vs. inactive in a cancer-cell-line screen. *Medium; node-label-dominated.*
 :::
 :::
 
@@ -225,9 +225,9 @@ For a [point cloud]{.term-with-icon data-icon="pointcloud"} or a [graph]{.term-w
 :::
 
 - **Invariance.** $\Phi(X) = \Phi(g \cdot X)$ for every symmetry $g$ (vertex relabeling; rotation / translation).
-- **Stability.** $\|\Phi(X) - \Phi(X')\| \leq L \, d(X, X')$ — close inputs ⇒ close outputs.
-- **Discriminability.** $\|\Phi(X) - \Phi(X')\| \geq \ell \, d(X, X')$ — distant inputs ⇒ distant outputs.
-- **Sample-efficient.** Informative without $10^5$ examples; ML / GNNs over-fit in our regime.
+- **Stability.** $\|\Phi(X) - \Phi(X')\| \leq \rho^+ \, d(X, X')$ — close inputs ⇒ close outputs.
+- **Discriminability.** $\|\Phi(X) - \Phi(X')\| \geq \rho^- \, d(X, X')$ — distant inputs ⇒ distant outputs.
+- **Sample-efficient.** Informative when training labels are scarce.
 :::
 
 ::: {.transition-line .fragment .fade-up}
@@ -635,7 +635,7 @@ $$
 :::
 
 ::: {.plate-caption}
-*From corpus to certified $\Phi$ — $\tau^*$, $R_k$ and $w_k$ all flow from the data; only $N$ is ours to set.*
+From corpus to certified $\Phi$ — $\tau^*$, $R_k$ and $w_k$ all flow from the data; only $N$ is ours to set.
 :::
 
 ## Construction at one scale
@@ -1095,7 +1095,7 @@ $$
 :::
 
 ::: {.plate-caption}
-*The classifier we will certify: nearest-centroid on $\Phi$-coordinates. A test diagram inside a ball gets a **proven** label.*
+The classifier we will certify: nearest-centroid on $\Phi$-coordinates. A test diagram inside a ball gets a **proven** label.
 :::
 
 ## The class margin Δ
@@ -1235,14 +1235,14 @@ $$
 $k$ classes; $R$ embedding radius; $m_{\min}$ smallest per-class sample size.
 :::
 
-::: {.def-box .fragment data-fragment-index="2" data-title="Minimax lower bound · Paper I, Thm. III.4"}
-For $m_{\min} \lesssim R/\Delta$, *no* classifier achieves better than constant excess risk on the worst-case PLACE-distribution family.
+::: {.def-box .fragment data-fragment-index="2" data-title="Minimax lower bound · Paper I, Thm. III.2"}
+For $m \lesssim R/\Delta$, *no classifier acting on persistence diagrams* — regardless of model class, embedding dimension, or compute budget — achieves better than constant excess risk on the *PD-native* family $\mathcal{P}^{\mathrm{PD}}_{\Delta,R}$.
 :::
 
 ::: {.dispatches .fragment data-fragment-index="3" data-title="What 'tight' means" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;"}
 - The $\Delta$ in the upper bound and the $\Delta$ in the lower bound are the **same** quantity.
 - For $m \gtrsim R/\Delta$, the rate $1/\sqrt{m}$ kicks in — *Δ is the only knob that lowers the sample need*.
-- No PD vectorization with only an upper distortion bound can prove an analogous minimax claim — *Δ requires $\lambda$*.
+- Le Cam two-point on single-pair diagrams in a Mitra–Virk hat wedge — *the hardness is PD-realizable, not a PLACE artifact*.
 :::
 
 ## The nearest-centroid certificate
@@ -1344,7 +1344,7 @@ The gap from $\lambda$ — passed through $\Delta$ — opens the door to *all fi
 :::
 
 ::: {.plate-caption}
-*Variance-aware Pinelis–Bernstein firing rate per dataset (Paper I, Tab. cert\_firing). Six chemical benchmarks fully certified; two partial; four silent.*
+Variance-aware Pinelis–Bernstein firing rate per dataset (Paper I, Tab. cert\_firing). Six chemical benchmarks fully certified; two partial; four silent.
 :::
 
 ## Headline accuracy
@@ -1388,8 +1388,8 @@ The closed-form rule from §III ranks descriptors *once*, no training. Here is w
 :::
 
 ::: {.dispatches .fragment data-fragment-index="2" data-title="Selection-quality vs. test accuracy · Paper I, §IV.3" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.4rem auto 0.4rem;"}
-- **Spearman $\rho \approx +0.54$** between $\hat\rho_{\mathrm{Mah}}$ rank and test-accuracy rank, averaged across 10 chemical benchmarks.
-- **Positive on 9 of 10** chemical datasets (PTC the lone outlier — $\rho_- \approx -0.08$).
+- **Mean Spearman $\rho = +0.56$** between $\hat\rho_{\mathrm{Mah}}$ rank and linear-SVM accuracy rank, across **11 benchmarks** (chemical · protein · social).
+- **Positive on 10 of 11** (PTC the lone outlier at $-0.24$, borderline non-significant).
 - *Closes* the open problem posed by **Zhao–Wang (WKPI, '19)** — the first closed-form descriptor selector with empirical validation. [[☞]{.manicule}Fires]{.followup-stamp .tilt-b}
 :::
 

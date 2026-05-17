@@ -182,7 +182,7 @@ html, body {
 .reveal h2 + .standfirst,
 .reveal h2 + p.subtitle {
   font-family: var(--display);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   font-size: 1.05em;
   line-height: 1.45;
@@ -350,7 +350,7 @@ html body div.reveal div.slides .qr-plate > svg {
 // ---------------------------------------------------------------------------
 .reveal .transition-line {
   font-family: var(--display);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   font-size: 1.8rem;
   line-height: 1.3;
@@ -457,7 +457,7 @@ html body div.reveal div.slides .qr-plate > svg {
   font-size: 0.68em;
   line-height: 1.4;
   hyphens: none;
-  white-space: nowrap;
+  white-space: normal;
 }
 .reveal .dataset-card p:first-of-type {
   margin-top: 0.6em;
@@ -1064,10 +1064,10 @@ html body div.reveal div.slides section.section-divider > h2 {
 }
 // Section-divider plates should dominate the slide visually.
 .reveal section.section-divider .plate {
-  width: 60% !important;
-  max-width: 800px !important;
-  margin: 1.2rem auto 0.4rem !important;
-  padding: 0.8rem !important;
+  width: 58% !important;
+  max-width: 760px !important;
+  margin: 0.8rem auto 0.3rem !important;
+  padding: 0.6rem !important;
 }
 .reveal section.section-divider .plate img,
 .reveal section.section-divider .plate svg {
@@ -1075,11 +1075,12 @@ html body div.reveal div.slides section.section-divider > h2 {
   width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
-  max-height: 48vh !important;
+  max-height: 38vh !important;
 }
 .reveal section.section-divider .plate-caption {
-  font-size: 1.0rem;
+  font-size: 0.95rem;
   max-width: 48rem;
+  margin-top: 0.2rem;
 }
 
 // Suppress the fleuron on section dividers — it collided with reveal's
@@ -1152,7 +1153,7 @@ html body div.reveal div.slides section.section-divider > h2 {
 .reveal .plate + p,
 .reveal .plate-caption {
   font-family: var(--display);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   font-size: 0.78em;
   line-height: 1.4;

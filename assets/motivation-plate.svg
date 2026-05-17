@@ -34,9 +34,9 @@
     <circle cx="610" cy="148" r="3.3"/>
   </g>
 
-  <!-- curve labels -->
-  <text x="624" y="106" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="28">ρ<tspan baseline-shift="sub" font-size="0.65em">+</tspan></text>
-  <text x="624" y="220" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="28">ρ<tspan baseline-shift="sub" font-size="0.65em">−</tspan></text>
+  <!-- curve labels (offset above/below curves to clear the strokes) -->
+  <text x="650" y="92" fill="#6c1d1a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="28">ρ<tspan baseline-shift="sub" font-size="0.65em">+</tspan></text>
+  <text x="650" y="240" fill="#2b211a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="28">ρ<tspan baseline-shift="sub" font-size="0.65em">−</tspan></text>
 
   <!-- axis labels -->
   <text x="84" y="126" fill="#57473a" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="15">‖Φ(x) − Φ(y)‖<tspan baseline-shift="sub" font-size="0.7em">ℋ</tspan></text>
