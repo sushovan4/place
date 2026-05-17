@@ -33,7 +33,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-3e09a098ccec048828c45ac9b6e7c7b0.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-0e61f0f526e0d6d393d5b880d3ca6f9b.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -177,23 +177,23 @@ Sushovan Majhi
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">I.</td>
-<td style="text-align: left;">Motivation — stability · discriminability; the <em>band</em> that closes the gap.</td>
+<td style="text-align: left;"><span style="color: var(--oxblood);"><strong>Motivation</strong></span>: stability · discriminability; the <em>band</em> that closes the gap.</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">II.</td>
-<td style="text-align: left;">Construction — one knob <span class="math inline">N</span>; an analytic engine; a certified <span class="math inline">\Phi</span>.</td>
+<td style="text-align: left;"><span style="color: var(--oxblood);"><strong>Construction</strong></span>: one knob <span class="math inline">N</span>; an analytic engine; a certified <span class="math inline">\Phi</span>.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">III.</td>
-<td style="text-align: left;">Theory — <span class="math inline">\lambda \to \Delta</span>; tight margin &amp; minimax; the NC certificate.</td>
+<td style="text-align: left;"><span style="color: var(--oxblood);"><strong>Theory</strong></span>: <span class="math inline">\lambda \to \Delta</span>; tight margin &amp; minimax; the NC certificate.</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">IV.</td>
-<td style="text-align: left;">Experiments — twelve benchmarks; where the certificate fires; silent ≠ wrong.</td>
+<td style="text-align: left;"><span style="color: var(--oxblood);"><strong>Experiments</strong></span>: twelve benchmarks; where the certificate fires; silent ≠ wrong.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">V.</td>
-<td style="text-align: left;">The wider arc — PALACE, CASTLE, open questions.</td>
+<td style="text-align: left;"><span style="color: var(--oxblood);"><strong>The wider arc</strong></span>: <code>PALACE</code>, <code>CASTLE</code>, open questions.</td>
 </tr>
 </tbody>
 </table>
@@ -207,17 +207,17 @@ Sushovan Majhi
 <section class="title-slide slide level1 section-divider center">
 <h1>§ I. Motivation</h1>
 <div class="section-deck">
-<p><em>Or, from point clouds to certified classifiers — via topology.</em></p>
+<p><em>From point clouds to certified classifiers, via topology.</em></p>
 </div>
 <div class="plate">
 <p><img data-src="assets/motivation-plate.svg"></p>
 </div>
 <div class="plate-caption">
-<p><em>An honest feature map lives <strong>in the band</strong> — bounded above (stability) and below (discriminability).</em></p>
+<p>An honest feature map lives <strong>in the band</strong>.</p>
 </div>
 </section>
 <section class="slide level2">
-<h2>Classifying point clouds and graphs</h2>
+<h2>The task</h2>
 <div class="standfirst">
 <p>Given a labeled corpus of <span class="term-with-icon" data-icon="pointcloud">point clouds</span> or <span class="term-with-icon" data-icon="graph">graphs</span>, learn a rule that predicts the label of a new instance.</p>
 </div>
@@ -257,7 +257,7 @@ Sushovan Majhi
 <div class="dataset-card fragment" data-fragment-index="1">
 <p><img data-src="assets/dataset-orbit5k.svg"></p>
 <p><strong>ORBIT5K</strong></p>
-<p><code>‹5 000›</code> synthetic point clouds; five classes from orbit dynamics on the torus. <em>Canonical TDA point-cloud benchmark.</em></p>
+<p><code>‹5 000›</code> synthetic point clouds; five orbit-dynamics classes. <em>Canonical TDA point-cloud benchmark.</em></p>
 </div>
 <div class="dataset-card fragment" data-fragment-index="2">
 <p><img data-src="assets/dataset-mutag.svg"></p>
@@ -267,7 +267,7 @@ Sushovan Majhi
 <div class="dataset-card fragment" data-fragment-index="3">
 <p><img data-src="assets/dataset-nci1.svg"></p>
 <p><strong>NCI1</strong></p>
-<p><code>‹4 110›</code> chemical compounds; active vs.&nbsp;inactive in a cancer-cell-line screen. <em>Medium, binary, harder.</em></p>
+<p><code>‹4 110›</code> chemical compounds; active vs.&nbsp;inactive in a cancer-cell-line screen. <em>Medium; node-label-dominated.</em></p>
 </div>
 </div>
 <div class="composing-rule fragment" data-fragment-index="4">
@@ -381,9 +381,9 @@ Sushovan Majhi
 </div>
 <ul>
 <li class="fragment"><strong>Invariance.</strong> <span class="math inline">\Phi(X) = \Phi(g \cdot X)</span> for every symmetry <span class="math inline">g</span> (vertex relabeling; rotation / translation).</li>
-<li class="fragment"><strong>Stability.</strong> <span class="math inline">\|\Phi(X) - \Phi(X')\| \leq L \, d(X, X')</span> — close inputs ⇒ close outputs.</li>
-<li class="fragment"><strong>Discriminability.</strong> <span class="math inline">\|\Phi(X) - \Phi(X')\| \geq \ell \, d(X, X')</span> — distant inputs ⇒ distant outputs.</li>
-<li class="fragment"><strong>Sample-efficient.</strong> Informative without <span class="math inline">10^5</span> examples; ML / GNNs over-fit in our regime.</li>
+<li class="fragment"><strong>Stability.</strong> <span class="math inline">\|\Phi(X) - \Phi(X')\| \leq \rho^+ \, d(X, X')</span> — close inputs ⇒ close outputs.</li>
+<li class="fragment"><strong>Discriminability.</strong> <span class="math inline">\|\Phi(X) - \Phi(X')\| \geq \rho^- \, d(X, X')</span> — distant inputs ⇒ distant outputs.</li>
+<li class="fragment"><strong>Sample-efficient.</strong> Informative when training labels are scarce.</li>
 </ul>
 </div>
 <div class="transition-line fragment fade-up">
@@ -743,7 +743,7 @@ Sushovan Majhi
 <p><img data-src="assets/construction-plate.svg"></p>
 </div>
 <div class="plate-caption">
-<p><em>From corpus to certified <span class="math inline">\Phi</span> — <span class="math inline">\tau^*</span>, <span class="math inline">R_k</span> and <span class="math inline">w_k</span> all flow from the data; only <span class="math inline">N</span> is ours to set.</em></p>
+<p>From corpus to certified <span class="math inline">\Phi</span> — <span class="math inline">\tau^*</span>, <span class="math inline">R_k</span> and <span class="math inline">w_k</span> all flow from the data; only <span class="math inline">N</span> is ours to set.</p>
 </div>
 </section>
 <section class="slide level2">
@@ -1153,7 +1153,7 @@ Sushovan Majhi
 <p><img data-src="assets/theory-plate.svg"></p>
 </div>
 <div class="plate-caption">
-<p><em>The classifier we will certify: nearest-centroid on <span class="math inline">\Phi</span>-coordinates. A test diagram inside a ball gets a <strong>proven</strong> label.</em></p>
+<p>The classifier we will certify: nearest-centroid on <span class="math inline">\Phi</span>-coordinates. A test diagram inside a ball gets a <strong>proven</strong> label.</p>
 </div>
 </section>
 <section class="slide level2">
@@ -1281,14 +1281,14 @@ Sushovan Majhi
 \mathbb{E}\bigl[\mathrm{err}(\hat g)\bigr] \;-\; \mathrm{err}(g^\star) \;\leq\; O\!\left(\frac{k\,R}{\Delta\,\sqrt{m_{\min}}}\right).
 </span> <span class="math inline">k</span> classes; <span class="math inline">R</span> embedding radius; <span class="math inline">m_{\min}</span> smallest per-class sample size.</p>
 </div>
-<div class="def-box fragment" data-fragment-index="2" data-title="Minimax lower bound · Paper I, Thm. III.4">
-<p>For <span class="math inline">m_{\min} \lesssim R/\Delta</span>, <em>no</em> classifier achieves better than constant excess risk on the worst-case PLACE-distribution family.</p>
+<div class="def-box fragment" data-fragment-index="2" data-title="Minimax lower bound · Paper I, Thm. III.2">
+<p>For <span class="math inline">m \lesssim R/\Delta</span>, <em>no classifier acting on persistence diagrams</em> — regardless of model class, embedding dimension, or compute budget — achieves better than constant excess risk on the <em>PD-native</em> family <span class="math inline">\mathcal{P}^{\mathrm{PD}}_{\Delta,R}</span>.</p>
 </div>
 <div class="dispatches fragment" data-fragment-index="3" data-title="What 'tight' means" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.5rem auto 0.4rem;">
 <ul>
 <li class="fragment">The <span class="math inline">\Delta</span> in the upper bound and the <span class="math inline">\Delta</span> in the lower bound are the <strong>same</strong> quantity.</li>
 <li class="fragment">For <span class="math inline">m \gtrsim R/\Delta</span>, the rate <span class="math inline">1/\sqrt{m}</span> kicks in — <em>Δ is the only knob that lowers the sample need</em>.</li>
-<li class="fragment">No PD vectorization with only an upper distortion bound can prove an analogous minimax claim — <em>Δ requires <span class="math inline">\lambda</span></em>.</li>
+<li class="fragment">Le Cam two-point on single-pair diagrams in a Mitra–Virk hat wedge — <em>the hardness is PD-realizable, not a PLACE artifact</em>.</li>
 </ul>
 </div>
 </section>
@@ -1435,7 +1435,7 @@ Sushovan Majhi
 <p><img data-src="assets/experiments-plate.svg"></p>
 </div>
 <div class="plate-caption">
-<p><em>Variance-aware Pinelis–Bernstein firing rate per dataset (Paper I, Tab. cert_firing). Six chemical benchmarks fully certified; two partial; four silent.</em></p>
+<p>Variance-aware Pinelis–Bernstein firing rate per dataset (Paper I, Tab. cert_firing). Six chemical benchmarks fully certified; two partial; four silent.</p>
 </div>
 </section>
 <section class="slide level2">
@@ -1575,8 +1575,8 @@ Sushovan Majhi
 </div>
 <div class="dispatches fragment" data-fragment-index="2" data-title="Selection-quality vs. test accuracy · Paper I, §IV.3" style="font-size: 0.82em; padding: 0.7rem 1.3rem 0.55rem; margin: 1.4rem auto 0.4rem;">
 <ul>
-<li class="fragment"><strong>Spearman <span class="math inline">\rho \approx +0.54</span></strong> between <span class="math inline">\hat\rho_{\mathrm{Mah}}</span> rank and test-accuracy rank, averaged across 10 chemical benchmarks.</li>
-<li class="fragment"><strong>Positive on 9 of 10</strong> chemical datasets (PTC the lone outlier — <span class="math inline">\rho_- \approx -0.08</span>).</li>
+<li class="fragment"><strong>Mean Spearman <span class="math inline">\rho = +0.56</span></strong> between <span class="math inline">\hat\rho_{\mathrm{Mah}}</span> rank and linear-SVM accuracy rank, across <strong>11 benchmarks</strong> (chemical · protein · social).</li>
+<li class="fragment"><strong>Positive on 10 of 11</strong> (PTC the lone outlier at <span class="math inline">-0.24</span>, borderline non-significant).</li>
 <li class="fragment"><em>Closes</em> the open problem posed by <strong>Zhao–Wang (WKPI, ’19)</strong> — the first closed-form descriptor selector with empirical validation. <span class="followup-stamp tilt-b"><span class="manicule">☞</span>Fires</span></li>
 </ul>
 </div>
